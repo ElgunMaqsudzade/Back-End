@@ -16,6 +16,5 @@ namespace EduHome.DAL
 
         public DbSet<AboutArea> AboutAreas { get; set; }
         public DbSet<TestimonialArea> TestimonialAreas { get; set; }
-        public DbSet<Student> Students { get; set; }
     }
 }

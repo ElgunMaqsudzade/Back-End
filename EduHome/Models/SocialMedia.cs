@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 
 namespace EduHome.Models
 {
-    public class TestimonialArea
+    public class SocialMedia
     {
         public int Id { get; set; }
         [Required]
-        public string Description { get; set; }
+        public string Link { get; set; }
         [Required]
-        public string Fullname { get; set; }
+        public string Icon { get; set; }
         [Required]
-        public string Image { get; set; }
         public bool IsDeleted { get; set; }
-        public DateTime? UpdateTime { get; set; }
+        [DataType(DataType.DateTime)]
         public DateTime? DeleteTime { get; set; }
+        public int TeacherSimpleRef { get; set; }
+        public TeacherSimple TeacherSimple { get; set; }
     }
 }

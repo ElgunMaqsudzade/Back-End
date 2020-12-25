@@ -15,6 +15,7 @@ namespace EduHome.Models
         public string Description { get; set; }
         [Required]
         public string Image { get; set; }
+        public bool Updated { get; set; }
         public DateTime? UpdateTime { get; set; }
     }
 }

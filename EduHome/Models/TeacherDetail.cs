@@ -6,18 +6,22 @@ using System.Threading.Tasks;
 
 namespace EduHome.Models
 {
-    public class Student
+    public class TeacherSimple
     {
         public int Id { get; set; }
+        [Required, StringLength(30)]
+        public string Fullname { get; set; }
         [Required, StringLength(25)]
-        public string Name { get; set; }
-        [Required, StringLength(25)]
-        public string Surname { get; set; }
+        public string Profession { get; set; }
         [Required]
         public string Image { get; set; }
+        [Required]
         public bool IsDeleted { get; set; }
+        [DataType(DataType.DateTime)]
         public DateTime? UpdateTime { get; set; }
+        [DataType(DataType.DateTime)]
         public DateTime? DeleteTime { get; set; }
-        public TestimonialArea TestimonialArea { get; set; }
+        [Required,DataType(DataType.DateTime)]
+        public DateTime? CreateTime { get; set; }
     }
 }

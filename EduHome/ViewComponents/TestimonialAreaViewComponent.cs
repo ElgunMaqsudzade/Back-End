@@ -18,7 +18,7 @@ namespace EduHome.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            List<TestimonialArea> testimonialAreas = await _db.TestimonialAreas.Where(t => t.IsDeleted == false).Include(s => s.Student).ToListAsync();
+            List<TestimonialArea> testimonialAreas = await _db.TestimonialAreas.Where(t => t.IsDeleted == false).ToListAsync();
             return View(await Task.FromResult(testimonialAreas));
         }
     }
