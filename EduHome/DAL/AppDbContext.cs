@@ -16,5 +16,11 @@ namespace EduHome.DAL
 
         public DbSet<AboutArea> AboutAreas { get; set; }
         public DbSet<TestimonialArea> TestimonialAreas { get; set; }
+        public DbSet<TeacherSimple> TeacherSimples { get; set; }
+        public DbSet<TeacherDetail> TeacherDetails { get; set; }
+        public DbSet<SocialMedia> SocialMedias { get; set; }
+        public DbSet<VideoTour> VideoTours { get; set; }
+        public DbSet<NoticeBoard> NoticeBoards { get; set; }
+        public DbSet<TeacherSkill> TeacherSkills { get; set; }
     }
 }

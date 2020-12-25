@@ -1,22 +1,4 @@
-﻿
-@{
-    ViewData["Title"] = "About";
-}
-
-<!-- Banner Area Start -->
-@await Component.InvokeAsync("Banner", new { word = "about us" })
-<!-- Banner Area End -->
-<!-- About Start -->
-@await Component.InvokeAsync("AboutArea", new { paddingT = "pt-145" })
-<!-- About End -->
-<!-- Teacher Start -->
-@await Component.InvokeAsync("Teacher", new { location = "About" })
-<!-- Teacher End -->
-<!-- Testimonial Area Start -->
-@await Component.InvokeAsync("TestimonialArea")
-<!-- Testimonial Area End -->
-<!-- Notice Start -->
-<section class="notice-area two pt-140 pb-100">
+﻿<section class="notice-area two pt-140 pb-100">
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -65,4 +47,3 @@
         </div>
     </div>
 </section>
-<!-- Notice End -->
