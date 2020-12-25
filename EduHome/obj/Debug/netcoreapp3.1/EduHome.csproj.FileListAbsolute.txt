@@ -264,3 +264,4 @@ C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Share
 C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\TestimonialArea\Default.cshtml.g.cs
 C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\Teacher\Default.cshtml.g.cs
 C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\NoticeArea\Default.cshtml.g.cs
+C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\Blog\Default.cshtml.g.cs

@@ -24,14 +24,6 @@ namespace EduHome.Models
         [Required]
         public string Phone { get; set; }
         public string Skype { get; set; }
-        [Required]
-        public bool IsDeleted { get; set; }
-        [DataType(DataType.DateTime)]
-        public DateTime? UpdateTime { get; set; }
-        [DataType(DataType.DateTime)]
-        public DateTime? DeleteTime { get; set; }
-        [Required,DataType(DataType.DateTime)]
-        public DateTime? CreateTime { get; set; }
         [ForeignKey("TeacherSimple")]
         public int TeacherSimpleId { get; set; }
         public TeacherSimple TeacherSimple { get; set; }

@@ -6,20 +6,22 @@ using System.Threading.Tasks;
 
 namespace EduHome.Models
 {
-    public class TestimonialArea
+    public class BlogSimple
     {
         public int Id { get; set; }
+        [Required, StringLength(50)]
+        public string Title { get; set; }
         [Required]
-        public string Description { get; set; }
-        [Required]
-        public string Fullname { get; set; }
+        public string Author { get; set; }
         [Required]
         public string Image { get; set; }
-        [Required]
         public bool IsDeleted { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime? UpdateTime { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime? DeleteTime { get; set; }
+        [Required, DataType(DataType.DateTime)]
+        public DateTime CreateTime { get; set; }
+        public BlogDetail BlogDetail { get; set; }
     }
 }

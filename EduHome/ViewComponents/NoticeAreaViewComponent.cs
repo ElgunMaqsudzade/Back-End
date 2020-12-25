@@ -17,12 +17,12 @@ namespace EduHome.ViewComponents
         {
             _db = db;
         }
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(string paddingB)
         {
-
+            ViewBag.PaddingB = paddingB;
             HomeVM homeVM = new HomeVM()
             {
-                NoticeBoards = await _db.NoticeBoards.TakeLast(8).ToListAsync(),
+                NoticeBoards = await _db.NoticeBoards.OrderByDescending(n=>n.Id).Take(6).ToListAsync(),
                 VideoTour = await _db.VideoTours.FirstOrDefaultAsync()
             };
             return View(await Task.FromResult(homeVM));

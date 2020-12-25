@@ -24,7 +24,7 @@ namespace EduHome.Models
         [DataType(DataType.DateTime)]
         public DateTime? DeleteTime { get; set; }
         [Required,DataType(DataType.DateTime)]
-        public DateTime? CreateTime { get; set; }
+        public DateTime CreateTime { get; set; }
         public TeacherDetail TeacherDetail { get; set; }
         public List<SocialMedia> SocialMedias { get; set; }
     }

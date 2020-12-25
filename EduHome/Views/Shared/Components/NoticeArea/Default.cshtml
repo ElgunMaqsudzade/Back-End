@@ -1,12 +1,13 @@
-﻿<section class="notice-area two pt-140 pb-100">
+﻿@model HomeVM
+<section class="notice-area two pt-140 @ViewBag.PaddingB">
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="notice-right-wrapper mb-25 pb-25">
-                    <h3>TAKE A VIDEO TOUR</h3>
+                    <h3>@Model.VideoTour.VideoTitle</h3>
                     <div class="notice-video">
                         <div class="video-icon video-hover">
-                            <a class="video-popup" href="https://www.youtube.com/watch?v=to6Ghf8UL7o">
+                            <a class="video-popup" href="@Model.VideoTour.VideoLink">
                                 <i class="zmdi zmdi-play"></i>
                             </a>
                         </div>
@@ -15,32 +16,15 @@
             </div>
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="notice-left-wrapper">
-                    <h3>notice board</h3>
+                    <h3>@Model.VideoTour.BoardTitle</h3>
                     <div class="notice-left">
-                        <div class="single-notice-left mb-23 pb-20">
-                            <h4>5, June 2017</h4>
-                            <p>I must explain to you how all this mistaken idea of denouncing plasure and praising pain was born and I will give you a complete </p>
-                        </div>
-                        <div class="single-notice-left hidden-sm mb-23 pb-20">
-                            <h4>4, June 2017</h4>
-                            <p>I must explain to you how all this mistaken idea of denouncing plasure and praising pain was born and I will give you a complete </p>
-                        </div>
-                        <div class="single-notice-left pb-70">
-                            <h4>3, June 2017</h4>
-                            <p>I must explain to you how all this mistaken idea of denouncing plasure and praising pain was born and I will give you a complete </p>
-                        </div>
-                        <div class="single-notice-left mb-23 pb-20">
-                            <h4>5, June 2017</h4>
-                            <p>I must explain to you how all this mistaken idea of denouncing plasure and praising pain was born and I will give you a complete </p>
-                        </div>
-                        <div class="single-notice-left hidden-sm mb-23 pb-20">
-                            <h4>4, June 2017</h4>
-                            <p>I must explain to you how all this mistaken idea of denouncing plasure and praising pain was born and I will give you a complete </p>
-                        </div>
-                        <div class="single-notice-left pb-70">
-                            <h4>3, June 2017</h4>
-                            <p>I must explain to you how all this mistaken idea of denouncing plasure and praising pain was born and I will give you a complete </p>
-                        </div>
+                        @foreach (NoticeBoard n in Model.NoticeBoards)
+                        {
+                            <div class="single-notice-left mb-23 pb-20">
+                                <h4>@n.NoticeDate.Day, @n.NoticeDate.ToString("MMMM") @n.NoticeDate.Year</h4>
+                                <p>@n.Descriptioon</p>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

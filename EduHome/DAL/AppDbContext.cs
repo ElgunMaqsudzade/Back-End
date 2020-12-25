@@ -22,5 +22,7 @@ namespace EduHome.DAL
         public DbSet<VideoTour> VideoTours { get; set; }
         public DbSet<NoticeBoard> NoticeBoards { get; set; }
         public DbSet<TeacherSkill> TeacherSkills { get; set; }
+        public DbSet<BlogSimple> BlogSimples { get; set; }
+        public DbSet<BlogDetail> BlogDetails { get; set; }
     }
 }
