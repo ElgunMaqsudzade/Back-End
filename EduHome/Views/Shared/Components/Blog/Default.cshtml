@@ -1,8 +1,9 @@
 ﻿@model List<BlogSimple>
 
+
 @foreach (BlogSimple blog in Model)
 {
-    <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="col-md-@(ViewBag.Col) col-sm-6 col-xs-12">
         <div class="single-blog">
             <div class="blog-img">
                 <a asp-controller="Blog" asp-action="Detail"><img src="img/blog/@blog.Image" alt="blog"></a>
@@ -12,7 +13,7 @@
             </div>
             <div class="blog-content">
                 <div class="blog-top">
-                    @*<p>By @blog.Author  /  @blog.CreateTime.Day, @blog.CreateTime.ToString("MMMM") @blog.CreateTime.Year  @((fea == null) ? "/  <i class='fa fa - comments - o'></i> 4":"")</p>*@
+                    <p>By @blog.Author  /  @blog.CreateTime.Day, @blog.CreateTime.ToString("MMMM") @blog.CreateTime.Year /  <i class='fa fa-comments-o'></i> 4</p>
                 </div>
                 <div class="blog-bottom">
                     <h2><a href="blog-details.html">@blog.Title</a></h2>
