@@ -1,0 +1,26 @@
+﻿@model Comment
+@{
+    Layout = null;
+}
+
+<div class="message-card">
+    <div class="img-holder">
+        <img class="img-fluid" src="~/img/user/@((Model.Image==null)?"User.png":Model.Image)" alt="User">
+    </div>
+    <div class="com-content">
+        <div class="com-title">
+            <h5 class="first"> <a asp-controller="User" asp-action="Profile">@Model.Name</a> </h5>
+            <h5>@Model.CreateTime.Day, @Model.CreateTime.ToString("MMM") @Model.CreateTime.Year</h5>
+        </div>
+        <div class="com-body">
+            <p>
+                @Model.Description
+            </p>
+        </div>
+        <div class="btn-box">
+            <button class="com-reply-btn">
+                <i class="fa fa-reply" aria-hidden="true"></i>REPLY
+            </button>
+        </div>
+    </div>
+</div>

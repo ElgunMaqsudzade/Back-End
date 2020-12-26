@@ -15,5 +15,6 @@ namespace EduHome.Models
         [ForeignKey("BlogSimple")]
         public int BlogSimpleId { get; set; }
         public BlogSimple BlogSimple { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

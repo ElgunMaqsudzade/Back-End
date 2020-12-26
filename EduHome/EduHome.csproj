@@ -11,6 +11,14 @@
     <Compile Remove="Migrations\20201225151732_CreateNoticeBoard.Designer.cs" />
     <Compile Remove="Migrations\20201225151925_CreateNoticeBoard.cs" />
     <Compile Remove="Migrations\20201225151925_CreateNoticeBoard.Designer.cs" />
+    <Compile Remove="Migrations\20201226162508_CreateCommentTable.cs" />
+    <Compile Remove="Migrations\20201226162508_CreateCommentTable.Designer.cs" />
+    <Compile Remove="Migrations\20201226162717_CreateCommentTable.cs" />
+    <Compile Remove="Migrations\20201226162717_CreateCommentTable.Designer.cs" />
+    <Compile Remove="Migrations\20201226164055_CreateCommentTable.cs" />
+    <Compile Remove="Migrations\20201226164055_CreateCommentTable.Designer.cs" />
+    <Compile Remove="Migrations\20201226164205_CreateCommentTable.cs" />
+    <Compile Remove="Migrations\20201226164205_CreateCommentTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

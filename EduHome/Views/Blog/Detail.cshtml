@@ -1,0 +1,133 @@
+﻿@model BlogVM
+@{
+    ViewData["Title"] = "Detail";
+    int count = Model.BlogSimple.BlogDetail.Comments.Count();
+}
+
+<!-- Banner Area Start -->
+@await Component.InvokeAsync("Banner", new { word = "Blog Details" })
+<!-- Banner Area End -->
+<!-- Blog Start -->
+<div class="blog-details-area pt-150 pb-140">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="blog-details">
+                    <div class="blog-details-img">
+                        <img class="img-fluid" src="~/img/blog/@Model.BlogSimple.Image" alt="blog-details">
+                    </div>
+                    <div class="blog-details-content">
+                        <h2>@Model.BlogSimple.Title </h2>
+                        <h6>
+                            By @Model.BlogSimple.Author / @Model.BlogSimple.CreateTime.Day, @Model.BlogSimple.CreateTime.ToString("MMMM") 
+                            @Model.BlogSimple.CreateTime.Year / <i class='fa fa-comments-o'></i> <span class="reply-count">@(count != 0?$"{count}": "")</span>
+                        </h6>
+                        @Html.Raw(Model.BlogSimple.BlogDetail.AboutContent)
+                    </div>
+                    <partial name="_CommentSectionPartial" />
+                    <div class="col-md-12">
+                        <hr />
+                        <div class="message-field">
+                            @if (Model.Comments.Count() != 0)
+                            {
+                                @foreach (var c in Model.Comments)
+                                {
+                                    <partial name="_CommentPartial" for="@c" />
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="blog-sidebar right">
+                    <div class="single-blog-widget mb-47">
+                        <h3>search</h3>
+                        <div class="blog-search">
+                            <form id="search" action="#">
+                                <input type="search" placeholder="Search..." name="search" />
+                                <button type="submit">
+                                    <span><i class="fa fa-search"></i></span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="single-blog-widget mb-47">
+                        <h3>categories</h3>
+                        <ul>
+                            <li><a href="#">CSS Engineering (10)</a></li>
+                            <li><a href="#">Political Science (12)</a></li>
+                            <li><a href="#">Micro Biology (08)</a></li>
+                            <li><a href="#">HTML5 &amp; CSS3 (15)</a></li>
+                            <li><a href="#">Web Design (20)</a></li>
+                            <li><a href="#">PHP (23)</a></li>
+                        </ul>
+                    </div>
+                    <div class="single-blog-widget mb-47">
+                        <div class="single-blog-banner">
+                            <a href="blog-details.html" id="blog"><img src="~/img/blog/blog-img.jpg" alt="blog"></a>
+                            <h2>best<br> eductaion<br> theme</h2>
+                        </div>
+                    </div>
+                    <div class="single-blog-widget mb-47">
+                        <h3>latest post</h3>
+                        <div class="single-post mb-30">
+                            <div class="single-post-img">
+                                <a href="blog-details.html">
+                                    <img src="~/img/post/post1.jpg" alt="post">
+                                    <div class="blog-hover">
+                                        <i class="fa fa-link"></i>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="single-post-content">
+                                <h4><a href="blog-details.html">English Language Course for you</a></h4>
+                                <p>By Alex  /  June 20, 2017</p>
+                            </div>
+                        </div>
+                        <div class="single-post mb-30">
+                            <div class="single-post-img">
+                                <a href="blog-details.html">
+                                    <img src="~/img/post/post2.jpg" alt="post">
+                                    <div class="blog-hover">
+                                        <i class="fa fa-link"></i>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="single-post-content">
+                                <h4><a href="blog-details.html">Advance Web Design and Develop</a></h4>
+                                <p>By Alex  /  June 20, 2017</p>
+                            </div>
+                        </div>
+                        <div class="single-post">
+                            <div class="single-post-img">
+                                <a href="blog-details.html">
+                                    <img src="~/img/post/post3.jpg" alt="post">
+                                    <div class="blog-hover">
+                                        <i class="fa fa-link"></i>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="single-post-content">
+                                <h4><a href="blog-details.html">English Language Course for you</a></h4>
+                                <p>By Alex  /  June 20, 2017</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="single-blog-widget">
+                        <h3>tags</h3>
+                        <div class="single-tag">
+                            <a href="blog-details.html" class="mr-10 mb-10">course</a>
+                            <a href="blog-details.html" class="mr-10 mb-10">education</a>
+                            <a href="blog-details.html" class="mb-10">teachers</a>
+                            <a href="blog-details.html" class="mr-10">learning</a>
+                            <a href="blog-details.html" class="mr-10">university</a>
+                            <a href="blog-details.html">events</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Blog End -->
