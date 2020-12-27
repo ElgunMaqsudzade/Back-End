@@ -29,5 +29,9 @@ namespace EduHome.DAL
         public DbSet<CourseSimple> CourseSimples { get; set; }
         public DbSet<CourseDetail> CourseDetails { get; set; }
         public DbSet<CourseFeature> CourseFeatures { get; set; }
+        public DbSet<EventSimple> EventSimples { get; set; }
+        public DbSet<EventDetail> EventDetails { get; set; }
+        public DbSet<Profession> Professions { get; set; }
+        public DbSet<Speaker> Speakers { get; set; }
     }
 }

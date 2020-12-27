@@ -16,7 +16,6 @@ namespace EduHome.Models
         public string ApplyContent { get; set; }
         [Required]
         public string CertificationContent { get; set; }
-        public List<Comment> Comments { get; set; }
         public CourseFeature CourseFeature { get; set; }
         [ForeignKey("CourseSimple")]
         public int CourseSimpleId { get; set; }

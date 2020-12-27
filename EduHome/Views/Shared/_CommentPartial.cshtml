@@ -10,7 +10,7 @@
     <div class="com-content">
         <div class="com-title">
             <h5 class="first"> <a asp-controller="User" asp-action="Profile">@Model.Name</a> </h5>
-            <h5>@Model.CreateTime.Day, @Model.CreateTime.ToString("MMM") @Model.CreateTime.Year</h5>
+            <h5>@Model.CreateTime.ToString("d, MMM yyyy")</h5>
         </div>
         <div class="com-body">
             <p>

@@ -19,8 +19,7 @@
                     <div class="blog-details-content">
                         <h2>@Model.BlogSimple.Title </h2>
                         <h6>
-                            By @Model.BlogSimple.Author / @Model.BlogSimple.CreateTime.Day, @Model.BlogSimple.CreateTime.ToString("MMMM") 
-                            @Model.BlogSimple.CreateTime.Year / <i class='fa fa-comments-o'></i> <span class="reply-count">@(count != 0?$"{count}": "")</span>
+                            By @Model.BlogSimple.Author / @Model.BlogSimple.CreateTime.ToString("d, MMMM yyyy") / <i class='fa fa-comments-o'></i> <span class="reply-count">@(count != 0?$"{count}": "")</span>
                         </h6>
                         @Html.Raw(Model.BlogSimple.BlogDetail.AboutContent)
                     </div>

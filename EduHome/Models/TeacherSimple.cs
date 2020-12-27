@@ -11,8 +11,6 @@ namespace EduHome.Models
         public int Id { get; set; }
         [Required, StringLength(30)]
         public string Fullname { get; set; }
-        [Required, StringLength(25)]
-        public string Profession { get; set; }
         [Required]
         public bool IsSimple { get; set; }
         [Required]
@@ -26,6 +24,7 @@ namespace EduHome.Models
         [Required,DataType(DataType.DateTime)]
         public DateTime CreateTime { get; set; }
         public TeacherDetail TeacherDetail { get; set; }
+        public Profession Profession { get; set; }
         public List<SocialMedia> SocialMedias { get; set; }
     }
 }

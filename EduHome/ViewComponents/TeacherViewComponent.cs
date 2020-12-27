@@ -20,12 +20,12 @@ namespace EduHome.ViewComponents
         {
             if (location == "About")
             {
-                List<TeacherSimple> teachers = _db.TeacherSimples.Where(t => t.IsDeleted == false && t.IsSimple == true).Include(t => t.SocialMedias).ToList();
+                List<TeacherSimple> teachers = _db.TeacherSimples.Where(t => t.IsDeleted == false && t.IsSimple == true).Include(t => t.SocialMedias).Include(t => t.Profession).ToList();
                 return View(await Task.FromResult(teachers));
             }
             else
             {
-                List<TeacherSimple> teachers = _db.TeacherSimples.Where(t => t.IsDeleted == false).Include(t => t.SocialMedias).ToList();
+                List<TeacherSimple> teachers = _db.TeacherSimples.Where(t => t.IsDeleted == false).Include(t => t.SocialMedias).Include(t => t.Profession).ToList();
                 return View(await Task.FromResult(teachers));
             }
         }

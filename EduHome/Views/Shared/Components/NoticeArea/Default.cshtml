@@ -21,7 +21,7 @@
                         @foreach (NoticeBoard n in Model.NoticeBoards)
                         {
                             <div class="single-notice-left mb-23 pb-20">
-                                <h4>@n.NoticeDate.Day, @n.NoticeDate.ToString("MMMM") @n.NoticeDate.Year</h4>
+                                <h4>@n.NoticeDate.ToString("d, MMMM yyyy")</h4>
                                 <p>@n.Descriptioon</p>
                             </div>
                         }

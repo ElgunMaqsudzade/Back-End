@@ -28,7 +28,9 @@ namespace EduHome.Models
         public DateTime CreateTime { get; set; }
         public int? BlogSimpleId { get; set; }
         public virtual BlogSimple BlogSimple { get; set; }
-        public int? CourseDetailId { get; set; }
-        public virtual CourseDetail CourseDetail { get; set; }
+        public int? CourseSimpleId { get; set; }
+        public virtual CourseSimple CourseSimple { get; set; }
+        public int? EventSimpleId { get; set; }
+        public virtual EventSimple EventSimple { get; set; }
     }
 }

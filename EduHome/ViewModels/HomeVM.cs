@@ -10,5 +10,6 @@ namespace EduHome.ViewModels
     {
         public List<NoticeBoard> NoticeBoards { get; set; }
         public VideoTour VideoTour { get; set; }
+        public List<EventSimple> EventSimples { get; set; }
     }
 }

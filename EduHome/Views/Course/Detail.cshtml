@@ -36,10 +36,7 @@
                             <h3>COURSE FEATURES</h3>
                             <ul>
                                 <li>
-                                    starts <span>
-                                        @Model.CourseSimple.CourseDetail.CourseFeature.StartingTime.Day,
-                                        @Model.CourseSimple.CourseDetail.CourseFeature.StartingTime.ToString("MMMM") @Model.CourseSimple.CourseDetail.CourseFeature.StartingTime.Year
-                                    </span>
+                                    starts <span>@Model.CourseSimple.CourseDetail.CourseFeature.StartingTime.ToString("d, MMMM yyyy")</span>
                                 </li>
                                 <li>duration <span>@(Math.Round((Double)(Model.CourseSimple.CourseDetail.CourseFeature.CourseDuration) / 720,0)) Month</span></li>
                                 <li>class duration <span>@Model.CourseSimple.CourseDetail.CourseFeature.ClassDuration hours</span></li>

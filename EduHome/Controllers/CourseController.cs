@@ -27,7 +27,7 @@ namespace EduHome.Controllers
             CourseVM courseVM = new CourseVM()
             {
                 CourseSimple = _db.CourseSimples.Where(b => b.IsDeleted == false && b.Id == id).Include(b => b.CourseDetail).ThenInclude(d=>d.CourseFeature).FirstOrDefault(),
-                Comments = _db.Comments.Where(c => c.IsDeleted == false && c.CourseDetailId == id).Take(10).OrderByDescending(c => c.Id).ToList(),
+                Comments = _db.Comments.Where(c => c.IsDeleted == false && c.CourseSimpleId == id).Take(10).OrderByDescending(c => c.Id).ToList(),
             };
             return View(courseVM);
         }
@@ -39,7 +39,7 @@ namespace EduHome.Controllers
                 Email = email,
                 Title = subject,
                 Description = message,
-                CourseDetailId = (int)TempData["DetailId"],
+                CourseSimpleId = (int)TempData["DetailId"],
                 CreateTime = DateTime.UtcNow
             };
             await _db.Comments.AddAsync(comment);

@@ -1,6 +1,7 @@
 ﻿@model HomeVM
 @{
     ViewData["Title"] = "Eduhome - Educational HTML Template";
+    int EventLoopCount = 0;
 }
 
 <!-- Background Area Start -->
@@ -124,72 +125,30 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-12 col-xs-12">
-                <div class="single-event mb-35">
-                    <div class="event-img">
-                        <a href="event-details.html"><img src="img/event/event1.jpg" alt="event"></a>
-                    </div>
-                    <div class="event-content text-left">
-                        <h3>20 June 2017</h3>
-                        <h4><a href="event-details.html">ADVANCE PHP WORKSHOP</a></h4>
-                        <ul>
-                            <li><i class="fa fa-clock-o"></i>9.00 AM - 4.45 PM</li>
-                            <li><i class="fa fa-map-marker"></i>New Yourk City</li>
-                        </ul>
-                        <div class="event-content-right">
-                            <a class="default-btn" href="event-details.html">join now</a>
+                @foreach (EventSimple e in Model.EventSimples)
+                {
+                    if (EventLoopCount % 2 == 0 && EventLoopCount != 0)
+                    {
+                        @Html.Raw("</div><div class='col-md-6 col-sm-12 col-xs-12'>");
+                    }
+                    <div class="single-event mb-35">
+                        <div style="width:217px" class="event-img">
+                            <a asp-controller="Event" asp-action="Detail" asp-route-id="@e.Id"><img class="img-fluid" src="img/event/@e.Image" alt="event"></a>
+                        </div>
+                        <div class="event-content text-left">
+                            <h3>@e.StartingTime.ToString("d MMMM yyyy")</h3>
+                            <h4><a asp-controller="Event" asp-action="Detail" asp-route-id="@e.Id">@e.Title</a></h4>
+                            <ul>
+                                <li><i class="fa fa-clock-o"></i>@e.StartingTime.ToString("hh:mm tt") - @e.EndingTime.ToString("hh:mm tt")</li>
+                                <li><i class="fa fa-map-marker"></i>New Yourk City</li>
+                            </ul>
+                            <div class="event-content-right">
+                                <a class="default-btn" asp-controller="Event" asp-action="Detail" asp-route-id="@e.Id">join now</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="single-event hidden-sm hidden-xs">
-                    <div class="event-img">
-                        <a href="event-details.html"><img src="img/event/event3.jpg" alt="event"></a>
-                    </div>
-                    <div class="event-content text-left">
-                        <h3>16 June 2017</h3>
-                        <h4><a href="event-details.html">learning english history</a></h4>
-                        <ul>
-                            <li><i class="fa fa-clock-o"></i>9.00 AM - 4.45 PM</li>
-                            <li><i class="fa fa-map-marker"></i>New Yourk City</li>
-                        </ul>
-                        <div class="event-content-right">
-                            <a class="default-btn" href="event-details.html">join now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-12 col-xs-12">
-                <div class="single-event mb-35">
-                    <div class="event-img">
-                        <a href="event-details.html"><img src="img/event/event2.jpg" alt="event"></a>
-                    </div>
-                    <div class="event-content text-left">
-                        <h3>18 June 2017</h3>
-                        <h4><a href="event-details.html">DIGITAL MARKETING ANALYSIS</a></h4>
-                        <ul>
-                            <li><i class="fa fa-clock-o"></i>9.00 AM - 4.45 PM</li>
-                            <li><i class="fa fa-map-marker"></i>New Yourk City</li>
-                        </ul>
-                        <div class="event-content-right">
-                            <a class="default-btn" href="event-details.html">join now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-event hidden-sm hidden-xs">
-                    <div class="event-img">
-                        <a href="event-details.html"><img src="img/event/event3.jpg" alt="event"></a>
-                    </div>
-                    <div class="event-content text-left">
-                        <h3>14 June 2017</h3>
-                        <h4><a href="event-details.html">UI & UX DESIGNER MEETUP</a></h4>
-                        <ul>
-                            <li><i class="fa fa-clock-o"></i>9.00 AM - 4.45 PM</li>
-                            <li><i class="fa fa-map-marker"></i>New Yourk City</li>
-                        </ul>
-                        <div class="event-content-right">
-                            <a class="default-btn" href="event-details.html">join now</a>
-                        </div>
-                    </div>
-                </div>
+                    EventLoopCount++;
+                }
             </div>
         </div>
     </div>
@@ -205,7 +164,7 @@
             @await Component.InvokeAsync("SectionTitle", new { section = 6 })
         </div>
         <div class="row">
-            @await Component.InvokeAsync("Blog", new { take = 3})
+            @await Component.InvokeAsync("Blog", new { take = 3 })
         </div>
     </div>
 </div>

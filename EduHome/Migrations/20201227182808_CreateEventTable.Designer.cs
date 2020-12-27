@@ -4,14 +4,16 @@ using EduHome.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EduHome.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201227182808_CreateEventTable")]
+    partial class CreateEventTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -474,6 +476,9 @@ namespace EduHome.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("EventDetailId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("EventSimpleId")
                         .HasColumnType("int");
 
@@ -481,6 +486,8 @@ namespace EduHome.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EventDetailId");
 
                     b.HasIndex("EventSimpleId");
 
@@ -728,12 +735,16 @@ namespace EduHome.Migrations
 
             modelBuilder.Entity("EduHome.Models.SpeakerEventSimple", b =>
                 {
+                    b.HasOne("EduHome.Models.EventDetail", null)
+                        .WithMany("speakerEventSimples")
+                        .HasForeignKey("EventDetailId");
+
                     b.HasOne("EduHome.Models.EventSimple", "EventSimple")
-                        .WithMany("SpeakerEventSimples")
+                        .WithMany()
                         .HasForeignKey("EventSimpleId");
 
                     b.HasOne("EduHome.Models.Speaker", "Speaker")
-                        .WithMany("SpeakerEventSimples")
+                        .WithMany("speakerEventSimples")
                         .HasForeignKey("SpeakerId");
                 });
 

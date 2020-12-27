@@ -21,12 +21,12 @@ namespace EduHome.ViewComponents
         {
             if (location == "Home")
             {
-                List<CourseSimple> courseSimples = await _db.CourseSimples.Where(t => t.IsDeleted == false && t.IsSimple == true).OrderByDescending(b => b.Id).ToListAsync();
+                List<CourseSimple> courseSimples = await _db.CourseSimples.Where(t => t.IsDeleted == false && t.IsSimple == true).ToListAsync();
                 return View(await Task.FromResult(courseSimples));
             }
             else
             {
-                List<CourseSimple> courseSimples = await _db.CourseSimples.Where(t => t.IsDeleted == false).OrderByDescending(b => b.Id).ToListAsync();
+                List<CourseSimple> courseSimples = await _db.CourseSimples.Where(t => t.IsDeleted == false).ToListAsync();
                 return View(await Task.FromResult(courseSimples));
             }
         }
