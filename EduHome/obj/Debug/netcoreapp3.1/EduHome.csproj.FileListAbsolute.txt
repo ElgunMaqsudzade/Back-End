@@ -270,3 +270,4 @@ C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Share
 C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_CommentSectionPartial.cshtml.g.cs
 C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\SectionTitle\Default.cshtml.g.cs
 C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\Course\Default.cshtml.g.cs
+C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Course\Detail.cshtml.g.cs

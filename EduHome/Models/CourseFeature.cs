@@ -11,7 +11,7 @@ namespace EduHome.Models
     {
         public int Id { get; set; }
         [Required, DataType(DataType.DateTime)]
-        public DateTime? StartingTime { get; set; }
+        public DateTime StartingTime { get; set; }
         [Required]
         public int CourseDuration { get; set; }
         [Required]
