@@ -6,29 +6,24 @@ using System.Threading.Tasks;
 
 namespace EduHome.Models
 {
-    public class Comment
+    public class CourseSimple
     {
         public int Id { get; set; }
-        [Required]
-        public string Name { get; set; }
-        [Required]
-        public string Email { get; set; }
+        [Required, StringLength(30)]
         public string Title { get; set; }
-
         [Required]
-        public string Description { get; set; }
         public string Image { get; set; }
+        [Required]
+        public string MainContent { get; set; }
+        [Required]
+        public bool IsSimple { get; set; }
         public bool IsDeleted { get; set; }
         [DataType(DataType.DateTime)]
-        public DateTime? DeleteTime { get; set; }
-
-        [DataType(DataType.DateTime)]
         public DateTime? UpdateTime { get; set; }
+        [DataType(DataType.DateTime)]
+        public DateTime? DeleteTime { get; set; }
         [Required, DataType(DataType.DateTime)]
         public DateTime CreateTime { get; set; }
-        public int? BlogSimpleId { get; set; }
-        public virtual BlogSimple BlogSimple { get; set; }
-        public int? CourseDetailId { get; set; }
-        public virtual CourseDetail CourseDetail { get; set; }
+        public CourseDetail CourseDetail { get; set; }
     }
 }

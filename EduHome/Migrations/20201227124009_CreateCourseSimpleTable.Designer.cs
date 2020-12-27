@@ -4,14 +4,16 @@ using EduHome.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EduHome.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201227124009_CreateCourseSimpleTable")]
+    partial class CreateCourseSimpleTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -234,8 +236,7 @@ namespace EduHome.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseDetailId")
-                        .IsUnique();
+                    b.HasIndex("CourseDetailId");
 
                     b.ToTable("CourseFeatures");
                 });
@@ -258,9 +259,6 @@ namespace EduHome.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsSimple")
                         .HasColumnType("bit");
 
                     b.Property<string>("MainContent")
@@ -546,8 +544,8 @@ namespace EduHome.Migrations
             modelBuilder.Entity("EduHome.Models.CourseFeature", b =>
                 {
                     b.HasOne("EduHome.Models.CourseDetail", "CourseDetail")
-                        .WithOne("CourseFeature")
-                        .HasForeignKey("EduHome.Models.CourseFeature", "CourseDetailId")
+                        .WithMany()
+                        .HasForeignKey("CourseDetailId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

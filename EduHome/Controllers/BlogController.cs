@@ -22,7 +22,7 @@ namespace EduHome.Controllers
            
             return View();
         }
-        public async Task<IActionResult> Detail(int id)
+        public IActionResult Detail(int id)
         {
             TempData["DetailId"] = id;
             BlogVM blogVM = new BlogVM()

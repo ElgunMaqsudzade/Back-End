@@ -19,6 +19,10 @@
     <Compile Remove="Migrations\20201226164055_CreateCommentTable.Designer.cs" />
     <Compile Remove="Migrations\20201226164205_CreateCommentTable.cs" />
     <Compile Remove="Migrations\20201226164205_CreateCommentTable.Designer.cs" />
+    <Compile Remove="Migrations\20201227121507_CommentUpdate.cs" />
+    <Compile Remove="Migrations\20201227121507_CommentUpdate.Designer.cs" />
+    <Compile Remove="Migrations\20201227123216_CreateCourseSimpleTable.cs" />
+    <Compile Remove="Migrations\20201227123216_CreateCourseSimpleTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

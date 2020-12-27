@@ -17,10 +17,18 @@ namespace EduHome.ViewComponents
         {
             _db = db;
         }
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(string location)
         {
-            
-            return View();
+            if (location == "Home")
+            {
+                List<CourseSimple> courseSimples = await _db.CourseSimples.Where(t => t.IsDeleted == false && t.IsSimple == true).OrderByDescending(b => b.Id).ToListAsync();
+                return View(await Task.FromResult(courseSimples));
+            }
+            else
+            {
+                List<CourseSimple> courseSimples = await _db.CourseSimples.Where(t => t.IsDeleted == false).OrderByDescending(b => b.Id).ToListAsync();
+                return View(await Task.FromResult(courseSimples));
+            }
         }
     }
 }
