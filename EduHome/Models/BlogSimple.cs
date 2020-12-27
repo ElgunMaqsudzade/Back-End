@@ -15,6 +15,7 @@ namespace EduHome.Models
         public string Author { get; set; }
         [Required]
         public string Image { get; set; }
+        public int ReplyCount { get; set; }
         public bool IsDeleted { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime? UpdateTime { get; set; }
@@ -23,5 +24,6 @@ namespace EduHome.Models
         [Required, DataType(DataType.DateTime)]
         public DateTime CreateTime { get; set; }
         public BlogDetail BlogDetail { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

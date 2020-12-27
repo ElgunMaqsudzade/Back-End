@@ -19,20 +19,19 @@ namespace EduHome.Controllers
         }
         public IActionResult Index()
         {
-
+           
             return View();
         }
-        public IActionResult Detail(int id)
+        public async Task<IActionResult> Detail(int id)
         {
             TempData["DetailId"] = id;
             BlogVM blogVM = new BlogVM()
             {
-                BlogSimple = _db.BlogSimples.Where(b => b.IsDeleted == false && b.Id == id).Include(b => b.BlogDetail).ThenInclude(b => b.Comments).FirstOrDefault(),
-                Comments = _db.Comments.Where(c => c.IsDeleted == false && c.BlogDetailId == id).Take(10).OrderByDescending(c => c.Id).ToList()
+                BlogSimple = _db.BlogSimples.Where(b => b.IsDeleted == false && b.Id == id).Include(b => b.BlogDetail).FirstOrDefault(),
+                Comments = _db.Comments.Where(c => c.IsDeleted == false && c.BlogSimpleId == id).Take(10).OrderByDescending(c => c.Id).ToList(),
             };
             return View(blogVM);
         }
-
         public async Task<IActionResult> Comment(string name, string email, string subject, string message)
         {
             Comment comment = new Comment()
@@ -41,7 +40,7 @@ namespace EduHome.Controllers
                 Email = email,
                 Title = subject,
                 Description = message,
-                BlogDetailId = (int)TempData["DetailId"],
+                BlogSimpleId = (int)TempData["DetailId"],
                 CreateTime = DateTime.UtcNow
             };
             await _db.Comments.AddAsync(comment);

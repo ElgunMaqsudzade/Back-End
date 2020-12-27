@@ -6,5 +6,11 @@
 @await Component.InvokeAsync("Banner", new { word = "our teachers" })
 <!-- Banner Area End -->
 <!-- Teacher Start -->
-@await Component.InvokeAsync("Teacher", new { paddingT = "pt-145" })
+<div class="teacher-area pt-150 pb-105">
+    <div class="container">
+        <div class="row">
+            @await Component.InvokeAsync("Teacher")
+        </div>
+    </div>
+</div>
 <!-- Teacher End -->

@@ -18,7 +18,10 @@ namespace EduHome.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync(int take)
         {
-            List<BlogSimple> blogSimples = await _db.BlogSimples.Where(t => t.IsDeleted == false).Take(take).OrderByDescending(b=>b.Id).ToListAsync();
+            List<BlogSimple> blogSimples = await _db.BlogSimples.Where(t => t.IsDeleted == false).Take(take).OrderByDescending(b=>b.Id).Include(b=>b.Comments).ToListAsync();
+            blogSimples.ForEach(b => b.ReplyCount = b.Comments.Count());
+            await _db.SaveChangesAsync();
+
             return View(await Task.FromResult(blogSimples));
         }
     }

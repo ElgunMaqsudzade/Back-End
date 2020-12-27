@@ -16,9 +16,8 @@ namespace EduHome.ViewComponents
         {
             _db = db;
         }
-        public async Task<IViewComponentResult> InvokeAsync(string location, string paddingT)
+        public async Task<IViewComponentResult> InvokeAsync(string location)
         {
-            ViewBag.PaddingT = paddingT;
             if (location == "About")
             {
                 List<TeacherSimple> teachers = _db.TeacherSimples.Where(t => t.IsDeleted == false && t.IsSimple == true).Include(t => t.SocialMedias).ToList();

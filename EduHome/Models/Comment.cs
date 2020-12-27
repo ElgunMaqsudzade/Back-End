@@ -26,7 +26,7 @@ namespace EduHome.Models
         public DateTime? UpdateTime { get; set; }
         [Required, DataType(DataType.DateTime)]
         public DateTime CreateTime { get; set; }
-        public int BlogDetailId { get; set; }
-        public virtual BlogDetail BlogDetail { get; set; }
+        public int BlogSimpleId { get; set; }
+        public virtual BlogSimple BlogSimple { get; set; }
     }
 }

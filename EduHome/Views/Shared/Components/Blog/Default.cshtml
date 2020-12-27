@@ -1,8 +1,12 @@
 ﻿@model List<BlogSimple>
-
+@{ 
+    int count;
+}
 
 @foreach (BlogSimple blog in Model)
 {
+
+    count = blog.ReplyCount;
     <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="single-blog">
             <div class="blog-img">
@@ -13,7 +17,7 @@
             </div>
             <div class="blog-content">
                 <div class="blog-top">
-                    <p>By @blog.Author  /  @blog.CreateTime.Day, @blog.CreateTime.ToString("MMMM") @blog.CreateTime.Year /  <i class='fa fa-comments-o'></i> 4</p>
+                    <p>By @blog.Author  /  @blog.CreateTime.Day, @blog.CreateTime.ToString("MMMM") @blog.CreateTime.Year /  <i class='fa fa-comments-o'></i> <span class="reply-count">@(count != 0?$"{count}": "")</span></p>
                 </div>
                 <div class="blog-bottom">
                     <h2><a asp-controller="Blog" asp-action="Detail"  asp-route-id="@blog.Id">@blog.Title</a></h2>
