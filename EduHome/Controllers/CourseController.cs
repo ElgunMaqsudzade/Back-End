@@ -21,14 +21,16 @@ namespace EduHome.Controllers
         {
             return View();
         }
-        public IActionResult Detail(int id)
+        public IActionResult Detail(int? id)
         {
+            if (id == null) return NotFound();
             TempData["DetailId"] = id;
             CourseVM courseVM = new CourseVM()
             {
                 CourseSimple = _db.CourseSimples.Where(b => b.IsDeleted == false && b.Id == id).Include(b => b.CourseDetail).ThenInclude(d=>d.CourseFeature).FirstOrDefault(),
                 Comments = _db.Comments.Where(c => c.IsDeleted == false && c.CourseSimpleId == id).Take(10).OrderByDescending(c => c.Id).ToList(),
             };
+            if (courseVM.CourseSimple == null) return NotFound();
             return View(courseVM);
         }
         public async Task<IActionResult> Comment(string name, string email, string subject, string message)

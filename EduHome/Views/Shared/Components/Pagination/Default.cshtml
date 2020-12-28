@@ -1,0 +1,25 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <div class="pagination">
+            <ul>
+                @for (int i = 1; i <= Model; i++)
+                {
+                    if (i == 1)
+                    {
+                        <li><button class="btn-active" id="@i">@i</button></li>
+                    }
+                    else
+                    {
+                        <li><button id="@i">@i</button></li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>

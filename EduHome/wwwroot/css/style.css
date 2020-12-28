@@ -1409,7 +1409,7 @@ textarea {
     background-position: center center;
     background-attachment: fixed;
 }
-.courses-area.two:after{
+.courses-area.two:before{
     position: absolute;
     left: 0;
     top: 0;

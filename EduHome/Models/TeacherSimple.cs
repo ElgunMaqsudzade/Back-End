@@ -24,6 +24,8 @@ namespace EduHome.Models
         [Required,DataType(DataType.DateTime)]
         public DateTime CreateTime { get; set; }
         public TeacherDetail TeacherDetail { get; set; }
+        [Required]
+        public int ProfessionId { get; set; }
         public Profession Profession { get; set; }
         public List<SocialMedia> SocialMedias { get; set; }
     }

@@ -69,6 +69,9 @@
     }
     //Validation ends
     //Bring comment from back
+    let BlogUrl = "/Blog/Comment/";
+    let CourseUrl = "/Course/Comment/";
+    let EventUrl = "/Event/Comment/";
     function TakeData() {
         let name;
         let email;
@@ -86,7 +89,7 @@
                 if (ValidateName(name) && ValidateSubject(subject) && ValidateMessage(message)) {
                     count = Number($(".reply-count").text())
                     $.ajax({
-                        url: `/Blog/Comment/`,
+                        url: `${this.dataset.url}Comment`,
                         type: "POST",
                         data: {
                             "name": name,

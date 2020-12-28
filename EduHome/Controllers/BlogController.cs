@@ -22,14 +22,16 @@ namespace EduHome.Controllers
            
             return View();
         }
-        public IActionResult Detail(int id)
+        public IActionResult Detail(int? id)
         {
+            if (id == null) return NotFound();
             TempData["DetailId"] = id;
             BlogVM blogVM = new BlogVM()
             {
                 BlogSimple = _db.BlogSimples.Where(b => b.IsDeleted == false && b.Id == id).Include(b => b.BlogDetail).FirstOrDefault(),
                 Comments = _db.Comments.Where(c => c.IsDeleted == false && c.BlogSimpleId == id).Take(10).OrderByDescending(c => c.Id).ToList(),
             };
+            if (blogVM.BlogSimple == null) return NotFound();
             return View(blogVM);
         }
         public async Task<IActionResult> Comment(string name, string email, string subject, string message)
