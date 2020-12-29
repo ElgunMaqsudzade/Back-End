@@ -11,15 +11,15 @@
             {
                 if ((string)ViewBag.Location == "Blog")
                 {
-                    <li><a asp-controller="Search" asp-action="CategorySearch">@(c.Name)(@c.BlogSimples.Count())</a></li>
+                    <li><a asp-controller="Blog" asp-action="Category" asp-route-name="@c.Name">@(c.Name)(@c.BlogSimples.Count())</a></li>
                 }
                 else if ((string)ViewBag.Location == "Event")
                 {
-                    <li><a asp-controller="Search" asp-action="CategorySearch">@(c.Name)(@c.EventSimples.Count())</a></li>
+                    <li><a asp-controller="Event" asp-action="Category" asp-route-name="@c.Name">@(c.Name)(@c.EventSimples.Count())</a></li>
                 }
                 else if ((string)ViewBag.Location == "Course")
                 {
-                    <li><a asp-controller="Search" asp-action="CategorySearch">@(c.Name)(@c.CourseSimples.Count())</a></li>
+                    <li><a asp-controller="Course" asp-action="Category" asp-route-name="@c.Name">@(c.Name)(@c.CourseSimples.Count())</a></li>
                 }
 
             }

@@ -17,10 +17,20 @@ namespace EduHome.ViewComponents
         {
             _db = db;
         }
-        public async Task<IViewComponentResult> InvokeAsync(int take)
+        public async Task<IViewComponentResult> InvokeAsync(int take,string category)
         {
-            List<EventSimple> eventSimples = await _db.EventSimples.Where(t => t.IsDeleted == false).Take(take).OrderByDescending(b => b.Id).Include(b => b.Comments).ToListAsync();
-            return View(await Task.FromResult(eventSimples));
+            bool isExist = _db.Categories.Any(t => t.Name == category);
+            if (isExist)
+            {
+                List<EventSimple> eventSimples = await _db.EventSimples.Where(t => t.IsDeleted == false && t.Category.Name.Contains(category))
+                    .OrderByDescending(b => b.Id).Include(t => t.Category).ToListAsync();
+                return View(await Task.FromResult(eventSimples));
+            }
+            else
+            {
+                List<EventSimple> eventSimples = await _db.EventSimples.Where(t => t.IsDeleted == false).Take(take).OrderByDescending(b => b.Id).Include(b => b.Comments).ToListAsync();
+                return View(await Task.FromResult(eventSimples));
+            }
         }
     }
 }

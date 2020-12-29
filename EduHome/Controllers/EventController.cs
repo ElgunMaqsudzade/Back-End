@@ -49,5 +49,10 @@ namespace EduHome.Controllers
 
             return PartialView("_CommentPartial", comment);
         }
+        public IActionResult Category(string name)
+        {
+            TempData["CategoryName"] = name;
+            return RedirectToAction("Index");
+        }
     }
 }

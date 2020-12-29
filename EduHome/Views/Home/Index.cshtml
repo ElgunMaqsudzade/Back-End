@@ -8,67 +8,28 @@
 <section id="slider-container" class="slider-area two">
     <div class="slider-owl owl-theme owl-carousel">
         <!-- Start Slingle Slide -->
-        <div class="single-slide item" style="background-image: url(img/slider/slider2.jpg)">
-            <!-- Start Slider Content -->
-            <div class="slider-content-area">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-10 col-md-offset-1">
-                            <div class="slide-content-wrapper">
-                                <div class="slide-content text-center">
-                                    <h2>EDUCATION MAKES HUMANITY </h2>
-                                    <p>I must explain to you how all this mistaken idea of denouncing pleasure and prsing pain was born and I will give you a complete account of the system  </p>
-                                    <a class="default-btn" href="about.html">Learn more</a>
+        @foreach (HomeSlider slider in Model.HomeSliders)
+        {
+            <div class="single-slide item" style="background-image: url(img/slider/@slider.BgImage)">
+                <!-- Start Slider Content -->
+                <div class="slider-content-area">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                <div class="slide-content-wrapper">
+                                    <div class="slide-content text-center">
+                                        <h2>@slider.Title </h2>
+                                        <p>@slider.Description</p>
+                                        <a class="default-btn"asp-controller="About" asp-action="Index">Learn more</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- Start Slider Content -->
             </div>
-            <!-- Start Slider Content -->
-        </div>
-        <!-- End Slingle Slide -->
-        <!-- Start Slingle Slide -->
-        <div class="single-slide item" style="background-image: url(img/slider/slider3.jpg)">
-            <!-- Start Slider Content -->
-            <div class="slider-content-area">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-10 col-md-offset-1">
-                            <div class="slide-content-wrapper">
-                                <div class="slide-content text-center">
-                                    <h2>EDUCATION MAKES HUMANITY </h2>
-                                    <p>I must explain to you how all this mistaken idea of denouncing pleasure and prsing pain was born and I will give you a complete account of the system  </p>
-                                    <a class="default-btn" href="about.html">Learn more</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Start Slider Content -->
-        </div>
-        <!-- End Slingle Slide -->
-        <!-- Start Slingle Slide -->
-        <div class="single-slide item" style="background-image: url(img/slider/slider1.jpg)">
-            <!-- Start Slider Content -->
-            <div class="slider-content-area">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-10 col-md-offset-1">
-                            <div class="slide-content-wrapper">
-                                <div class="slide-content text-center">
-                                    <h2>EDUCATION MAKES HUMANITY </h2>
-                                    <p>I must explain to you how all this mistaken idea of denouncing pleasure and prsing pain was born and I will give you a complete account of the system  </p>
-                                    <a class="default-btn" href="about.html">Learn more</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Start Slider Content -->
-        </div>
+        }
         <!-- End Slingle Slide -->
     </div>
 </section>
@@ -77,24 +38,15 @@
 <div class="service-area two pt-150 pb-150">
     <div class="container">
         <div class="row">
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                <div class="single-service">
-                    <h3><a href="teacher.html">PROFESSIONAL TEACHER</a></h3>
-                    <p>I must explain to you how all this mistaken denouncing pleure and praising pain </p>
+            @foreach (TeacherSimple t in Model.TeacherSimples)
+            {
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="single-service">
+                        <h3><a style="text-transform:capitalize" asp-controller="Teacher" asp-action="Detail" asp-route-id="@t.Id">@t.Fullname</a></h3>
+                        <p>@((t.TeacherDetail.AboutContent.Length < 88)? t.TeacherDetail.AboutContent : t.TeacherDetail.AboutContent.Substring(0,88) + "...")</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                <div class="single-service">
-                    <h3><a href="teacher.html">PROFESSIONAL TEACHER</a></h3>
-                    <p>I must explain to you how all this mistaken denouncing pleure and praising pain </p>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                <div class="single-service">
-                    <h3><a href="teacher.html">PROFESSIONAL TEACHER</a></h3>
-                    <p>I must explain to you how all this mistaken denouncing pleure and praising pain </p>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </div>

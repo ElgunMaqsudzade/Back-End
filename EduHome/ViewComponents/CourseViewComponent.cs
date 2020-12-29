@@ -17,9 +17,16 @@ namespace EduHome.ViewComponents
         {
             _db = db;
         }
-        public async Task<IViewComponentResult> InvokeAsync(string location)
+        public async Task<IViewComponentResult> InvokeAsync(string location, string category)
         {
-            if (location == "Home")
+            bool isExist = _db.Categories.Any(t => t.Name == category);
+            if (isExist)
+            {
+                List<CourseSimple> courseSimples = await _db.CourseSimples.Where(t => t.IsDeleted == false && t.Category.Name.Contains(category))
+                    .OrderByDescending(b => b.Id).Include(t => t.Category).ToListAsync();
+                return View(await Task.FromResult(courseSimples));
+            }
+            else if (location == "Home")
             {
                 List<CourseSimple> courseSimples = await _db.CourseSimples.Where(t => t.IsDeleted == false && t.IsSimple == true).ToListAsync();
                 return View(await Task.FromResult(courseSimples));

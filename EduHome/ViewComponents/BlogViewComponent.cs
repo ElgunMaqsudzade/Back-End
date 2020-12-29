@@ -16,28 +16,21 @@ namespace EduHome.ViewComponents
         {
             _db = db;
         }
-        public async Task<IViewComponentResult> InvokeAsync(int take, int tagId)
+        public async Task<IViewComponentResult> InvokeAsync(int take, string category)
         {
-            bool isExist = _db.Tags.Any(t => t.Id == tagId);
+            bool isExist = _db.Categories.Any(t => t.Name == category);
             if (isExist)
             {
-                List<BlogSimple> blogSimples1 = new List<BlogSimple>();
-                List<BlogSimple> blogSimples = await _db.BlogSimples.Where(t => t.IsDeleted == false).OrderByDescending(b => b.Id).Include(t => t.TagBlogSimples).ThenInclude(t => t.Tag).Include(b => b.Comments).ToListAsync();
-                foreach (var blog in blogSimples)
-                {
-                    foreach (var item in blog.TagBlogSimples.Where(t => t.TagId == tagId).ToList())
-                    {
-                        blogSimples1.Add(blog);
-                    }
-                   
-                }
+                List<BlogSimple> blogSimples = await _db.BlogSimples.Where(t => t.IsDeleted == false && t.Category.Name.Contains(category))
+                    .OrderByDescending(b => b.Id).Include(t=>t.Category      ).Include(b => b.Comments).ToListAsync();
                 blogSimples.ForEach(b => b.ReplyCount = b.Comments.Count());
                 await _db.SaveChangesAsync();
-                return View(await Task.FromResult(blogSimples1));
+                return View(await Task.FromResult(blogSimples));
             }
             else
             {
-                List<BlogSimple> blogSimples = await _db.BlogSimples.Where(t => t.IsDeleted == false).Take(take).OrderByDescending(b => b.Id).Include(b => b.Comments).ToListAsync();
+                List<BlogSimple> blogSimples = await _db.BlogSimples.Where(t => t.IsDeleted == false).Take(take)
+                    .OrderByDescending(b => b.Id).Include(b => b.Comments).ToListAsync();
                 blogSimples.ForEach(b => b.ReplyCount = b.Comments.Count());
                 await _db.SaveChangesAsync();
                 return View(await Task.FromResult(blogSimples));

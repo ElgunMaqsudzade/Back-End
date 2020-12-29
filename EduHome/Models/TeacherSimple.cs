@@ -27,8 +27,6 @@ namespace EduHome.Models
         [Required]
         public int ProfessionId { get; set; }
         public Profession Profession { get; set; }
-        public int? CategoryId { get; set; }
-        public Category Category { get; set; }
         public List<SocialMedia> SocialMedias { get; set; }
     }
 }
