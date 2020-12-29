@@ -9,7 +9,7 @@
 <div class="blog-area pt-150 pb-150">
     <div class="container">
         <div class="row">
-            @await Component.InvokeAsync("Blog", new { take = 9 })
+            @await Component.InvokeAsync("Blog", new { take = 6 })
         </div>
         @await Component.InvokeAsync("Pagination", new { item = "blog", take = 6 })
     </div>

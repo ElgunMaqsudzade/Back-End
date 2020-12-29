@@ -4,14 +4,16 @@ using EduHome.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EduHome.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201228180124_TagTest2")]
+    partial class TagTest2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -405,26 +407,6 @@ namespace EduHome.Migrations
                     b.ToTable("SectionTitles");
                 });
 
-            modelBuilder.Entity("EduHome.Models.Skill", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(15)")
-                        .HasMaxLength(15);
-
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Skill");
-                });
-
             modelBuilder.Entity("EduHome.Models.SocialMedia", b =>
                 {
                     b.Property<int>("Id")
@@ -685,19 +667,22 @@ namespace EduHome.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("SkillId")
-                        .HasColumnType("int");
+                    b.Property<string>("Skill")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(15)")
+                        .HasMaxLength(15);
 
                     b.Property<int>("TeacherDetailId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<int>("Value")
+                        .HasColumnType("int");
 
-                    b.HasIndex("SkillId");
+                    b.HasKey("Id");
 
                     b.HasIndex("TeacherDetailId");
 
-                    b.ToTable("TeacherSkill");
+                    b.ToTable("TeacherSkills");
                 });
 
             modelBuilder.Entity("EduHome.Models.TestimonialArea", b =>
@@ -900,12 +885,6 @@ namespace EduHome.Migrations
 
             modelBuilder.Entity("EduHome.Models.TeacherSkill", b =>
                 {
-                    b.HasOne("EduHome.Models.Skill", "Skill")
-                        .WithMany("TeacherSkills")
-                        .HasForeignKey("SkillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("EduHome.Models.TeacherDetail", "TeacherDetail")
                         .WithMany("TeacherSkills")
                         .HasForeignKey("TeacherDetailId")

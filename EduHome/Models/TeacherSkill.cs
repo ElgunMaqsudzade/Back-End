@@ -9,11 +9,11 @@ namespace EduHome.Models
     public class TeacherSkill
     {
         public int Id { get; set; }
-        [Required, StringLength(15)]
-        public string Skill { get; set; }
-        [Required, Range(0, 100)]
-        public int Value { get; set; }
         public int TeacherDetailId { get; set; }
+
         public TeacherDetail TeacherDetail { get; set; }
+
+        public int SkillId { get; set; }
+        public Skill Skill { get; set; }
     }
 }

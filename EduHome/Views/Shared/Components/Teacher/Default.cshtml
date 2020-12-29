@@ -5,10 +5,10 @@
     <div class="col-md-3 col-sm-4 col-xs-12">
         <div class="single-teacher">
             <div class="single-teacher-img">
-                <a asp-controller="Teacher" asp-action="Detail"><img src="~/img/teacher/@tec.Image" alt="teacher"></a>
+                <a asp-controller="Teacher" asp-action="Detail" asp-route-id="@tec.Id"><img src="~/img/teacher/@tec.Image" alt="teacher"></a>
             </div>
             <div class="single-teacher-content text-center">
-                <h2><a asp-controller="Teacher" asp-action="Detail">@tec.Fullname</a></h2>
+                <h2><a asp-controller="Teacher" asp-action="Detail" asp-route-id="@tec.Id">@tec.Fullname</a></h2>
                 <h4>@tec.Profession.Name</h4>
                 <ul>
                     @foreach (var soc in tec.SocialMedias)

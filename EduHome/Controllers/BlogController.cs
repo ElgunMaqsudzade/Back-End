@@ -50,6 +50,5 @@ namespace EduHome.Controllers
 
             return PartialView("_CommentPartial", comment);
         }
-
     }
 }

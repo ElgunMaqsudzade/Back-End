@@ -29,5 +29,6 @@ namespace EduHome.Models
         public EventDetail EventDetail { get; set; }
         public List<Comment> Comments { get; set; }
         public List<SpeakerEventSimple> SpeakerEventSimples { get; set; }
+        public List<TagEventSimple> TagEventSimples { get; set; }
     }
 }

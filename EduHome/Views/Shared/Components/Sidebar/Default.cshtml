@@ -1,0 +1,111 @@
+﻿@model SidebarVM
+@{
+    Layout = null;
+}
+
+<div class="blog-sidebar right">
+    <div class="single-blog-widget mb-47">
+        <h3>categories</h3>
+        <ul>
+            @*@if ((string)ViewBag.Location == "Blog")
+                {
+                    <li><a asp-controller="Search" asp-action="CategorySearch">Event()</a></li>
+                    <li><a asp-controller="Search" asp-action="CategorySearch">Course()</a></li>
+                }
+                else if ((string)ViewBag.Location == "Event")
+                {
+                    @foreach (var e in Model.EventSimples)
+                    {
+                        @foreach (var te in e.TagEventSimples)
+                        {
+                            @foreach (var b in Model.BlogSimples)
+                            {
+                                @foreach (var bt in b.TagBlogSimples.Where(t => t.Tag.Name == te.Tag.Name))
+                                {
+                                    <li><a asp-controller="Blog" asp-action="Category" asp-route-id="@bt.TagId">@(te.EventSimple.Title)(@(b.TagBlogSimples.Where(tgb => tgb.Tag.Name == bt.Tag.Name).Count()))</a></li>
+                                }
+                            }
+                        }
+
+                    }
+                }
+                else if ((string)ViewBag.Location == "Course")
+                {
+                    @foreach (CourseSimple b in Model.CourseSimples)
+                    {
+                        <li><a asp-controller="Search" asp-action="CategorySearch" asp-route-id="@b.Id">CSS Engineering (10)</a></li>
+                    }
+                }*@
+        </ul>
+    </div>
+    @foreach (BlogSimple bl in Model.BlogSimples)
+    {
+        if (bl.ReplyCount == Model.BlogSimples.Max(b => b.ReplyCount))
+        {
+            <div class="single-blog-widget mb-47">
+                <div class="single-blog-banner">
+                    <a asp-controller="Blog" asp-action="Detail" asp-route-id="@bl.Id" id="blog"><img src="~/img/blog/@bl.Image" alt="blog"></a>
+                    <h2>best<br> eductaion<br> theme</h2>
+                </div>
+            </div>
+            break;
+        }
+    }
+
+    <div class="single-blog-widget mb-47">
+        <h3>latest post</h3>
+        @foreach (BlogSimple b in Model.BlogSimples.Take(3).OrderByDescending(b => b.Id))
+        {
+            <div class="single-post mb-30">
+                <div class="single-post-img">
+                    <a asp-controller="Blog" asp-action="Detail" asp-route-id="@b.Id">
+                        <img style="width:95px" class="img-fluid" src="~/img/blog/@b.Image" alt="post">
+                        <div class="blog-hover">
+                            <i class="fa fa-link"></i>
+                        </div>
+                    </a>
+                </div>
+                <div class="single-post-content">
+                    <h4><a asp-controller="Blog" asp-action="Detail" asp-route-id="@b.Id">English Language Course for you</a></h4>
+                    <p>@b.Author  /  @b.CreateTime.ToString("MMMM dd, yyyy")</p>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="single-blog-widget">
+        <h3>tags</h3>
+        <div class="single-tag">
+            @if ((string)ViewBag.Location == "Blog")
+            {
+                @foreach (BlogSimple b in Model.BlogSimples.Where(t => t.Id == (int)TempData["DetailId"]))
+                {
+                    @foreach (TagBlogSimple tag in b.TagBlogSimples)
+                    {
+                        <a asp-controller="Search" asp-action="TagSearch" asp-route-id="@b.Id" class="mr-10 mb-10">@tag.Tag.Name</a>
+                    }
+                }
+            }
+            else if ((string)ViewBag.Location == "Event")
+            {
+                @foreach (EventSimple b in Model.EventSimples.Where(t => t.Id == (int)TempData["DetailId"]))
+                {
+                    @foreach (TagEventSimple tag in b.TagEventSimples)
+                    {
+                        <a asp-controller="Search" asp-action="TagSearch" asp-route-id="@b.Id" class="mr-10 mb-10">@tag.Tag.Name</a>
+                    }
+                }
+            }
+            else if ((string)ViewBag.Location == "Course")
+            {
+                @foreach (CourseSimple b in Model.CourseSimples.Where(t => t.Id == (int)TempData["DetailId"]))
+                {
+                    @foreach (TagCourseSimple tag in b.TagCourseSimples)
+                    {
+                        <a asp-controller="Search" asp-action="TagSearch" asp-route-id="@b.Id" class="mr-10 mb-10">@tag.Tag.Name</a>
+                    }
+                }
+            }
+
+        </div>
+    </div>
+</div>

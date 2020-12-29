@@ -26,7 +26,7 @@ namespace EduHome.ViewComponents
             }
             else
             {
-                List<CourseSimple> courseSimples = await _db.CourseSimples.Where(t => t.IsDeleted == false).ToListAsync();
+                List<CourseSimple> courseSimples = await _db.CourseSimples.Where(t => t.IsDeleted == false).Take(6).ToListAsync();
                 return View(await Task.FromResult(courseSimples));
             }
         }

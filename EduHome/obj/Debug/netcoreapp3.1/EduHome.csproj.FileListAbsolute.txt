@@ -275,3 +275,5 @@ C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Share
 C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Event\Detail.cshtml.g.cs
 C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\Speaker\Default.cshtml.g.cs
 C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\Pagination\Default.cshtml.g.cs
+C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\Sidebar\Default.cshtml.g.cs
+C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Teacher\Detail.cshtml.g.cs

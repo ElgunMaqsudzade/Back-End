@@ -26,5 +26,6 @@ namespace EduHome.Models
         public DateTime CreateTime { get; set; }
         public CourseDetail CourseDetail { get; set; }
         public List<Comment> Comments { get; set; }
+        public List<TagCourseSimple> TagCourseSimples { get; set; }
     }
 }

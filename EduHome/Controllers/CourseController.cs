@@ -23,7 +23,7 @@ namespace EduHome.Controllers
         }
         public IActionResult Detail(int? id)
         {
-            if (id == null) return NotFound();
+            if (id == null) return RedirectToAction(nameof(Index));
             TempData["DetailId"] = id;
             CourseVM courseVM = new CourseVM()
             {
