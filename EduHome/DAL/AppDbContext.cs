@@ -38,5 +38,6 @@ namespace EduHome.DAL
         public DbSet<TagCourseSimple> TagCourseSimples { get; set; }
         public DbSet<TagEventSimple> TagEventSimples { get; set; }
         public DbSet<Skill> Skills { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }

@@ -35,6 +35,7 @@ namespace EduHome.Controllers
         }
         public async Task<IActionResult> Comment(string name, string email, string subject, string message)
         {
+            if (name == null || email == null || subject == null || message == null) return NotFound();
             Comment comment = new Comment()
             {
                 Name = name,

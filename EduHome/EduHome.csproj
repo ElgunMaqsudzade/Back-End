@@ -27,6 +27,8 @@
     <Compile Remove="Migrations\20201227132256_CourseDetailUpdate-2.Designer.cs" />
     <Compile Remove="Migrations\20201227155032_CourseDetailUpdate-2.cs" />
     <Compile Remove="Migrations\20201227155032_CourseDetailUpdate-2.Designer.cs" />
+    <Compile Remove="Migrations\20201229081207_CreateCategoryTable.cs" />
+    <Compile Remove="Migrations\20201229081207_CreateCategoryTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

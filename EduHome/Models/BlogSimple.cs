@@ -26,5 +26,7 @@ namespace EduHome.Models
         public BlogDetail BlogDetail { get; set; }
         public List<Comment> Comments { get; set; }
         public List<TagBlogSimple> TagBlogSimples { get; set; }
+        public int? CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }

@@ -25,6 +25,7 @@ namespace EduHome.ViewComponents
                 BlogSimples = _db.BlogSimples.Where(b => b.IsDeleted == false).Include(b => b.TagBlogSimples).ThenInclude(b => b.Tag).ToList(),
                 CourseSimples = _db.CourseSimples.Where(b => b.IsDeleted == false).Include(b => b.TagCourseSimples).ThenInclude(b => b.Tag).ToList(),
                 EventSimples = _db.EventSimples.Where(b => b.IsDeleted == false).Include(b => b.TagEventSimples).ThenInclude(b => b.Tag).ToList(),
+                Categories = _db.Categories.Include(b=>b.BlogSimples).Include(b=>b.CourseSimples).Include(b=>b.EventSimples).ToList()
             };
             return View(sidebarVM);
         }

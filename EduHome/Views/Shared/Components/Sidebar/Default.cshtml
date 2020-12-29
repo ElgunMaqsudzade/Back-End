@@ -7,35 +7,22 @@
     <div class="single-blog-widget mb-47">
         <h3>categories</h3>
         <ul>
-            @*@if ((string)ViewBag.Location == "Blog")
+            @foreach (var c in Model.Categories)
+            {
+                if ((string)ViewBag.Location == "Blog")
                 {
-                    <li><a asp-controller="Search" asp-action="CategorySearch">Event()</a></li>
-                    <li><a asp-controller="Search" asp-action="CategorySearch">Course()</a></li>
+                    <li><a asp-controller="Search" asp-action="CategorySearch">@(c.Name)(@c.BlogSimples.Count())</a></li>
                 }
                 else if ((string)ViewBag.Location == "Event")
                 {
-                    @foreach (var e in Model.EventSimples)
-                    {
-                        @foreach (var te in e.TagEventSimples)
-                        {
-                            @foreach (var b in Model.BlogSimples)
-                            {
-                                @foreach (var bt in b.TagBlogSimples.Where(t => t.Tag.Name == te.Tag.Name))
-                                {
-                                    <li><a asp-controller="Blog" asp-action="Category" asp-route-id="@bt.TagId">@(te.EventSimple.Title)(@(b.TagBlogSimples.Where(tgb => tgb.Tag.Name == bt.Tag.Name).Count()))</a></li>
-                                }
-                            }
-                        }
-
-                    }
+                    <li><a asp-controller="Search" asp-action="CategorySearch">@(c.Name)(@c.EventSimples.Count())</a></li>
                 }
                 else if ((string)ViewBag.Location == "Course")
                 {
-                    @foreach (CourseSimple b in Model.CourseSimples)
-                    {
-                        <li><a asp-controller="Search" asp-action="CategorySearch" asp-route-id="@b.Id">CSS Engineering (10)</a></li>
-                    }
-                }*@
+                    <li><a asp-controller="Search" asp-action="CategorySearch">@(c.Name)(@c.CourseSimples.Count())</a></li>
+                }
+
+            }
         </ul>
     </div>
     @foreach (BlogSimple bl in Model.BlogSimples)
