@@ -17,9 +17,17 @@ namespace EduHome.Controllers
         {
             _db = db;
         }
-        public IActionResult Index(int? page = 1, int take = 6)
+        public IActionResult Index(string name ,int? page = 1, int take = 6)
         {
-            ViewBag.isTrue = true;
+            if (name != null)
+            {
+                ViewBag.CategoryName = name;
+                ViewBag.IsTrue = true;
+            }
+            else
+            {
+                ViewBag.IsTrue = false;
+            }
             if (page == null || page == 0) return View(1);
             if ((page - 1) * take > _db.CourseSimples.Count()) return NotFound();
             return View(page);
@@ -30,7 +38,7 @@ namespace EduHome.Controllers
             TempData["DetailId"] = id;
             CourseVM courseVM = new CourseVM()
             {
-                CourseSimple = _db.CourseSimples.Where(b => b.IsDeleted == false && b.Id == id).Include(b => b.CourseDetail).ThenInclude(d=>d.CourseFeature).FirstOrDefault(),
+                CourseSimple = _db.CourseSimples.Where(b => b.IsDeleted == false && b.Id == id).Include(b => b.CourseDetail).ThenInclude(d => d.CourseFeature).FirstOrDefault(),
                 Comments = _db.Comments.Where(c => c.IsDeleted == false && c.CourseSimpleId == id).Take(10).OrderByDescending(c => c.Id).ToList(),
             };
             if (courseVM.CourseSimple == null) return NotFound();
@@ -52,11 +60,6 @@ namespace EduHome.Controllers
             await _db.SaveChangesAsync();
 
             return PartialView("_CommentPartial", comment);
-        }
-        public IActionResult Category(string name)
-        {
-            TempData["CategoryName"] = name;
-            return RedirectToAction("Index");
         }
     }
 }
