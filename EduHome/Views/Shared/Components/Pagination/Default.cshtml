@@ -10,13 +10,13 @@
             <ul>
                 @for (int i = 1; i <= Model; i++)
                 {
-                    if (i == 1)
+                    if (i == ViewBag.Page)
                     {
-                        <li><button class="btn-active" id="@i">@i</button></li>
+                        <li><a asp-controller="@ViewBag.Location" asp-action="Index" asp-route-page="@i" asp-route-take="@ViewBag.Take" class="btn-active" id="@i">@i</a></li>
                     }
                     else
                     {
-                        <li><button id="@i">@i</button></li>
+                        <li><a asp-controller="@ViewBag.Location" asp-action="Index" asp-route-page="@i" asp-route-take="@ViewBag.Take" id="@i">@i</a></li>
                     }
                 }
             </ul>

@@ -17,10 +17,17 @@ namespace EduHome.ViewComponents
         {
             _db = db;
         }
-        public async Task<IViewComponentResult> InvokeAsync(string item, int take)
+        public async Task<IViewComponentResult> InvokeAsync(string item, int take, bool isTrue, int page)
         {
             int count = 1;
             double dbreturncount = 1;
+            ViewBag.Page = page;
+            ViewBag.Location = item;
+            if (!isTrue)
+            {
+                count = 0;
+            }
+            else
             if (item.ToLower() == "teacher")
             {
                 dbreturncount = _db.TeacherSimples.Where(t => t.IsDeleted == false).Count();
@@ -33,6 +40,7 @@ namespace EduHome.ViewComponents
             }
             else if (item.ToLower() == "blog")
             {
+
                 dbreturncount = _db.BlogSimples.Where(t => t.IsDeleted == false).Count();
                 count = dbreturncount.PaginationCount(take);
             }
@@ -41,7 +49,7 @@ namespace EduHome.ViewComponents
                 dbreturncount = _db.EventSimples.Where(t => t.IsDeleted == false).Count();
                 count = dbreturncount.PaginationCount(take);
             }
-
+            ViewBag.Take = take;
             return View(await Task.FromResult(count));
         }
     }

@@ -22,9 +22,9 @@
             </div>
         </div>
         <div class="row">
-            @await Component.InvokeAsync("Teacher")
+            @await Component.InvokeAsync("Teacher", new { page = Model, take = 8 })
         </div>
-        @await Component.InvokeAsync("Pagination", new { item = "teacher", take = 9 })
+        @await Component.InvokeAsync("Pagination", new { item = "teacher", take = 9, isTrue = (bool)ViewBag.isTrue, page = Model })
     </div>
 </div>
 <!-- Teacher End -->

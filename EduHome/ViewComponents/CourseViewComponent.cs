@@ -17,7 +17,7 @@ namespace EduHome.ViewComponents
         {
             _db = db;
         }
-        public async Task<IViewComponentResult> InvokeAsync(string location, string category)
+        public async Task<IViewComponentResult> InvokeAsync(string location, string category,int page ,int take)
         {
             bool isExist = _db.Categories.Any(t => t.Name == category);
             if (isExist)
@@ -33,7 +33,7 @@ namespace EduHome.ViewComponents
             }
             else
             {
-                List<CourseSimple> courseSimples = await _db.CourseSimples.Where(t => t.IsDeleted == false).Take(6).ToListAsync();
+                List<CourseSimple> courseSimples = await _db.CourseSimples.Where(t => t.IsDeleted == false).Skip(take * (page - 1)).Take(take).ToListAsync();
                 return View(await Task.FromResult(courseSimples));
             }
         }

@@ -16,7 +16,7 @@ namespace EduHome.ViewComponents
         {
             _db = db;
         }
-        public async Task<IViewComponentResult> InvokeAsync(string location)
+        public async Task<IViewComponentResult> InvokeAsync(string location,int take,int page)
         {
             if (location == "About")
             {
@@ -25,7 +25,7 @@ namespace EduHome.ViewComponents
             }
             else
             {
-                List<TeacherSimple> teachers = _db.TeacherSimples.Where(t => t.IsDeleted == false).Include(t => t.SocialMedias).Include(t => t.Profession).ToList();
+                List<TeacherSimple> teachers = _db.TeacherSimples.Where(t => t.IsDeleted == false).Take(take).Include(t => t.SocialMedias).Include(t => t.Profession).ToList();
                 return View(await Task.FromResult(teachers));
             }
         }

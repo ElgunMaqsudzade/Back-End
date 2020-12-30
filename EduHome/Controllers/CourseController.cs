@@ -17,9 +17,12 @@ namespace EduHome.Controllers
         {
             _db = db;
         }
-        public IActionResult Index()
+        public IActionResult Index(int? page = 1, int take = 6)
         {
-            return View();
+            ViewBag.isTrue = true;
+            if (page == null || page == 0) return View(1);
+            if ((page - 1) * take > _db.CourseSimples.Count()) return NotFound();
+            return View(page);
         }
         public IActionResult Detail(int? id)
         {

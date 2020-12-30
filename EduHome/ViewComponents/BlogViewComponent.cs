@@ -16,24 +16,37 @@ namespace EduHome.ViewComponents
         {
             _db = db;
         }
-        public async Task<IViewComponentResult> InvokeAsync(int take, string category)
+        public async Task<IViewComponentResult> InvokeAsync(int take, string category, int page)
         {
             bool isExist = _db.Categories.Any(t => t.Name == category);
             if (isExist)
             {
                 List<BlogSimple> blogSimples = await _db.BlogSimples.Where(t => t.IsDeleted == false && t.Category.Name.Contains(category))
-                    .OrderByDescending(b => b.Id).Include(t=>t.Category      ).Include(b => b.Comments).ToListAsync();
+                    .OrderByDescending(b => b.Id).Include(t => t.Category).Include(b => b.Comments).ToListAsync();
                 blogSimples.ForEach(b => b.ReplyCount = b.Comments.Count());
                 await _db.SaveChangesAsync();
                 return View(await Task.FromResult(blogSimples));
             }
-            else
+            else if(take < 6)
             {
                 List<BlogSimple> blogSimples = await _db.BlogSimples.Where(t => t.IsDeleted == false).Take(take)
                     .OrderByDescending(b => b.Id).Include(b => b.Comments).ToListAsync();
                 blogSimples.ForEach(b => b.ReplyCount = b.Comments.Count());
                 await _db.SaveChangesAsync();
                 return View(await Task.FromResult(blogSimples));
+            }
+            else if (take >= 6)
+            {
+                List<BlogSimple> blogSimples = await _db.BlogSimples.Where(t => t.IsDeleted == false).Skip(take * (page - 1)).Take(take)
+                    .OrderByDescending(b => b.Id).Include(b => b.Comments).ToListAsync();
+                blogSimples.ForEach(b => b.ReplyCount = b.Comments.Count());
+                await _db.SaveChangesAsync();
+
+                return View(await Task.FromResult(blogSimples));
+            }
+            else
+            {
+                return View();
             }
         }
     }
