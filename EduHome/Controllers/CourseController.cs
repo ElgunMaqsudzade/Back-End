@@ -33,7 +33,7 @@ namespace EduHome.Controllers
             if (courseVM.CourseSimple == null) return NotFound();
             return View(courseVM);
         }
-        public async Task<IActionResult> Comment(string name, string email, string subject, string message)
+        public async Task<IActionResult> Comment(int dbid, string name, string email, string subject, string message)
         {
             if (name == null || email == null || subject == null || message == null) return NotFound();
             Comment comment = new Comment()
@@ -42,7 +42,7 @@ namespace EduHome.Controllers
                 Email = email,
                 Title = subject,
                 Description = message,
-                CourseSimpleId = (int)TempData["DetailId"],
+                CourseSimpleId = dbid,
                 CreateTime = DateTime.UtcNow
             };
             await _db.Comments.AddAsync(comment);

@@ -1,0 +1,66 @@
+﻿@model HeaderFooter
+<footer class="footer-area">
+    <div class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="single-widget pr-60">
+                        <div class="footer-logo pb-25">
+                            <a asp-controller="Home" asp-action="Index"><img src="~/img/logo/@Model.Logo" alt="eduhome"></a>
+                        </div>
+                        <p>@Model.Content</p>
+                        <div class="footer-social">
+                            <ul>
+                                @foreach (var item in Model.SocialMedias)
+                                {
+                                    <li><a href="@Html.Raw(item.Link)">@Html.Raw(item.Icon)</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="single-widget">
+                        <h3>information</h3>
+                        <ul>
+                            <li><a asp-controller="Home" asp-action="Index">addmission</a></li>
+                            <li><a asp-controller="Home" asp-action="Index">Academic Calender</a></li>
+                            <li><a asp-controller="Event" asp-action="Index">Event List</a></li>
+                            <li><a asp-controller="Home" asp-action="Index">Hostel &amp; Dinning</a></li>
+                            <li><a asp-controller="Home" asp-action="Index">TimeTable</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-6 col-xs-12">
+                    <div class="single-widget">
+                        <h3>useful links</h3>
+                        <ul>
+                            <li><a asp-controller="Course" asp-action="Index">our courses</a></li>
+                            <li><a asp-controller="About" asp-action="Index">about us</a></li>
+                            <li><a asp-controller="Teacher" asp-action="Index">teachers &amp; faculty</a></li>
+                            <li><a asp-controller="Home" asp-action="Index">teams &amp; conditions</a></li>
+                            <li><a asp-controller="Event" asp-action="Index">our events</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="single-widget">
+                        <h3>get in touch</h3>
+                        <p>@Html.Raw(Model.Address)</p>
+                        <p>@Html.Raw(Model.Phone)</p>
+                        <p>@Html.Raw(Model.Email)/p>
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <p>Copyright © <a href="#" target="_blank">HasTech</a> 2017. All Right Reserved By Hastech.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

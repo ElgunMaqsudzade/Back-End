@@ -4,14 +4,16 @@ using EduHome.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EduHome.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201230063403_CreateHeaderTableUpdate")]
+    partial class CreateHeaderTableUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -569,7 +571,7 @@ namespace EduHome.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TeacherSimpleId")
+                    b.Property<int>("TeacherSimpleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -962,13 +964,15 @@ namespace EduHome.Migrations
 
             modelBuilder.Entity("EduHome.Models.SocialMedia", b =>
                 {
-                    b.HasOne("EduHome.Models.HeaderFooter", "HeaderFooter")
+                    b.HasOne("EduHome.Models.HeaderFooter", null)
                         .WithMany("SocialMedias")
                         .HasForeignKey("HeaderFooterId");
 
                     b.HasOne("EduHome.Models.TeacherSimple", "TeacherSimple")
                         .WithMany("SocialMedias")
-                        .HasForeignKey("TeacherSimpleId");
+                        .HasForeignKey("TeacherSimpleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EduHome.Models.Speaker", b =>

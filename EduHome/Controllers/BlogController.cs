@@ -33,7 +33,7 @@ namespace EduHome.Controllers
             if (blogVM.BlogSimple == null) return NotFound();
             return View(blogVM);
         }
-        public async Task<IActionResult> Comment(string name, string email, string subject, string message)
+        public async Task<IActionResult> Comment(int dbid, string name, string email, string subject, string message)
         {
             Comment comment = new Comment()
             {
@@ -41,7 +41,7 @@ namespace EduHome.Controllers
                 Email = email,
                 Title = subject,
                 Description = message,
-                BlogSimpleId = (int)TempData["DetailId"],
+                BlogSimpleId = dbid,
                 CreateTime = DateTime.UtcNow
             };
             await _db.Comments.AddAsync(comment);

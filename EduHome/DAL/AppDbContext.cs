@@ -40,5 +40,8 @@ namespace EduHome.DAL
         public DbSet<Skill> Skills { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<HomeSlider> HomeSliders { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<MapAddress> MapAddresses { get; set; }
+        public DbSet<HeaderFooter> HeaderFooters { get; set; }
     }
 }

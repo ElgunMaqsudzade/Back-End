@@ -29,6 +29,22 @@
     <Compile Remove="Migrations\20201227155032_CourseDetailUpdate-2.Designer.cs" />
     <Compile Remove="Migrations\20201229081207_CreateCategoryTable.cs" />
     <Compile Remove="Migrations\20201229081207_CreateCategoryTable.Designer.cs" />
+    <Compile Remove="Migrations\20201229144222_ContactTableCreate.cs" />
+    <Compile Remove="Migrations\20201229144222_ContactTableCreate.Designer.cs" />
+    <Compile Remove="Migrations\20201230061642_CreateHeaderTable.cs" />
+    <Compile Remove="Migrations\20201230061642_CreateHeaderTable.Designer.cs" />
+    <Compile Remove="Migrations\20201230062019_CreateHeaderTable.cs" />
+    <Compile Remove="Migrations\20201230062019_CreateHeaderTable.Designer.cs" />
+    <Compile Remove="Migrations\20201230062137_CreateHeaderTable.cs" />
+    <Compile Remove="Migrations\20201230062137_CreateHeaderTable.Designer.cs" />
+    <Compile Remove="Migrations\20201230062628_CreateHeaderTable.cs" />
+    <Compile Remove="Migrations\20201230062628_CreateHeaderTable.Designer.cs" />
+    <Compile Remove="Migrations\20201230063052_CreateHeaderTable.cs" />
+    <Compile Remove="Migrations\20201230063052_CreateHeaderTable.Designer.cs" />
+    <Compile Remove="Migrations\20201230063240_CreateHeaderTableUpdate.cs" />
+    <Compile Remove="Migrations\20201230063240_CreateHeaderTableUpdate.Designer.cs" />
+    <Compile Remove="Migrations\20201230063643_UpdateSocialMedia.cs" />
+    <Compile Remove="Migrations\20201230063643_UpdateSocialMedia.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

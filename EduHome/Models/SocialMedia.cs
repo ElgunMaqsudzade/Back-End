@@ -14,7 +14,9 @@ namespace EduHome.Models
         public string Link { get; set; }
         [Required]
         public string Icon { get; set; }
-        public int TeacherSimpleId { get; set; }
+        public int? TeacherSimpleId { get; set; }
         public virtual TeacherSimple TeacherSimple { get; set; }
+        public int? HeaderFooterId { get; set; }
+        public virtual HeaderFooter HeaderFooter { get; set; }
     }
 }

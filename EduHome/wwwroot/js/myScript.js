@@ -69,11 +69,12 @@
     }
     //Validation ends
     //Bring comment from back
-    let BlogUrl = "/Blog/Comment/";
-    let CourseUrl = "/Course/Comment/";
-    let EventUrl = "/Event/Comment/";
+    let BlogUrl = "/Blog/";
+    let CourseUrl = "/Course/";
+    let EventUrl = "/Event/";
     function TakeData() {
         let name;
+        let dbid;
         let email;
         let subject;
         let message;
@@ -81,6 +82,7 @@
         let count;
         $(document).on("click", ".reply-button", function (e) {
             e.preventDefault();
+            dbid = $("#db-id").val();
             name = $("#name").val();
             email = $("#email").val();
             subject = $("#subject").val();
@@ -92,6 +94,7 @@
                         url: `${this.dataset.url}Comment`,
                         type: "POST",
                         data: {
+                            "dbid": dbid,
                             "name": name,
                             "email": email,
                             "subject": subject,
@@ -115,5 +118,6 @@
                 }
             }
         });
-    } TakeData();
+    }
+    TakeData();
 });

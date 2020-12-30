@@ -4,14 +4,16 @@ using EduHome.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EduHome.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201229144312_ContactTableCreate")]
+    partial class ContactTableCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -406,34 +408,6 @@ namespace EduHome.Migrations
                     b.ToTable("EventSimples");
                 });
 
-            modelBuilder.Entity("EduHome.Models.HeaderFooter", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Logo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("HeaderFooters");
-                });
-
             modelBuilder.Entity("EduHome.Models.HomeSlider", b =>
                 {
                     b.Property<int>("Id")
@@ -558,9 +532,6 @@ namespace EduHome.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("HeaderFooterId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Icon")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -569,12 +540,10 @@ namespace EduHome.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TeacherSimpleId")
+                    b.Property<int>("TeacherSimpleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("HeaderFooterId");
 
                     b.HasIndex("TeacherSimpleId");
 
@@ -962,13 +931,11 @@ namespace EduHome.Migrations
 
             modelBuilder.Entity("EduHome.Models.SocialMedia", b =>
                 {
-                    b.HasOne("EduHome.Models.HeaderFooter", "HeaderFooter")
-                        .WithMany("SocialMedias")
-                        .HasForeignKey("HeaderFooterId");
-
                     b.HasOne("EduHome.Models.TeacherSimple", "TeacherSimple")
                         .WithMany("SocialMedias")
-                        .HasForeignKey("TeacherSimpleId");
+                        .HasForeignKey("TeacherSimpleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EduHome.Models.Speaker", b =>
