@@ -17,20 +17,26 @@ namespace EduHome.Controllers
         {
             _db = db;
         }
-        public IActionResult Index(string name , int? page = 1, int take = 6)
+        public IActionResult Index(string name, int? page = 1, int take = 6)
         {
+            //it is for determining is it from sidebar filter at Detail or not
             if (name != null)
             {
                 ViewBag.CategoryName = name;
-                ViewBag.IsTrue = true;
+                ViewBag.hasFilter = true;
             }
             else
             {
-                ViewBag.IsTrue = false;
+                ViewBag.hasFilter = false;
             }
             if (page == null || page == 0) return View(1);
             if ((page - 1) * take > _db.BlogSimples.Count()) return NotFound();
             return View(page);
+        }
+        [HttpPost]
+        public IActionResult Index(string search)
+        {
+            return RedirectToAction("Index", "Search", new { keyword = search, location = "Blog" });
         }
         public IActionResult Detail(int? id)
         {
@@ -60,5 +66,12 @@ namespace EduHome.Controllers
 
             return PartialView("_CommentPartial", comment);
         }
+        public async Task<IActionResult> Search(string word)
+        {
+            List<BlogSimple> blogSimples = await _db.BlogSimples.Where(b => b.IsDeleted == false && b.Title.Trim().ToLower().Contains(word.Trim().ToLower())).Take(10).ToListAsync();
+
+            return PartialView("_SearchBlogPartial", blogSimples);
+        }
+
     }
 }

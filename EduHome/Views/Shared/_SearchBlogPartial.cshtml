@@ -1,0 +1,19 @@
+﻿@model List<BlogSimple>
+@{
+    Layout = null;
+}
+    @foreach (BlogSimple blog in Model)
+    {
+        <li class="item">
+            <a class="option" asp-controller="Blog" asp-action="Detail" asp-route-id="@blog.Id">
+                <div class="item_image">
+                    <img class="img-fluid" style="vertical-align:middle" src="~/img/blog/@blog.Image">
+                </div>
+                <div class="item_name">
+                    @blog.Title
+                </div>
+            </a>
+        </li>
+    }
+
+

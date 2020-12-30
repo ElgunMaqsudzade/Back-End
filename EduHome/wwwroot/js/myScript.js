@@ -120,4 +120,38 @@
         });
     }
     TakeData();
+    function Search() {
+        let search;
+        let isUl = false;
+        $(document).on("keyup", "#search-inp", function () {
+            $(".search-ul").empty();
+            search = $("#search-inp").val();
+            $.ajax({
+                url: `${$("#mycont").val()}Search`,
+                type: "GET",
+                data: {
+                    "word": search
+                },
+                success: function (res) {
+                    $(".search-ul").append(res);
+                }
+            })
+        })
+        $(document).on("blur", "#search-inp", function () {
+
+            if (!isUl) {
+                $(".search-ul").css("display", "none");
+            }
+        })
+        $(document).on("focus", "#search-inp", function () {
+            console.log("dafe")
+            $(".search-ul").css("display","block");
+        })
+        $(document).on("mouseenter", ".search-ul", function () {
+            isUl = true;
+        })
+        $(document).on("mouseleave", ".search-ul", function () {
+            isUl = false;
+        })
+    } Search();
 });

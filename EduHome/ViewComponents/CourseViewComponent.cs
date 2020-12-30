@@ -17,7 +17,7 @@ namespace EduHome.ViewComponents
         {
             _db = db;
         }
-        public async Task<IViewComponentResult> InvokeAsync(string location, string category,int page ,int take)
+        public async Task<IViewComponentResult> InvokeAsync(string location,string keyword, string category,int page ,int take)
         {
             bool isExist = _db.Categories.Any(t => t.Name == category);
             if (isExist)
@@ -29,6 +29,11 @@ namespace EduHome.ViewComponents
             else if (location == "Home")
             {
                 List<CourseSimple> courseSimples = await _db.CourseSimples.Where(t => t.IsDeleted == false && t.IsSimple == true).ToListAsync();
+                return View(await Task.FromResult(courseSimples));
+            }
+            else if (location == "search" && keyword != null)
+            {
+                List<CourseSimple> courseSimples = await _db.CourseSimples.Where(t => t.IsDeleted == false && t.Title.Trim().ToLower().Contains(keyword)).ToListAsync();
                 return View(await Task.FromResult(courseSimples));
             }
             else

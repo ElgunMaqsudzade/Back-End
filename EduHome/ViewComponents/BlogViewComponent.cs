@@ -16,9 +16,13 @@ namespace EduHome.ViewComponents
         {
             _db = db;
         }
-        public async Task<IViewComponentResult> InvokeAsync(int take, string category, int page)
+        public async Task<IViewComponentResult> InvokeAsync(string location, string keyword, string category, int? take, int? page)
         {
-            bool isExist = _db.Categories.Any(t => t.Name == category);
+            bool isExist = false;
+            if (category != null)
+            {
+                isExist = _db.Categories.Any(t => t.Name == category);
+            }
             if (isExist)
             {
                 List<BlogSimple> blogSimples = await _db.BlogSimples.Where(t => t.IsDeleted == false && t.Category.Name.Contains(category))
@@ -27,9 +31,9 @@ namespace EduHome.ViewComponents
                 await _db.SaveChangesAsync();
                 return View(await Task.FromResult(blogSimples));
             }
-            else if(take < 6)
+            else if (take < 6)
             {
-                List<BlogSimple> blogSimples = await _db.BlogSimples.Where(t => t.IsDeleted == false).Take(take)
+                List<BlogSimple> blogSimples = await _db.BlogSimples.Where(t => t.IsDeleted == false).Take((int)take)
                     .OrderByDescending(b => b.Id).Include(b => b.Comments).ToListAsync();
                 blogSimples.ForEach(b => b.ReplyCount = b.Comments.Count());
                 await _db.SaveChangesAsync();
@@ -37,7 +41,16 @@ namespace EduHome.ViewComponents
             }
             else if (take >= 6)
             {
-                List<BlogSimple> blogSimples = await _db.BlogSimples.Where(t => t.IsDeleted == false).Skip(take * (page - 1)).Take(take)
+                List<BlogSimple> blogSimples = await _db.BlogSimples.Where(t => t.IsDeleted == false).Skip((int)take * ((int)page - 1)).Take((int)take)
+                    .OrderByDescending(b => b.Id).Include(b => b.Comments).ToListAsync();
+                blogSimples.ForEach(b => b.ReplyCount = b.Comments.Count());
+                await _db.SaveChangesAsync();
+
+                return View(await Task.FromResult(blogSimples));
+            }
+            else if (location == "search")
+            {
+                List<BlogSimple> blogSimples = await _db.BlogSimples.Where(t => t.IsDeleted == false && t.Title.Trim().ToLower().Contains(keyword))
                     .OrderByDescending(b => b.Id).Include(b => b.Comments).ToListAsync();
                 blogSimples.ForEach(b => b.ReplyCount = b.Comments.Count());
                 await _db.SaveChangesAsync();
@@ -46,7 +59,12 @@ namespace EduHome.ViewComponents
             }
             else
             {
-                return View();
+                List<BlogSimple> blogSimples = await _db.BlogSimples.Where(t => t.IsDeleted == false)
+                    .OrderByDescending(b => b.Id).Include(b => b.Comments).ToListAsync();
+                blogSimples.ForEach(b => b.ReplyCount = b.Comments.Count());
+                await _db.SaveChangesAsync();
+
+                return View(await Task.FromResult(blogSimples));
             }
         }
     }

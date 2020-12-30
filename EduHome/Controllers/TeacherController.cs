@@ -18,10 +18,16 @@ namespace EduHome.Controllers
         }
         public IActionResult Index(int? page = 1, int take = 6)
         {
-            ViewBag.isTrue = true;
+            //it is for pagination view component
+            ViewBag.hasFilter = false;
             if (page == null || page == 0) return View(1);
             if ((page - 1) * take > _db.TeacherSimples.Count()) return NotFound();
             return View(page);
+        }
+        [HttpPost]
+        public IActionResult Index(string search)
+        {
+            return RedirectToAction("Index", "Search", new { keyword= search, location = "Teacher" }) ;
         }
         public IActionResult Detail(int? id)
         {
@@ -33,6 +39,12 @@ namespace EduHome.Controllers
             
             if (teacherSimple == null) return NotFound();
             return View(teacherSimple);
+        }
+        public async Task<IActionResult> Search(string word)
+        {
+            List<TeacherSimple> teacherSimples = await _db.TeacherSimples.Where(b => b.IsDeleted == false && b.Fullname.Trim().ToLower().Contains(word.Trim().ToLower())).Take(10).ToListAsync();
+
+            return PartialView("_SearchTeacherPartial", teacherSimples);
         }
     }
 }

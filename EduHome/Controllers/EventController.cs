@@ -19,6 +19,7 @@ namespace EduHome.Controllers
         }
         public IActionResult Index(string name, int? page = 1, int take = 6)
         {
+            //it is for determining is it from sidebar filter at Detail or not
             if (name != null)
             {
                 ViewBag.CategoryName = name;
@@ -31,6 +32,11 @@ namespace EduHome.Controllers
             if (page == null || page == 0) return View(1);
             if ((page - 1) * take > _db.EventSimples.Count()) return NotFound();
             return View(page);
+        }
+        [HttpPost]
+        public IActionResult Index(string search)
+        {
+            return RedirectToAction("Index", "Search", new { keyword = search, location = "Event" });
         }
         public IActionResult Detail(int? id)
         {
@@ -59,6 +65,12 @@ namespace EduHome.Controllers
             await _db.SaveChangesAsync();
 
             return PartialView("_CommentPartial", comment);
+        }
+        public async Task<IActionResult> Search(string word)
+        {
+            List<EventSimple> eventSimples = await _db.EventSimples.Where(b => b.IsDeleted == false && b.Title.Trim().ToLower().Contains(word.Trim().ToLower())).Take(10).ToListAsync();
+
+            return PartialView("_SearchEventPartial", eventSimples);
         }
     }
 }

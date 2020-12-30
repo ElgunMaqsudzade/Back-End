@@ -1,0 +1,19 @@
+﻿@model List<CourseSimple>
+@{
+    Layout = null;
+}
+    @foreach (CourseSimple c in Model)
+    {
+        <li class="item">
+            <a class="option" asp-controller="Course" asp-action="Detail" asp-route-id="@c.Id">
+                <div class="item_image">
+                    <img class="img-fluid" style="vertical-align:middle" src="~/img/course/@c.Image">
+                </div>
+                <div class="item_name">
+                    @c.Title
+                </div>
+            </a>
+        </li>
+    }
+
+

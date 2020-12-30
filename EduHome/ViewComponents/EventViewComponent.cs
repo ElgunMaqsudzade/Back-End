@@ -17,13 +17,18 @@ namespace EduHome.ViewComponents
         {
             _db = db;
         }
-        public async Task<IViewComponentResult> InvokeAsync(int take,string category ,int page)
+        public async Task<IViewComponentResult> InvokeAsync(int take, string category, int page, string location, string keyword)
         {
             bool isExist = _db.Categories.Any(t => t.Name == category);
             if (isExist)
             {
                 List<EventSimple> eventSimples = await _db.EventSimples.Where(t => t.IsDeleted == false && t.Category.Name.Contains(category))
                     .OrderByDescending(b => b.Id).Include(t => t.Category).ToListAsync();
+                return View(await Task.FromResult(eventSimples));
+            }
+            else if (location == "search" && keyword != null)
+            {
+                List<EventSimple> eventSimples = await _db.EventSimples.Where(t => t.IsDeleted == false && t.Title.Trim().ToLower().Contains(keyword)).OrderByDescending(b => b.Id).Include(b => b.Comments).ToListAsync();
                 return View(await Task.FromResult(eventSimples));
             }
             else

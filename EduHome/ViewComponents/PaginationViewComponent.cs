@@ -17,13 +17,13 @@ namespace EduHome.ViewComponents
         {
             _db = db;
         }
-        public async Task<IViewComponentResult> InvokeAsync(string item, int take,  int page, bool isTrue)
+        public async Task<IViewComponentResult> InvokeAsync(string item, int take,  int page, bool hasFilter)
         {
             int count = 1;
             double dbreturncount = 1;
             ViewBag.Page = page;
             ViewBag.Location = item;
-            if (isTrue)
+            if (hasFilter)
             {
                 count = 1;
             }

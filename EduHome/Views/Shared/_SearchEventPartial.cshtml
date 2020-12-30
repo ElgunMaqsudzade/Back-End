@@ -1,0 +1,19 @@
+﻿@model List<EventSimple>
+@{
+    Layout = null;
+}
+    @foreach (EventSimple e in Model)
+    {
+        <li class="item">
+            <a class="option" asp-controller="Event" asp-action="Detail" asp-route-id="@e.Id">
+                <div class="item_image">
+                    <img class="img-fluid" style="vertical-align:middle" src="~/img/event/@e.Image">
+                </div>
+                <div class="item_name">
+                    @e.Title
+                </div>
+            </a>
+        </li>
+    }
+
+

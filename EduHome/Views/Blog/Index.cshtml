@@ -11,20 +11,24 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="course-title">
-                    <h3>search courses</h3>
+                    <h3>search blogs</h3>
                 </div>
                 <div class="course-form">
-                    <form id="search" action="#">
-                        <input type="search" placeholder="Search..." name="search" />
+                    <form id="search" method="post">
+                        <input type="text" placeholder="Search..." id="search-inp" name="search" autocomplete="off" />
                         <button type="submit">search</button>
+                        <input type="hidden" id="mycont" value="/Blog/" />
                     </form>
+                </div>
+                <div class="ul-holder">
+                    <ul class="search-ul"></ul>
                 </div>
             </div>
         </div>
         <div class="row">
             @await Component.InvokeAsync("Blog", new { take = 6, category = (string)ViewBag.CategoryName , page = Model })
         </div>
-        @await Component.InvokeAsync("Pagination", new { item = "blog", take = 6 , isTrue = (bool)ViewBag.IsTrue, page = Model })
+        @await Component.InvokeAsync("Pagination", new { item = "blog", take = 6 , hasFilter = (bool)ViewBag.hasFilter, page = Model })
     </div>
 </div>
 <!-- Blog End -->
