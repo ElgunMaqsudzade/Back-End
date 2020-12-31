@@ -1,0 +1,86 @@
+﻿@model List<UserVM>
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Fullname</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>IsDeleted</th>
+                                    <th>Role</th>
+                                    <th>Settings</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (UserVM user in Model)
+                                {
+
+                                    <tr>
+                                        <td>@user.Fullname</td>
+                                        <td class="username-column">@user.Username</td>
+                                        <td class="email-column">@user.Email</td>
+                                        @if (!user.IsDeleted)
+                                        {
+                                            <td class="text-success">Active</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-danger">Passive</td>
+                                        }
+                                        <td class="role-column">@user.Role</td>
+                                        <td>
+                                            @if (!(User.Identity.Name == user.Username))
+                                            {
+                                                @if (!user.IsDeleted)
+                                                {
+                                                    <a class="btn btn-md btn-danger" asp-controller="User" asp-action="Activation" asp-route-id="@user.Id">Disable</a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="btn btn-md btn-success" asp-controller="User" asp-action="Activation" asp-route-id="@user.Id">Enable</a>
+                                                }
+                                            }
+                                            <a class="btn btn-md btn-warning" asp-controller="User" asp-action="ResetPassword" asp-route-id="@user.Id">Reset Password</a>
+                                            @if (!(User.Identity.Name == user.Username))
+                                            {
+                                                <button class="btn btn-md btn-secondary change-role-btn">Change Role</button>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="role-modal d-none">
+    <div class="rol-btn-holder d-flex flex-column" style="width:240px">
+        <i class="fas fa-caret-up"></i>
+        @foreach (string role in Model.FirstOrDefault().Roles)
+        {
+            <button  class="btn btn-sm btn-light role-btn">@role</button>
+        }
+    <ul style="list-style-type:none;" class="p-0 m-0 d-flex">
+        <li>
+            <button class="role-save-btn btn" style="width:100px;cursor:not-allowed">Save</button>
+        </li>
+        <li>
+            <button class="role-cancel-btn btn btn-danger" style="width:100px">Cancel</button>
+        </li>
+    </ul>
+    </div>
+</div>
+
+

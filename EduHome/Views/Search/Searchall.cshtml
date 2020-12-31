@@ -1,0 +1,39 @@
+﻿@model SearchVM
+@{
+    ViewData["Title"] = "SearchAll";
+}
+<!-- Banner Area Start -->
+@await Component.InvokeAsync("Banner", new { word = "Search / All" })
+<!-- Banner Area End -->
+<!-- search Start -->
+<div class="blog-area pt-150 pb-150">
+    <div class="container">
+        <div class="row searchall">
+            <div class="ul-holder">
+                <ul class="searchall-ul">
+                    @if (Model.CourseSimples.Count() != 0)
+                    {
+                        <li><a asp-controller="Course" asp-action="Index">Course</a></li>
+                        <partial name="_SearchCoursePartial" for="CourseSimples" />
+                    }
+                    @if (Model.TeacherSimples.Count() != 0)
+                    {
+                        <li><a asp-controller="Teacher" asp-action="Index">Teacher</a></li>
+                        <partial name="_SearchTeacherPartial" for="TeacherSimples" />
+                    }
+                    @if (Model.EventSimples.Count() != 0)
+                    {
+                        <li><a asp-controller="Event" asp-action="Index">Event</a></li>
+                        <partial name="_SearchEventPartial" for=EventSimples />
+                    }
+                    @if (Model.BlogSimples.Count() != 0)
+                    {
+                        <li><a asp-controller="Blog" asp-action="Index">Blogs</a></li>
+                        <partial name="_SearchBlogPartial" for="BlogSimples" />
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- search End -->

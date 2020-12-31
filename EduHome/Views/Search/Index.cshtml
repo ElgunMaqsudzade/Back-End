@@ -1,31 +1,13 @@
 ﻿
 @{
     ViewData["Title"] = "Search";
-    int count;
 }
 <!-- Banner Area Start -->
 @await Component.InvokeAsync("Banner", new { word = "search" })
 <!-- Banner Area End -->
-<!-- Blog Start -->
+<!-- search Start -->
 <div class="blog-area pt-150 pb-150">
     <div class="container">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="course-title">
-                    <h3>search blogs</h3>
-                </div>
-                <div class="course-form">
-                    <form id="search">
-                        <input type="text" placeholder="Search..." id="search-inp" name="search" autocomplete="off" />
-                        <button type="submit">search</button>
-                        <input type="hidden" id="mycont" value="/@ViewBag.Card/" />
-                    </form>
-                </div>
-                <div class="ul-holder">
-                    <ul class="search-ul"></ul>
-                </div>
-            </div>
-        </div>
         <div class="row">
             @if (ViewBag.Card == "Blog")
             {
@@ -48,4 +30,4 @@
         </div>
     </div>
 </div>
-<!-- Blog End -->
+<!-- search End -->

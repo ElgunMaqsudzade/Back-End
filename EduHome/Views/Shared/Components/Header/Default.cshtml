@@ -11,8 +11,21 @@
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     <div class="header-top-right text-right">
                         <ul>
-                            <li><a asp-controller="User" asp-action="Login">login</a></li>
-                            <li><a asp-controller="User" asp-action="Register">signup</a></li>
+                            @if (User.IsInRole("Admin"))
+                            {
+
+                                <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin</a></li>
+                            }
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li><a asp-controller="Account" asp-action="Profile">@User.Identity.Name</a></li>
+                                <li><a asp-controller="Account" asp-action="Logout">logout</a></li>
+                            }
+                            else
+                            {
+                                <li><a asp-controller="Account" asp-action="Login">login</a></li>
+                                <li><a asp-controller="Account" asp-action="Register">signup</a></li>
+                            }
                         </ul>
                     </div>
                 </div>
@@ -62,9 +75,9 @@
                             </ul>
                             <div class="search">
                                 <div class="search-form">
-                                    <form id="search-form" action="#">
-                                        <input type="search" placeholder="Search here..." name="search" />
-                                        <button type="submit">
+                                    <form id="search-form" method="get" asp-controller="Search" asp-action="Searchall">
+                                        <input class="search-input" type="search" placeholder="Search here..." name="search" autocomplete="off" />
+                                        <button class="search-btn" type="submit" disabled>
                                             <span><i class="fa fa-search"></i></span>
                                         </button>
                                     </form>

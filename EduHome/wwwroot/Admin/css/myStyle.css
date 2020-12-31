@@ -1,0 +1,33 @@
+﻿/*user model interface*/
+.role-modal {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    right: 0;
+    background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) );
+}
+
+.rol-btn-holder {
+    position: absolute;
+    background-color: white;
+    top: 200px;
+    right: 200px;
+    border-radius: 3px;
+}
+
+    .rol-btn-holder i {
+        font-size: 25px;
+        position: absolute;
+        top: -16px;
+        left: 7px;
+        color: white;
+    }
+
+    .rol-btn-holder button {
+        margin: 5px 10px;
+    }
+
+    .rol-btn-holder .role-save-btn {
+        margin: 5px 10px;
+    }

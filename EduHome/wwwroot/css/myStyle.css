@@ -10,9 +10,11 @@
     font-size: 40px;
     font-weight: 600;
 }
+
 .message-field {
     margin-top: 40px;
 }
+
 .message-card {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -156,19 +158,103 @@
         margin-right: 10px;
     }
 
-   .reply {
+.reply {
     padding-left: 80px;
-    }
+}
 
-    @media only screen and (max-width: 767.98px) {
+@media only screen and (max-width: 767.98px) {
     .reply {
         padding: 0;
-      }
     }
+}
 
 /*pagination*/
 .pagination .btn-active {
     color: #fff;
     background-color: #5cb85c;
     border-color: #4cae4c;
+}
+/*user profile*/
+.input-field input {
+    display:none;
+}
+.edit-btn {
+    font-size: 18px;
+    color: #303030;
+    font-weight: 700;
+    font-family: 'Open Sans', sans-serif;
+    text-transform: uppercase;
+    -webkit-transition: all 0.5s ease 0s;
+    -o-transition: all 0.5s ease 0s;
+    transition: all 0.5s ease 0s;
+    cursor:pointer;
+}
+.edit-btn:hover {
+    color: #EC1C23;
+}
+.save-btn {
+    border: 1px solid transparent;
+    margin: 0 8px;
+    min-width: 90px;
+    display: inline-block;
+    font-size: 12px;
+    padding: 7px 10px;
+    text-transform: uppercase;
+    font-weight: 600;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.save-btn {
+    cursor: default;
+    border: 1px solid #e7e7e7;
+    background-color: gainsboro;
+    color: #c8c8c8;
+    outline: none;
+}
+
+    .save-btn :active {
+        outline: none;
+    }
+
+.btnActive {
+    cursor: pointer !important;
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+    background-color: #1ebeb6 !important;
+    color: white !important;
+}
+
+    .btnActive:active {
+        opacity: 0.8;
+    }
+
+.modal-box {
+    display:none;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    right: 0;
+    background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) );
+    z-index: 1000000;
+}
+.input-holder {
+    border-radius:10px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width: 400px;
+    height: 130px;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.img-input {
+    cursor:pointer;
+}
+.img-input:focus{
+    outline:none!important;
 }

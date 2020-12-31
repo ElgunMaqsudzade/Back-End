@@ -1,0 +1,67 @@
+﻿@model AppUser
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<!-- Banner Area Start -->
+@await Component.InvokeAsync("Banner", new { word = "profile" })
+<!-- Banner Area End -->
+<!-- Blog Start -->
+<div class=" pt-150 pb-150">
+    <div class="container">
+        <div class="row" style="display:flex; justify-content:center">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="single-blog">
+                    <form asp-controller="Account" asp-action="Profile" method="post">
+                        <div class="modal-box">
+                            <div class="input-holder">
+                                <input asp-for="Photo" class="img-input" />
+                            </div>
+                        </div>
+                        <div class="blog-img">
+                            <a class="profile-image" href="javascript:void"><img class="img-fluid" src="~/img/user/@Model.Image" alt="blog"></a>
+                            <div class="blog-hover">
+                                <a class="profile-image" href="javascript:void"><i class="far fa-image"></i></a>
+                            </div>
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-bottom">
+                                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                                <div class="content" style="display:flex; justify-content:space-between">
+                                    <h2 class="name">Fullname: <span class="text-name">@Model.Fullname</span></h2>
+                                    <div class="input-field">
+                                        <input asp-for="Fullname" class="profile-inp" id="name" placeholder="Fullname" value="@Model.Fullname" autocomplete="off" />
+                                    </div>
+                                    <h2><a data-set="name" class="edit-btn text-right"><i class="fas fa-user-edit"></i></a></h2>
+                                </div>
+                                <div class="content" style="display:flex; justify-content:space-between">
+                                    <h2 class="username">Username: <span class="text-username">@Model.UserName</span></h2>
+                                    <div class="input-field">
+                                        <input asp-for="UserName" class="profile-inp" id="username" placeholder="Username" value="@Model.UserName" autocomplete="off" />
+                                    </div>
+                                    <h2><a data-set="username" class="edit-btn text-right"><i class="fas fa-user-edit"></i></a></h2>
+                                </div>
+                                <div class="content" style="display:flex; justify-content:space-between">
+                                    <h2 class="email">Email: <span class="text-email">@Model.Email</span></h2>
+                                    <div class="input-field">
+                                        <input asp-for="Email" class="profile-inp" id="email" placeholder="Email" value="@Model.Email" autocomplete="off" />
+                                    </div>
+                                    <h2><a data-set="email" class="edit-btn text-right"><i class="fas fa-user-edit"></i></a></h2>
+                                </div>
+                                <div style="display:flex; justify-content:center">
+                                    <button type="submit" class="save-btn" disabled>Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Blog End -->
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
+}

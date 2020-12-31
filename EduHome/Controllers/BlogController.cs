@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using EduHome.DAL;
 using EduHome.Models;
 using EduHome.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,9 +14,11 @@ namespace EduHome.Controllers
     public class BlogController : Controller
     {
         private readonly AppDbContext _db;
-        public BlogController(AppDbContext db)
+        private readonly UserManager<AppUser> _user;
+        public BlogController(AppDbContext db, UserManager<AppUser> user)
         {
             _db = db;
+            _user = user;
         }
         public IActionResult Index(string name, int? page = 1, int take = 6)
         {
@@ -52,8 +55,17 @@ namespace EduHome.Controllers
         }
         public async Task<IActionResult> Comment(int dbid, string name, string email, string subject, string message)
         {
+            string image = "User.png";
+            if (User.Identity.IsAuthenticated)
+            {
+                AppUser userManager =await _user.FindByNameAsync(User.Identity.Name);
+                email = userManager.Email;
+                name = userManager.UserName;
+                image = userManager.Image;
+            }
             Comment comment = new Comment()
             {
+                Image = image,
                 Name = name,
                 Email = email,
                 Title = subject,

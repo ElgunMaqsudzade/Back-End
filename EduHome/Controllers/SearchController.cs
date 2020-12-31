@@ -23,6 +23,18 @@ namespace EduHome.Controllers
             ViewBag.Keyword = keyword;
             return View();
         }
+        public async Task<IActionResult> Searchall(string search)
+        {
+            if (search == null) return NotFound();
+            SearchVM searchVM = new SearchVM()
+            {
+                BlogSimples = await _db.BlogSimples.Where(b => b.IsDeleted == false && b.Title.Trim().ToLower().Contains(search)).ToListAsync(),
+                EventSimples = await _db.EventSimples.Where(b => b.IsDeleted == false && b.Title.Trim().ToLower().Contains(search)).ToListAsync(),
+                CourseSimples = await _db.CourseSimples.Where(b => b.IsDeleted == false && b.Title.Trim().ToLower().Contains(search)).ToListAsync(),
+                TeacherSimples = await _db.TeacherSimples.Where(b => b.IsDeleted == false && b.Fullname.Trim().ToLower().Contains(search)).ToListAsync()
+            };
+            return View(searchVM);
+        }
 
     }
 }

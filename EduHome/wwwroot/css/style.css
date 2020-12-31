@@ -4464,9 +4464,11 @@ textarea {
 .console-form {
     position: relative;
 }
+
 .ul-holder {
     box-sizing: border-box;
 }
+
 .search-ul {
     position: absolute;
     top: 125px;
@@ -4496,6 +4498,12 @@ textarea {
     border-bottom: 1px solid rgba(220,220,220,0.7);
     border-top: 1px solid rgba(220,220,220,0.7);
 }
+
 .item_name {
-    text-transform:uppercase;
+    text-transform: uppercase;
+}
+/*searchall*/
+.searchall .item_image {
+    width: 100px;
+    height: 100px;
 }
