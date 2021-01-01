@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using EduHome.Models;
 using EduHome.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using static EduHome.Extensions.Extension;
@@ -15,11 +17,13 @@ namespace EduHome.Controllers
         public readonly UserManager<AppUser> _usermanager;
         public readonly SignInManager<AppUser> _signinmanager;
         public readonly RoleManager<IdentityRole> _rolemanager;
-        public AccountController(UserManager<AppUser> usermanager, SignInManager<AppUser> signinmanager, RoleManager<IdentityRole> rolemanager)
+        public readonly IWebHostEnvironment _env;
+        public AccountController(UserManager<AppUser> usermanager, SignInManager<AppUser> signinmanager, RoleManager<IdentityRole> rolemanager, IWebHostEnvironment env)
         {
             _usermanager = usermanager;
             _signinmanager = signinmanager;
             _rolemanager = rolemanager;
+            _env = env;
         }
         public IActionResult Register()
         {
@@ -94,11 +98,19 @@ namespace EduHome.Controllers
             await _signinmanager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-        public async Task<IActionResult> Profile()
+        public async Task<IActionResult> Profile(string username)
         {
-            AppUser appUser = await _usermanager.FindByNameAsync(User.Identity.Name);
+            if(username != null)
+            {
+                AppUser appUser = await _usermanager.FindByNameAsync(username);
+                return View(appUser);
+            }
+            else
+            {
+                AppUser appUser = await _usermanager.FindByNameAsync(User.Identity.Name);
+                return View(appUser);
+            }
 
-            return View(appUser);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -106,26 +118,40 @@ namespace EduHome.Controllers
         {
 
             AppUser appUser = await _usermanager.FindByNameAsync(User.Identity.Name);
-            if (!ModelState.IsValid) return View();
+            if (!ModelState.IsValid) return View(appUser);
             if (ModelState.IsValid)
             {
                 appUser.UserName = user.UserName;
                 appUser.Fullname = user.Fullname;
                 appUser.Email = user.Email;
             }
-            if(user.Image != null)
+            if(user.Photo != null)
             {
-                appUser.Image = user.Image;
-                return View(appUser);
+
+                if (!user.Photo.IsImage())
+                {
+                    ModelState.AddModelError("", "Please,add Image file");
+                    return View(appUser);
+                }
+                if (!user.Photo.MaxSize(500))
+                {
+                    ModelState.AddModelError("", "Max size of Image should be lower than 500");
+                    return View(appUser);
+                }
+
+                string folder = Path.Combine("img", "user");
+                string fileName = await user.Photo.SaveImagesAsync(_env.WebRootPath, folder);
+                appUser.Image = fileName;
             }
-            IdentityResult identityResult = await _usermanager.UpdateAsync(appUser);
+
+            IdentityResult identityResult =  await _usermanager.UpdateAsync(appUser);
             if (!identityResult.Succeeded)
             {
                 foreach (IdentityError error in identityResult.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
-                return View();
+                return View(appUser);
             }
             await _signinmanager.RefreshSignInAsync(appUser);
             return RedirectToAction("Profile");

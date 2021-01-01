@@ -53,6 +53,8 @@
     <Compile Remove="Migrations\20201231191058_UserUpdate.Designer.cs" />
     <Compile Remove="Migrations\20201231191303_UserUpdate.cs" />
     <Compile Remove="Migrations\20201231191303_UserUpdate.Designer.cs" />
+    <Compile Remove="Migrations\20210101093814_CommentUpdateUserRelation.cs" />
+    <Compile Remove="Migrations\20210101093814_CommentUpdateUserRelation.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

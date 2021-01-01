@@ -18,7 +18,7 @@
                             }
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <li><a asp-controller="Account" asp-action="Profile">@User.Identity.Name</a></li>
+                                <li><a asp-controller="Account" asp-action="Profile" asp-route-username="@User.Identity.Name">@User.Identity.Name</a></li>
                                 <li><a asp-controller="Account" asp-action="Logout">logout</a></li>
                             }
                             else

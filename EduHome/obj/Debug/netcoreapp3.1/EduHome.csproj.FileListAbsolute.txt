@@ -299,3 +299,5 @@ C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Accou
 C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\EduHome.csproj.CoreCompileInputs.cache
 C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\EduHome.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Account\Profile.cshtml.g.cs
+C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_CommentInputPartial.cshtml.g.cs
+C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_CommentReplyPartial.cshtml.g.cs

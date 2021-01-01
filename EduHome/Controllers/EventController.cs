@@ -54,7 +54,7 @@ namespace EduHome.Controllers
         {
             Comment comment = new Comment()
             {
-                Name = name,
+                Name = "Guest - " + name,
                 Email = email,
                 Title = subject,
                 Description = message,

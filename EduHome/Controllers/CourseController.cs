@@ -55,7 +55,7 @@ namespace EduHome.Controllers
             if (name == null || email == null || subject == null || message == null) return NotFound();
             Comment comment = new Comment()
             {
-                Name = name,
+                Name = "Guest - " + name,
                 Email = email,
                 Title = subject,
                 Description = message,

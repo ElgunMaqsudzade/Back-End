@@ -2,7 +2,10 @@
     //Validation starts
     function ValidateEmail(email) {
         var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-        if (email.match(mailformat)) {
+        if ($("#comment-form").hasClass("authorized")) {
+            return true;
+        }
+        else if (email.match(mailformat)) {
             return true;
         }
         else {
@@ -20,7 +23,10 @@
         }
     }
     function ValidateName(text) {
-        if (text.length != 0) {
+        if ($("#comment-form").hasClass("authorized")) {
+            return true;
+        }
+        else if (text.length != 0) {
             return true;
         }
         else {
@@ -69,6 +75,8 @@
     }
     //Validation ends
     //Bring comment from back
+
+
     let BlogUrl = "/Blog/";
     let CourseUrl = "/Course/";
     let EventUrl = "/Event/";
@@ -116,6 +124,102 @@
                         }
                     });
                 }
+            }
+        });
+        //variables
+        $(document).on("click", ".com-reply-btn", function (e) {
+            e.preventDefault();
+            if ($(this).hasClass("disabled") && !$(this).parents(".message-card").next().hasClass("error")) {
+                let error = $(this).parents(".message-card").after(
+                    "<div style='font-size: 13px;transform:translate(107px,-40px);' class='text-danger error' >You must login before commenting something</div>"
+                )
+                setTimeout((e) => {
+                    error.next().remove();
+                }, 2000)
+                return;
+            }
+        });
+        let id;
+        let url;
+        let replyInputCard;
+        let primaryCard;
+        $(document).on("click", ".com-reply-btn", function () {
+            primaryCard = $(this).parents(".comment");
+            replyInputCard = $(this).parents(".message-card").next(".reply-input");
+            let replyInput;
+            id = this.dataset.take;
+            url = document.querySelector(".reply-button").dataset.url;
+            $.ajax({
+                url: `${url}Reply`,
+                type: "POST",
+                data: {
+                    "id": id,
+                },
+                success: function (res) {
+                    if (!replyInputCard.hasClass("collapsed")) {
+                        replyInputCard.prop("hidden", false);
+                        replyInputCard.append(res);
+                        replyInputCard.addClass("collapsed");
+                        replyInput = replyInputCard.find(".reply-inp");
+                        replyInput.focus();
+                    } else {
+                        replyInput = replyInputCard.find(".reply-inp");
+                        replyInput.focus();
+                    }
+                    replyInput = replyInputCard.find(".reply-inp");
+                }
+            });
+
+        })
+
+        $(document).on("keyup", ".reply-inp", function () {
+            if (!($(this).val() == 0)) {
+                $(this).next().find(".rp-send").addClass("btnActive");
+                $(this).next().find(".rp-send").prop("disabled", false);
+            } else {
+                $(this).next().find(".rp-send").removeClass("btnActive");
+            }
+        });
+
+
+        $(document).on("click", ".rp-cancel", function () {
+            $(this).parents(".com-card").remove();
+            replyInputCard.removeClass("collapsed");
+        });
+
+
+        let replycard;
+        $(document).on("click", ".rp-send", function () {
+            let message = $(this).parent().prev(".reply-inp").val();
+            replycard = $(this).parents(".reply-input").next(".reply-card")
+            $.ajax({
+                url: `${url}ReplyComment`,
+                type: "POST",
+                data: {
+                    "message": message,
+                    "id": id,
+                },
+                success: function (res) {
+                    replyInputCard.removeClass("collapsed");
+                    replyInputCard.empty();
+                    if (!primaryCard.find(".reply-card").hasClass("added")) {
+                        replycard.find(".reply-card-ul").append(res);
+                        primaryCard.find(".reply-card-ul").prop("hidden", false);
+                        primaryCard.addClass("added");
+                    } else {
+                        primaryCard.find(".reply-card-ul").append(res);
+                    }
+                }
+            });
+
+        });
+        $(document).on("click", ".load-btn", function () {
+            if ($(this).next(".reply-card-ul").prop("hidden")) {
+                $(this).next(".reply-card-ul").prop("hidden", false)
+                $(this).find(".fa-caret-down").css("transform", "rotate(180deg)")
+            } else {
+                $(this).next(".reply-card-ul").prop("hidden", true);
+                $(this).find(".fa-caret-down").css("transform", "rotate(0deg)");
             }
         });
     }
@@ -167,6 +271,7 @@
         })
 
     } SearchAll();
+    //yoxla
     //user page configuring with ajax
     function UserPageModel() {
 
@@ -269,14 +374,18 @@
             e.stopPropagation();
         })
     } UserPageModel();
+
+
+
     //user profile
     function UserProfile() {
         let name = $("#name").val();
         let username = $("#username").val();
         let email = $("#email").val();
+        let image = $("#Photo").val();
 
         $(".profile-image").click(function () {
-            $(".modal-box").css("display","block");
+            $(".modal-box").css("display", "block");
             $("body").css({ "height": "100vh", "overflow-y": "hidden" })
         })
 
@@ -301,17 +410,23 @@
             }
         })
         $(document).on("keyup", ".profile-inp", function () {
-            if ($("#name").val() != name || $("#username").val() != username || $("#email").val() != email) {
+            if ($("#name").val() != name || $("#username").val() != username || $("#email").val() != email || $("#Photo").val() != "") {
                 $(".save-btn").addClass("btnActive");
                 $(".save-btn").prop("disabled", false);
             }
-            if ($("#name").val() == name && $("#username").val() == username && $("#email").val() == email) {
+            if ($("#name").val() == name && $("#username").val() == username && $("#email").val() == email && $("#Photo").val() == image) {
                 $(".save-btn").removeClass("btnActive");
                 $(".save-btn").prop("disabled", true);
             }
             if ($("#name").val() == 0 || $("#username").val() == 0 || $("#email").val() == 0) {
                 $(".save-btn").removeClass("btnActive");
                 $(".save-btn").prop("disabled", true);
+            }
+        })
+        $(document).on("change", ".profile-form", function () {
+            if ($("#Photo").val() != "") {
+                $(".save-btn").addClass("btnActive");
+                $(".save-btn").prop("disabled", false);
             }
         })
     } UserProfile();

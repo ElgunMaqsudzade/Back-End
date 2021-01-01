@@ -2,16 +2,19 @@
 <div class="reply-area">
     <h3>LEAVE A REPLY</h3>
     <p>I must explain to you how all this a mistaken idea of ncing great explorer of the rut<br> the is lder of human happinescias unde omnis iste natus error sit volptatem </p>
-    <form id="comment-form">
+    <form id="comment-form"  class="@((User.Identity.IsAuthenticated)?"authorized":"")">
         <div class="row">
-            <div class="col-md-12">
-                <p>Name</p>
-                <input type="text" name="name" id="name">
-            </div>
-            <div style="margin-bottom:20px" class="col-md-12">
-                <p>Email</p>
-                <input style="margin-bottom:0px;" type="email" name="email" id="email">
-            </div>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <div class="col-md-12">
+                    <p>Name</p>
+                    <input type="text" name="name" id="name">
+                </div>
+                <div style="margin-bottom:20px" class="col-md-12">
+                    <p>Email</p>
+                    <input style="margin-bottom:0px;" type="email" name="email" id="email">
+                </div>
+            }
             <div class="col-md-12">
                 <p>Subject</p>
                 <input type="text" name="subject" id="subject">

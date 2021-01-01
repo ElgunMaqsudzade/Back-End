@@ -32,5 +32,10 @@ namespace EduHome.Models
         public virtual CourseSimple CourseSimple { get; set; }
         public int? EventSimpleId { get; set; }
         public virtual EventSimple EventSimple { get; set; }
+        public int? ParentId { get; set; }
+        public virtual Comment Parent { get; set; }
+        public List<Comment> Children { get; set; }
+        public string AppUserId { get; set; }
+        public virtual AppUser AppUser { get; set; }
     }
 }

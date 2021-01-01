@@ -1,0 +1,15 @@
+﻿@model Comment
+@{
+    Layout = null;
+}
+
+<div class="com-card reply">
+    <div class="r-inp-holder">
+        <textarea class="reply-inp" name="reply-inp" placeholder="@(Html.Raw("@"))@Model.Name"
+                  type="text"></textarea>
+        <div class="col-12 btn-holder">
+            <button class="rp-cancel">Cancel</button>
+            <button class="rp-send" disabled>Send</button>
+        </div>
+    </div>
+</div>

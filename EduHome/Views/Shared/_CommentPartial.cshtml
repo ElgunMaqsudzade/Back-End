@@ -2,25 +2,48 @@
 @{
     Layout = null;
 }
-
-<div class="message-card">
-    <div class="img-holder">
-        <img class="img-fluid" src="~/img/user/@((Model.Image==null)?"User.png":Model.Image)" alt="User">
+<div class="comment">
+    <div class="message-card">
+        <div class="img-holder">
+            <img class="img-fluid" src="~/img/user/@((Model.AppUserId !=null)?Model.AppUser.Image:Model.Image)" alt="User">
+        </div>
+        <div class="com-content">
+            <div class="com-title">
+                <h5 class="first"><a asp-controller="Account" asp-action="Profile" asp-route-username="@Model.Name">@Model.Name</a> </h5>
+                <h5>@Model.CreateTime.ToString("d, MMM yyyy")</h5>
+            </div>
+            <div class="com-body">
+                <p>
+                    @if (Model.ParentId != null)
+                    {
+                        <a class="suitable" asp-controller="Account" asp-action="Profile" asp-route-username="@Model.Parent.Name">@Html.Raw("@")@Model.Parent.Name</a>
+                    }
+                    <span>
+                        @Model.Description
+                    </span>
+                </p>
+            </div>
+            <div class="btn-box">
+                <button data-take="@Model.Id" class="com-reply-btn @((!User.Identity.IsAuthenticated)?"disabled":"")" >
+                    <i class="fa fa-reply" aria-hidden="true"></i>REPLY
+                </button>
+            </div>
+        </div>
     </div>
-    <div class="com-content">
-        <div class="com-title">
-            <h5 class="first"> <a asp-controller="User" asp-action="Profile">@Model.Name</a> </h5>
-            <h5>@Model.CreateTime.ToString("d, MMM yyyy")</h5>
-        </div>
-        <div class="com-body">
-            <p>
-                @Model.Description
-            </p>
-        </div>
-        <div class="btn-box">
-            <button class="com-reply-btn">
-                <i class="fa fa-reply" aria-hidden="true"></i>REPLY
-            </button>
-        </div>
+    <div class="reply-input" hidden></div>
+    <div class="reply-card">
+        @if (Model.Children.Count() != 0)
+        {
+            <button type="button" class="load-btn"><span class="btn-icon"><i class="fas fa-caret-down"></i></span> View replies</button>
+        }
+        <ul class="reply-card-ul" hidden>
+            @if (Model.Children.Count() != 0)
+            {
+                @foreach (Comment c in Model.Children)
+                {
+                    <partial name="_CommentReplyPartial" for="@c" />
+                }
+            }
+        </ul>
     </div>
 </div>

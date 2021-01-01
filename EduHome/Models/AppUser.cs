@@ -17,5 +17,6 @@ namespace EduHome.Models
         [NotMapped]
         public IFormFile Photo { get; set; }
         public bool IsDeleted { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }
