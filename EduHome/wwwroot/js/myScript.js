@@ -202,13 +202,9 @@
                 success: function (res) {
                     replyInputCard.removeClass("collapsed");
                     replyInputCard.empty();
-                    if (!primaryCard.find(".reply-card").hasClass("added")) {
-                        replycard.find(".reply-card-ul").append(res);
-                        primaryCard.find(".reply-card-ul").prop("hidden", false);
-                        primaryCard.addClass("added");
-                    } else {
-                        primaryCard.find(".reply-card-ul").append(res);
-                    }
+                    primaryCard.find(".reply-card-ul").append(res);
+                    primaryCard.find(".reply-card-ul").prop("hidden", false);
+                    primaryCard.addClass("added");
                 }
             });
 

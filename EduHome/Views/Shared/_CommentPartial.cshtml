@@ -24,7 +24,7 @@
                 </p>
             </div>
             <div class="btn-box">
-                <button data-take="@Model.Id" class="com-reply-btn @((!User.Identity.IsAuthenticated)?"disabled":"")" >
+                <button data-take="@Model.Id" class="com-reply-btn @((!User.Identity.IsAuthenticated)?"disabled":"")">
                     <i class="fa fa-reply" aria-hidden="true"></i>REPLY
                 </button>
             </div>
@@ -36,14 +36,25 @@
         {
             <button type="button" class="load-btn"><span class="btn-icon"><i class="fas fa-caret-down"></i></span> View replies</button>
         }
-        <ul class="reply-card-ul" hidden>
-            @if (Model.Children.Count() != 0)
+    <ul class="reply-card-ul" hidden>
+        @if (Model.Children.Count() > 0)
+        {
+            @foreach (Comment c in Model.Children)
             {
-                @foreach (Comment c in Model.Children)
+                <partial name="_CommentReplyPartial" for="@c" />
+
+                if (c.Children != null)
                 {
-                    <partial name="_CommentReplyPartial" for="@c" />
+                    if (c.Children.Count() > 0)
+                    {
+                        foreach (Comment child in c.Children)
+                        {
+                            <partial name="_CommentReplyPartial" for="@child" />
+                        }
+                    }
                 }
             }
-        </ul>
+        }
+    </ul>
     </div>
 </div>

@@ -30,7 +30,7 @@
                         <div class="message-field">
                             @if (Model.Comments.Count() != 0)
                             {
-                                @foreach (var c in Model.Comments)
+                                @foreach (Comment c in Model.Comments)
                                 {
                                     <partial name="_CommentPartial" for="@c" />
                                 }

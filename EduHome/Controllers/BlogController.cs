@@ -48,7 +48,7 @@ namespace EduHome.Controllers
             BlogVM blogVM = new BlogVM()
             {
                 BlogSimple = _db.BlogSimples.Where(b => b.IsDeleted == false && b.Id == id).Include(b => b.BlogDetail).FirstOrDefault(),
-                Comments = _db.Comments.Where(c => c.IsDeleted == false && c.BlogSimpleId == id).Take(10).OrderByDescending(c => c.Id).Include(c=>c.Children).Include(c=>c.AppUser).ToList(),
+                Comments = _db.Comments.Where(c => c.IsDeleted == false && c.BlogSimpleId == id).Take(10).OrderByDescending(c => c.Id).Include(c => c.Children).ThenInclude(c=>c.AppUser).Include(c => c.AppUser).ToList(),
             };
             if (blogVM.BlogSimple == null) return NotFound();
             return View(blogVM);
@@ -56,17 +56,19 @@ namespace EduHome.Controllers
         public async Task<IActionResult> Comment(int dbid, string name, string email, string subject, string message)
         {
             string image = "User.png";
-            string fullname = name + "(Guest)";
             Comment comment = new Comment()
             {
                 Image = image,
-                Name = fullname,
                 Email = email,
                 Title = subject,
                 Description = message,
                 BlogSimpleId = dbid,
                 CreateTime = DateTime.UtcNow
             };
+            if (!User.Identity.IsAuthenticated)
+            {
+                comment.Name = name + "(Guest)";
+            }
             if (User.Identity.IsAuthenticated)
             {
                 AppUser userManager = await _user.FindByNameAsync(User.Identity.Name);
@@ -77,7 +79,9 @@ namespace EduHome.Controllers
             await _db.Comments.AddAsync(comment);
             await _db.SaveChangesAsync();
 
-            return PartialView("_CommentPartial", comment);
+            Comment commentdb = _db.Comments.Where(t => t.IsDeleted == false && t.Id == comment.Id).Include(t => t.AppUser).Include(t => t.Children).ThenInclude(c => c.Children).FirstOrDefault();
+
+            return PartialView("_CommentPartial", commentdb);
         }
         public async Task<IActionResult> Reply(int id)
         {
@@ -111,6 +115,5 @@ namespace EduHome.Controllers
 
             return PartialView("_SearchBlogPartial", blogSimples);
         }
-
     }
 }

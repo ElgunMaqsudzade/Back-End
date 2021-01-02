@@ -33,8 +33,15 @@ using System.Globalization;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 4 "C:\Users\USER\Desktop\Back-End\EduHome\Views\_ViewImports.cshtml"
+using Microsoft.EntityFrameworkCore;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7a37538ca1bc85f5e66766d25199a38eb9156563", @"/Views/Shared/Components/Event/Default.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"9f630e9031e164b705cfb34783738a29c2724d19", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"66fd4b7fd03e4826d7dc47206af90b9beb9c55b4", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared_Components_Event_Default : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<List<EventSimple>>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-controller", "Event", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -82,7 +89,7 @@ using System.Globalization;
 #line hidden
 #nullable disable
             WriteLiteral("    <div class=\"col-md-4 col-sm-6 col-xs-12\">\r\n        <div class=\"single-event mb-60\">\r\n            <div class=\"event-img\">\r\n                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7a37538ca1bc85f5e66766d25199a38eb91565634841", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7a37538ca1bc85f5e66766d25199a38eb91565635024", async() => {
                 WriteLiteral("\r\n                    <img");
                 BeginWriteAttribute("src", " src=\"", 328, "\"", 352, 2);
                 WriteAttributeValue("", 334, "img/event/", 334, 10, true);
@@ -142,7 +149,7 @@ WriteAttributeValue("", 344, e.Image, 344, 8, false);
 #line hidden
 #nullable disable
             WriteLiteral("</span></h3>\r\n                </div>\r\n            </div>\r\n            <div class=\"event-content text-left\">\r\n                <h4>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7a37538ca1bc85f5e66766d25199a38eb91565638601", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7a37538ca1bc85f5e66766d25199a38eb91565638784", async() => {
 #nullable restore
 #line 22 "C:\Users\USER\Desktop\Back-End\EduHome\Views\Shared\Components\Event\Default.cshtml"
                                                                                   Write(e.Title);
@@ -205,7 +212,7 @@ WriteAttributeValue("", 344, e.Image, 344, 8, false);
 #line hidden
 #nullable disable
             WriteLiteral("</li>\r\n                </ul>\r\n                <div class=\"event-content-right\">\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7a37538ca1bc85f5e66766d25199a38eb915656312294", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7a37538ca1bc85f5e66766d25199a38eb915656312477", async() => {
                 WriteLiteral("join now");
             }
             );

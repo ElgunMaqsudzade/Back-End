@@ -33,8 +33,15 @@ using System.Globalization;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 4 "C:\Users\USER\Desktop\Back-End\EduHome\Views\_ViewImports.cshtml"
+using Microsoft.EntityFrameworkCore;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"bd0fc2e88855cea0ad83d966bb1789463e9b9630", @"/Views/Shared/Components/Sidebar/Default.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"9f630e9031e164b705cfb34783738a29c2724d19", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"66fd4b7fd03e4826d7dc47206af90b9beb9c55b4", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared_Components_Sidebar_Default : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<SidebarVM>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-controller", "Blog", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -95,7 +102,7 @@ using System.Globalization;
 #line hidden
 #nullable disable
             WriteLiteral("                    <li>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd0fc2e88855cea0ad83d966bb1789463e9b96308356", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd0fc2e88855cea0ad83d966bb1789463e9b96308539", async() => {
 #nullable restore
 #line 14 "C:\Users\USER\Desktop\Back-End\EduHome\Views\Shared\Components\Sidebar\Default.cshtml"
                                                                                          Write(c.Name);
@@ -153,7 +160,7 @@ using System.Globalization;
 #line hidden
 #nullable disable
             WriteLiteral("                    <li>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd0fc2e88855cea0ad83d966bb1789463e9b963011684", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd0fc2e88855cea0ad83d966bb1789463e9b963011867", async() => {
 #nullable restore
 #line 18 "C:\Users\USER\Desktop\Back-End\EduHome\Views\Shared\Components\Sidebar\Default.cshtml"
                                                                                           Write(c.Name);
@@ -211,7 +218,7 @@ using System.Globalization;
 #line hidden
 #nullable disable
             WriteLiteral("                    <li>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd0fc2e88855cea0ad83d966bb1789463e9b963015018", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd0fc2e88855cea0ad83d966bb1789463e9b963015201", async() => {
 #nullable restore
 #line 22 "C:\Users\USER\Desktop\Back-End\EduHome\Views\Shared\Components\Sidebar\Default.cshtml"
                                                                                            Write(c.Name);
@@ -280,8 +287,8 @@ using System.Globalization;
 #line hidden
 #nullable disable
             WriteLiteral("            <div class=\"single-blog-widget mb-47\">\r\n                <div class=\"single-blog-banner\">\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd0fc2e88855cea0ad83d966bb1789463e9b963018766", async() => {
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "bd0fc2e88855cea0ad83d966bb1789463e9b963018983", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd0fc2e88855cea0ad83d966bb1789463e9b963018949", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "bd0fc2e88855cea0ad83d966bb1789463e9b963019166", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -355,9 +362,9 @@ AddHtmlAttributeValue("", 1353, bl.Image, 1353, 9, false);
 #line hidden
 #nullable disable
             WriteLiteral("            <div class=\"single-post mb-30\">\r\n                <div class=\"single-post-img\">\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd0fc2e88855cea0ad83d966bb1789463e9b963023644", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd0fc2e88855cea0ad83d966bb1789463e9b963023827", async() => {
                 WriteLiteral("\r\n                        ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "bd0fc2e88855cea0ad83d966bb1789463e9b963023924", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "bd0fc2e88855cea0ad83d966bb1789463e9b963024107", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -414,7 +421,7 @@ AddHtmlAttributeValue("", 1962, b.Image, 1962, 8, false);
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                </div>\r\n                <div class=\"single-post-content\">\r\n                    <h4>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd0fc2e88855cea0ad83d966bb1789463e9b963028137", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd0fc2e88855cea0ad83d966bb1789463e9b963028320", async() => {
                 WriteLiteral("English Language Course for you");
             }
             );
@@ -498,7 +505,7 @@ AddHtmlAttributeValue("", 1962, b.Image, 1962, 8, false);
 #line hidden
 #nullable disable
             WriteLiteral("                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd0fc2e88855cea0ad83d966bb1789463e9b963032367", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd0fc2e88855cea0ad83d966bb1789463e9b963032550", async() => {
 #nullable restore
 #line 71 "C:\Users\USER\Desktop\Back-End\EduHome\Views\Shared\Components\Sidebar\Default.cshtml"
                                                                                                               Write(tag.Tag.Name);
@@ -582,7 +589,7 @@ AddHtmlAttributeValue("", 1962, b.Image, 1962, 8, false);
 #line hidden
 #nullable disable
             WriteLiteral("                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd0fc2e88855cea0ad83d966bb1789463e9b963036436", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd0fc2e88855cea0ad83d966bb1789463e9b963036619", async() => {
 #nullable restore
 #line 81 "C:\Users\USER\Desktop\Back-End\EduHome\Views\Shared\Components\Sidebar\Default.cshtml"
                                                                                                               Write(tag.Tag.Name);
@@ -666,7 +673,7 @@ AddHtmlAttributeValue("", 1962, b.Image, 1962, 8, false);
 #line hidden
 #nullable disable
             WriteLiteral("                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd0fc2e88855cea0ad83d966bb1789463e9b963040510", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bd0fc2e88855cea0ad83d966bb1789463e9b963040693", async() => {
 #nullable restore
 #line 91 "C:\Users\USER\Desktop\Back-End\EduHome\Views\Shared\Components\Sidebar\Default.cshtml"
                                                                                                               Write(tag.Tag.Name);
