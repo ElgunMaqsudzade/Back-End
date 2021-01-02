@@ -1,0 +1,51 @@
+﻿@model List<TeacherSimple>
+@{
+    ViewData["Title"] = "Teacher Simple";
+    int count = 1;
+}
+
+<div class="row">
+    <table class="table table-hover">
+        <thead>
+            <tr class="text-right">
+                <th scope="col"><a class="btn btn-md btn-success" asp-controller="Teacher" asp-action="Create">Create</a></th>
+            </tr>
+            <tr class="text-center">
+                <th scope="col">#</th>
+                <th scope="col">Image</th>
+                <th scope="col">Fullname</th>
+                <th scope="col">For Home Page</th>
+                <th scope="col">Profession</th>
+                <th scope="col">Social Media</th>
+                <th scope="col">Settings</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (TeacherSimple e in Model)
+            {
+                <tr class="text-center">
+                    <td>@count</td>
+                    <td class="td-img"><img src="~/img/teacher/@e.Image" alt="Alternate Text" /></td>
+                    <td>@e.Fullname</td>
+                    <td>@e.IsSimple</td>
+                    <td>@e.Profession.Name</td>
+                    <td>
+                        <ul>
+                            @foreach (SocialMedia s in e.SocialMedias)
+                            {
+                                <li><a href="@s.Link">@Html.Raw(s.Icon)</a></li>
+                            }
+                        </ul>
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-secondary" asp-controller="Teacher" asp-action="Detail" asp-route-id="@e.Id">Detail</a>
+                        <a class="btn btn-sm btn-primary" asp-controller="Teacher" asp-action="Update" asp-route-id="@e.Id">Update</a>
+                        <a class="btn btn-sm btn-danger" asp-controller="Teacher" asp-action="Delete" asp-route-id="@e.Id">Delete</a>
+                    </td>
+                </tr>
+                count++;
+            }
+        </tbody>
+    </table>
+</div>
+

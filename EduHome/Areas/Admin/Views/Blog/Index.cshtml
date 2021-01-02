@@ -1,0 +1,41 @@
+﻿@model List<BlogSimple>
+@{
+    ViewData["Title"] = "Blog Simple";
+    int count = 1;
+}
+
+<div class="row">
+    <table class="table table-hover">
+        <thead>
+            <tr class="text-right">
+                <th scope="col"><a class="btn btn-md btn-success" asp-controller="Blog" asp-action="Create">Create</a></th>
+            </tr>
+            <tr class="text-center">
+                <th scope="col">#</th>
+                <th scope="col">Image</th>
+                <th scope="col">Title</th>
+                <th scope="col">Created Date</th>
+                <th scope="col">Author</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (BlogSimple e in Model)
+            {
+                <tr class="text-center">
+                    <td>@count</td>
+                    <td class="td-img"><img src="~/img/blog/@e.Image" alt="Alternate Text" /></td>
+                    <td>@e.Title</td>
+                    <td>@e.CreateTime</td>
+                    <td>@e.Author</td>
+                    <td>
+                        <a class="btn btn-sm btn-secondary" asp-controller="Blog" asp-action="Detail" asp-route-id="@e.Id">Detail</a>
+                        <a class="btn btn-sm btn-primary" asp-controller="Blog" asp-action="Update" asp-route-id="@e.Id">Update</a>
+                        <a class="btn btn-sm btn-danger" asp-controller="Blog" asp-action="Delete" asp-route-id="@e.Id">Delete</a>
+                    </td>
+                </tr>
+                count++;
+            }
+        </tbody>
+    </table>
+</div>
+

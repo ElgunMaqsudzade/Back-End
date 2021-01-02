@@ -1,0 +1,49 @@
+﻿@model CourseSimple
+@{
+    ViewData["Title"] = "Course Detail";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="courses-details">
+                <div class="courses-details-img">
+                    <img class="img-fluid" src="~/img/course/@Model.Image" alt="courses-details">
+                </div>
+                <div class="course-details-content">
+                    <h2>@Model.Title</h2>
+                    <p>@Model.MainContent</p>
+                    <div class="course-details-left">
+                        <div class="single-course-left">
+                            <h3>about course</h3>
+                            <p>@Model.CourseDetail.AboutCourse</p>
+                        </div>
+                        <div class="single-course-left">
+                            <h3>how to apply</h3>
+                            <p>@Model.CourseDetail.ApplyContent</p>
+                        </div>
+                        <div class="single-course-left">
+                            <h3>certification</h3>
+                            @Html.Raw(Model.CourseDetail.CertificationContent)
+                        </div>
+                    </div>
+                    <div class="course-details-right">
+                        <h3>COURSE FEATURES</h3>
+                        <ul>
+                            <li>
+                                starts <span>@Model.CourseDetail.CourseFeature.StartingTime.ToString("d, MMMM yyyy")</span>
+                            </li>
+                            <li>duration <span>@(Math.Round((Double)(Model.CourseDetail.CourseFeature.CourseDuration) / 720,0)) Month</span></li>
+                            <li>class duration <span>@Model.CourseDetail.CourseFeature.ClassDuration hours</span></li>
+                            <li>skill level <span>@Model.CourseDetail.CourseFeature.SkillLevel</span></li>
+                            <li>language <span>@Model.CourseDetail.CourseFeature.Language</span></li>
+                            <li>students <span>@Model.CourseDetail.CourseFeature.StudentCount</span></li>
+                            <li>assesments <span>@Model.CourseDetail.CourseFeature.Assesment</span></li>
+                        </ul>
+                        <h3 class="red">course fee $@Model.CourseDetail.CourseFeature.Price</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

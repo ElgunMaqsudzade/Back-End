@@ -1,0 +1,51 @@
+﻿@model List<CourseSimple>
+@{
+    ViewData["Title"] = "Course Simple";
+    int count = 1;
+}
+<div class="modal-box">
+    <div class="inner-box col-4">
+        <div class="modal-img-box">
+            <img class=" img-fluid inner-img" src="" />
+        </div>
+        <div class="modal-body text-uppercase"></div>
+        <div class="modal-btn">
+            <button class="m-2 btn btn-md btn-danger modal-delete">Delete</button>
+            <button class="m-2 btn btn-md btn-primary modal-back">Go Back</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <table class="table table-hover">
+        <thead>
+            <tr class="text-right">
+                <th scope="col"><a class="btn btn-md btn-success" asp-controller="Course" asp-action="Create">Create</a></th>
+            </tr>
+            <tr class="text-center">
+                <th scope="col">#</th>
+                <th scope="col">Image</th>
+                <th scope="col">Title</th>
+                <th style="width:40%" scope="col">MainContent</th>
+                <th scope="col">Settings</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (CourseSimple c in Model)
+            {
+                <tr class="text-center">
+                    <td>@count</td>
+                    <td class="td-img"><img src="~/img/course/@c.Image" alt="Alternate Text" /></td>
+                    <td>@c.Title</td>
+                    <td>@((c.MainContent.Length < 157) ? c.MainContent:c.MainContent.Substring(0,157) + "...")</td>
+                    <td>
+                        <a class="btn btn-sm btn-secondary" asp-controller="Course" asp-action="Detail" asp-route-id="@c.Id">Detail</a>
+                        <a class="btn btn-sm btn-primary" asp-controller="Course" asp-action="Update" asp-route-id="@c.Id">Update</a>
+                        <button data-delete="@c.Id" class="btn btn-sm btn-danger delete">Delete</button>
+                    </td>
+                </tr>
+                count++;
+            }
+        </tbody>
+    </table>
+</div>
+

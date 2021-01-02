@@ -1,0 +1,108 @@
+﻿@model CourseForCreateVM
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <form class="forms-sample" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                                <div class="form-group">
+                                    <label asp-for="CourseSimple.Photo" class="form-label">Select Image</label>
+                                    <input asp-for="CourseSimple.Photo" class="form-control" accept="image/*" type="file">
+                                    <span class="text-danger" asp-validation-for="CourseSimple.Photo"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CourseSimple.Title" class="form-label">Title</label>
+                                    <input asp-for="CourseSimple.Title" class="form-control" placeholder="Title">
+                                    <span class="text-danger" asp-validation-for="CourseSimple.Title"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CourseSimple.MainContent">Main Description</label>
+                                    <input asp-for="CourseSimple.MainContent" class="form-control" placeholder="Main Description">
+                                    <span class="text-danger" asp-validation-for="CourseSimple.MainContent"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CourseDetail.AboutCourse">About Course</label>
+                                    <input asp-for="CourseDetail.AboutCourse" class="form-control" placeholder="About Course">
+                                    <span class="text-danger" asp-validation-for="CourseDetail.AboutCourse"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CourseDetail.ApplyContent">How to Apply</label>
+                                    <input asp-for="CourseDetail.ApplyContent" class="form-control" placeholder="How to Apply">
+                                    <span class="text-danger" asp-validation-for="CourseDetail.ApplyContent"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CourseDetail.CertificationContent">Certification</label>
+                                    <input asp-for="CourseDetail.CertificationContent" class="form-control" placeholder="Certification">
+                                    <span class="text-danger" asp-validation-for="CourseDetail.CertificationContent"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CourseFeature.StartingTime">Starting Date</label>
+                                    <input asp-for="CourseFeature.StartingTime" class="form-control" placeholder="Starting Date">
+                                    <span class="text-danger" asp-validation-for="CourseFeature.StartingTime"></span>
+                                </div>
+                                <div class="form-check form-check-flat form-check-primary">
+                                    <label asp-for="CourseSimple.IsSimple" class="form-check-label">
+                                        <input asp-for="CourseSimple.IsSimple" type="checkbox" class="form-check-input">
+                                        Do you want to show it also at home page?
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="CourseFeature.CourseDuration">Course Duration</label>
+                                    <input asp-for="CourseFeature.CourseDuration" class="form-control" placeholder="Course Duration/Hours">
+                                    <span class="text-danger" asp-validation-for="CourseFeature.CourseDuration"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CourseFeature.ClassDuration">Class Duration</label>
+                                    <input asp-for="CourseFeature.ClassDuration" class="form-control" placeholder="Class Duration/Hours">
+                                    <span class="text-danger" asp-validation-for="CourseFeature.ClassDuration"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CourseFeature.SkillLevel">Skill Level</label>
+                                    <input asp-for="CourseFeature.SkillLevel" class="form-control" placeholder="Skill Level">
+                                    <span class="text-danger" asp-validation-for="CourseFeature.SkillLevel"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CourseFeature.Language">Language</label>
+                                    <input asp-for="CourseFeature.Language" class="form-control" placeholder="Language">
+                                    <span class="text-danger" asp-validation-for="CourseFeature.Language"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CourseFeature.StudentCount">Student Count</label>
+                                    <input asp-for="CourseFeature.StudentCount" class="form-control" placeholder="Student Count">
+                                    <span class="text-danger" asp-validation-for="CourseFeature.StudentCount"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CourseFeature.Assesment">Assesment</label>
+                                    <input asp-for="CourseFeature.Assesment" class="form-control" placeholder="Assesment">
+                                    <span class="text-danger" asp-validation-for="CourseFeature.Assesment"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CourseFeature.Price">Price</label>
+                                    <input asp-for="CourseFeature.Price" class="form-control" placeholder="Price">
+                                    <span class="text-danger" asp-validation-for="CourseFeature.Price"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <button class="btn btn-light">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

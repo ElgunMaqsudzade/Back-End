@@ -1,0 +1,44 @@
+﻿@model List<EventSimple>
+@{
+    ViewData["Title"] = "Event Simple";
+    int count = 1;
+}
+
+<div class="row">
+    <table class="table table-hover">
+        <thead>
+            <tr class="text-right">
+                <th scope="col"><a class="btn btn-md btn-success" asp-controller="Event" asp-action="Create">Create</a></th>
+            </tr>
+            <tr class="text-center">
+                <th scope="col">#</th>
+                <th scope="col">Image</th>
+                <th scope="col">Title</th>
+                <th scope="col">Starting Date</th>
+                <th scope="col">Ending Date</th>
+                <th scope="col">Address</th>
+                <th scope="col">Settings</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (EventSimple e in Model)
+            {
+                <tr class="text-center">
+                    <td>@count</td>
+                    <td class="td-img"><img src="~/img/event/@e.Image" alt="Alternate Text" /></td>
+                    <td>@e.Title</td>
+                    <td>@e.StartingTime</td>
+                    <td>@e.EndingTime</td>
+                    <td>@e.Location</td>
+                    <td>
+                        <a class="btn btn-sm btn-secondary" asp-controller="Event" asp-action="Detail" asp-route-id="@e.Id">Detail</a>
+                        <a class="btn btn-sm btn-primary" asp-controller="Event" asp-action="Update" asp-route-id="@e.Id">Update</a>
+                        <a class="btn btn-sm btn-danger" asp-controller="Event" asp-action="Delete" asp-route-id="@e.Id">Delete</a>
+                    </td>
+                </tr>
+                count++;
+            }
+        </tbody>
+    </table>
+</div>
+

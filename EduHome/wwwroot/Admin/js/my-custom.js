@@ -99,3 +99,45 @@ $(function () {
         e.stopPropagation();
     })
 })
+
+//Course Simple Delete Action modal
+function Modal() {
+    $(".delete").click(function () {
+        let box = $(this).parents(".text-center");
+        $(".modal-box").css("display", "block");
+        $("body").css({ "height": "100vh", "overflow-y": "hidden" })
+        $.ajax({
+            type: "GET",
+            url: '/Admin/Course/Delete',
+            data: { "id": this.dataset.delete },
+            success: function (res) {
+                $(".inner-img").attr("src", `/img/course/${res.image}`)
+                $(".modal-body").append(res.title)
+                $(".modal-delete").click(function () {
+                    $.ajax({
+                        type: "Get",
+                        url: '/Admin/Course/DeleteCourse',
+                        data: { "id": res.id },
+                        success: function () {
+                            $(".modal-box").css("display", "none");
+                            $("body").css({ "height": "initial", "overflow-y": "initial" })
+                            box.remove();
+                        }
+                    })
+                })
+            }
+        })
+    })
+
+    $(".modal-box").click(function () {
+        $(".modal-box").css("display", "none");
+        $("body").css({ "height": "initial", "overflow-y": "initial" })
+    });
+    $(".modal-back").click(function () {
+        $(".modal-box").css("display", "none");
+        $("body").css({ "height": "initial", "overflow-y": "initial" })
+    });
+    $(".inner-box").click(function (e) {
+        e.stopPropagation();
+    })
+} Modal();
