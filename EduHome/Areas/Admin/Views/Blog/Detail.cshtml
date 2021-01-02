@@ -1,0 +1,25 @@
+﻿@model BlogSimple
+@{
+    ViewData["Title"] = "Blog Detail";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="blog-details">
+                <div class="blog-details-img">
+                    <img class="img-fluid" src="~/img/blog/@Model.Image" alt="blog-details">
+                </div>
+                <div class="blog-details-content">
+                    <h2>@Model.Title </h2>
+                    <h6>
+                        By @Model.Author / @Model.CreateTime.ToString("d, MMMM yyyy") / <i class='fa fa-comments-o'></i> <span class="reply-count">@(Model.ReplyCount != 0?$"{Model.ReplyCount}": "")</span>
+                    </h6>
+                    @Html.Raw(Model.BlogDetail.AboutContent)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

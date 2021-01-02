@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using EduHome.DAL;
 using EduHome.Models;
 using EduHome.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ using static EduHome.Extensions.Extension;
 namespace EduHome.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class EventController : Controller
     {
         private readonly AppDbContext _db;
@@ -27,9 +29,13 @@ namespace EduHome.Areas.Admin.Controllers
             List<EventSimple> eventSimples = await _db.EventSimples.Where(e => e.IsDeleted == false).Skip(0).Take(10).ToListAsync();
             return View(eventSimples);
         }
-        public async Task<IActionResult> Detail(int id)
+        public async Task<IActionResult> Detail(int? id)
         {
-            EventSimple eventSimple = await _db.EventSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e=>e.EventDetail).FirstOrDefaultAsync();
+            if (id == null) return NotFound();
+            bool isExist = _db.EventSimples.Where(c => c.IsDeleted == false).Any(c => c.Id == id);
+            if (!isExist) return NotFound();
+
+            EventSimple eventSimple = await _db.EventSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.EventDetail).Include(e=>e.SpeakerEventSimples).ThenInclude(e=>e.Speaker).FirstOrDefaultAsync();
             return View(eventSimple);
         }
         public IActionResult Create()
@@ -37,12 +43,17 @@ namespace EduHome.Areas.Admin.Controllers
             
             return View();
         }
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
+        {
+            EventSimple eventSimple = _db.EventSimples.Where(e => e.IsDeleted == false && e.Id == id).FirstOrDefault();
+            return Json(eventSimple);
+        }
+        public async Task<IActionResult> DeletePost(int id)
         {
             EventSimple eventSimple = _db.EventSimples.Where(e => e.IsDeleted == false && e.Id == id).FirstOrDefault();
             eventSimple.IsDeleted = true;
             await _db.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Json(eventSimple);
         }
         public async Task<IActionResult> Update(int id)
         {

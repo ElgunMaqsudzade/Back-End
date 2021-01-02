@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EduHome.Models;
 using EduHome.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using static EduHome.Extensions.Extension;
@@ -11,6 +12,7 @@ using static EduHome.Extensions.Extension;
 namespace EduHome.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private readonly UserManager<AppUser> _userManager;

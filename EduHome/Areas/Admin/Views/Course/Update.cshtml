@@ -16,31 +16,31 @@
                     <div class="course-details-left">
                         <div class="single-course-left">
                             <h3>about course</h3>
-                            <p>@Model.CourseSimple.CourseDetail.AboutCourse</p>
+                            <p>@Model.CourseDetail.AboutCourse</p>
                         </div>
                         <div class="single-course-left">
                             <h3>how to apply</h3>
-                            <p>@Model.CourseSimple.CourseDetail.ApplyContent</p>
+                            <p>@Model.CourseDetail.ApplyContent</p>
                         </div>
                         <div class="single-course-left">
                             <h3>certification</h3>
-                            @Html.Raw(Model.CourseSimple.CourseDetail.CertificationContent)
+                            @Html.Raw(Model.CourseDetail.CertificationContent)
                         </div>
                     </div>
                     <div class="course-details-right">
                         <h3>COURSE FEATURES</h3>
                         <ul>
                             <li>
-                                starts <span>@Model.CourseSimple.CourseDetail.CourseFeature.StartingTime.ToString("d, MMMM yyyy")</span>
+                                starts <span>@Model.CourseFeature.StartingTime.ToString("d, MMMM yyyy")</span>
                             </li>
-                            <li>duration <span>@(Math.Round((Double)(Model.CourseSimple.CourseDetail.CourseFeature.CourseDuration) / 720,0)) Month</span></li>
-                            <li>class duration <span>@Model.CourseSimple.CourseDetail.CourseFeature.ClassDuration hours</span></li>
-                            <li>skill level <span>@Model.CourseSimple.CourseDetail.CourseFeature.SkillLevel</span></li>
-                            <li>language <span>@Model.CourseSimple.CourseDetail.CourseFeature.Language</span></li>
-                            <li>students <span>@Model.CourseSimple.CourseDetail.CourseFeature.StudentCount</span></li>
-                            <li>assesments <span>@Model.CourseSimple.CourseDetail.CourseFeature.Assesment</span></li>
+                            <li>duration <span>@(Math.Round((Double)(Model.CourseFeature.CourseDuration) / 720,0)) Month</span></li>
+                            <li>class duration <span>@Model.CourseFeature.ClassDuration hours</span></li>
+                            <li>skill level <span>@Model.CourseFeature.SkillLevel</span></li>
+                            <li>language <span>@Model.CourseFeature.Language</span></li>
+                            <li>students <span>@Model.CourseFeature.StudentCount</span></li>
+                            <li>assesments <span>@Model.CourseFeature.Assesment</span></li>
                         </ul>
-                        <h3 class="red">course fee $@Model.CourseSimple.CourseDetail.CourseFeature.Price</h3>
+                        <h3 class="red">course fee $@Model.CourseFeature.Price</h3>
                     </div>
                 </div>
             </div>
@@ -56,37 +56,37 @@
                                 <div class="text-danger" asp-validation-summary="ModelOnly"></div>
                                 <div class="form-group">
                                     <label asp-for="CourseSimple.Photo" class="form-label">Select Image</label>
-                                    <input asp-for="CourseSimple.Photo" class="form-control" accept="image/*" type="file">
+                                    <input asp-for="CourseSimple.Photo"  class="form-control" accept="image/*">
                                     <span class="text-danger" asp-validation-for="CourseSimple.Photo"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="CourseSimple.Title" class="form-label">Title</label>
-                                    <input asp-for="CourseSimple.Title" class="form-control" placeholder="Title">
+                                    <input asp-for="CourseSimple.Title" value="@Model.CourseSimple.Title" class="form-control" placeholder="Title">
                                     <span class="text-danger" asp-validation-for="CourseSimple.Title"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="CourseSimple.MainContent">Main Description</label>
-                                    <input asp-for="CourseSimple.MainContent" class="form-control" placeholder="Main Description">
+                                    <input asp-for="CourseSimple.MainContent" value="@Model.CourseSimple.MainContent" class="form-control" placeholder="Main Description">
                                     <span class="text-danger" asp-validation-for="CourseSimple.MainContent"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="CourseDetail.AboutCourse">About Course</label>
-                                    <input asp-for="CourseDetail.AboutCourse" class="form-control" placeholder="About Course">
+                                    <input asp-for="CourseDetail.AboutCourse" value="@Model.CourseDetail.AboutCourse" class="form-control" placeholder="About Course">
                                     <span class="text-danger" asp-validation-for="CourseDetail.AboutCourse"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="CourseDetail.ApplyContent">How to Apply</label>
-                                    <input asp-for="CourseDetail.ApplyContent" class="form-control" placeholder="How to Apply">
+                                    <input asp-for="CourseDetail.ApplyContent" value="@Model.CourseDetail.ApplyContent" class="form-control" placeholder="How to Apply">
                                     <span class="text-danger" asp-validation-for="CourseDetail.ApplyContent"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="CourseDetail.CertificationContent">Certification</label>
-                                    <input asp-for="CourseDetail.CertificationContent" class="form-control" placeholder="Certification">
+                                    <input asp-for="CourseDetail.CertificationContent" value="@Model.CourseDetail.CertificationContent" class="form-control" placeholder="Certification">
                                     <span class="text-danger" asp-validation-for="CourseDetail.CertificationContent"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="CourseFeature.StartingTime">Starting Date</label>
-                                    <input asp-for="CourseFeature.StartingTime" class="form-control" placeholder="Starting Date">
+                                    <input asp-for="CourseFeature.StartingTime" value="@Model.CourseFeature.StartingTime" class="form-control" placeholder="Starting Date">
                                     <span class="text-danger" asp-validation-for="CourseFeature.StartingTime"></span>
                                 </div>
                                 <div class="form-check form-check-flat form-check-primary">
@@ -99,37 +99,37 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label asp-for="CourseFeature.CourseDuration">Course Duration</label>
-                                    <input asp-for="CourseFeature.CourseDuration" class="form-control" placeholder="Course Duration/Hours">
+                                    <input asp-for="CourseFeature.CourseDuration" value="@Model.CourseFeature.CourseDuration" class="form-control" placeholder="Course Duration/Hours">
                                     <span class="text-danger" asp-validation-for="CourseFeature.CourseDuration"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="CourseFeature.ClassDuration">Class Duration</label>
-                                    <input asp-for="CourseFeature.ClassDuration" class="form-control" placeholder="Class Duration/Hours">
+                                    <input asp-for="CourseFeature.ClassDuration" value="@Model.CourseFeature.ClassDuration" class="form-control" placeholder="Class Duration/Hours">
                                     <span class="text-danger" asp-validation-for="CourseFeature.ClassDuration"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="CourseFeature.SkillLevel">Skill Level</label>
-                                    <input asp-for="CourseFeature.SkillLevel" class="form-control" placeholder="Skill Level">
+                                    <input asp-for="CourseFeature.SkillLevel" value="@Model.CourseFeature.SkillLevel" class="form-control" placeholder="Skill Level">
                                     <span class="text-danger" asp-validation-for="CourseFeature.SkillLevel"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="CourseFeature.Language">Language</label>
-                                    <input asp-for="CourseFeature.Language" class="form-control" placeholder="Language">
+                                    <input asp-for="CourseFeature.Language" value="@Model.CourseFeature.Language" class="form-control" placeholder="Language">
                                     <span class="text-danger" asp-validation-for="CourseFeature.Language"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="CourseFeature.StudentCount">Student Count</label>
-                                    <input asp-for="CourseFeature.StudentCount" class="form-control" placeholder="Student Count">
+                                    <input asp-for="CourseFeature.StudentCount" value="@Model.CourseFeature.StudentCount" class="form-control" placeholder="Student Count">
                                     <span class="text-danger" asp-validation-for="CourseFeature.StudentCount"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="CourseFeature.Assesment">Assesment</label>
-                                    <input asp-for="CourseFeature.Assesment" class="form-control" placeholder="Assesment">
+                                    <input asp-for="CourseFeature.Assesment" value="@Model.CourseFeature.Assesment" class="form-control" placeholder="Assesment">
                                     <span class="text-danger" asp-validation-for="CourseFeature.Assesment"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="CourseFeature.Price">Price</label>
-                                    <input asp-for="CourseFeature.Price" class="form-control" placeholder="Price">
+                                    <input asp-for="CourseFeature.Price" value="@Model.CourseFeature.Price" class="form-control" placeholder="Price">
                                     <span class="text-danger" asp-validation-for="CourseFeature.Price"></span>
                                 </div>
                             </div>

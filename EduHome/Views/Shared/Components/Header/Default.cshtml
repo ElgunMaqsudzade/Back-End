@@ -16,6 +16,11 @@
 
                                 <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin</a></li>
                             }
+                            @if (User.IsInRole("CourseModerator"))
+                            {
+
+                                <li><a asp-area="Admin" asp-controller="Course" asp-action="Index">Course Moderator</a></li>
+                            }
                             @if (User.Identity.IsAuthenticated)
                             {
                                 <li><a asp-controller="Account" asp-action="Profile" asp-route-username="@User.Identity.Name">@User.Identity.Name</a></li>

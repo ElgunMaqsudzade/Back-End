@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Course Simple";
     int count = 1;
+    string url = "Course";
 }
 <div class="modal-box">
     <div class="inner-box col-4">
@@ -40,7 +41,7 @@
                     <td>
                         <a class="btn btn-sm btn-secondary" asp-controller="Course" asp-action="Detail" asp-route-id="@c.Id">Detail</a>
                         <a class="btn btn-sm btn-primary" asp-controller="Course" asp-action="Update" asp-route-id="@c.Id">Update</a>
-                        <button data-delete="@c.Id" class="btn btn-sm btn-danger delete">Delete</button>
+                        <button data-delete="@c.Id" data-url="@url" class="btn btn-sm btn-danger delete">Delete</button>
                     </td>
                 </tr>
                 count++;

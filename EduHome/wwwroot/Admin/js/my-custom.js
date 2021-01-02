@@ -7,7 +7,7 @@ $(function () {
     $(".change-role-btn").click(function () {
         $(".rol-btn-holder").css({ "top": `${$(this).offset().top - $(document).scrollTop() + 50}px`, "left": `${$(this).offset().left + 20}px` })
         $(".role-modal").removeClass("d-none");
-        $("body").css({ "height": "100vh", "overflow-y": "hidden" })
+        $("body").css({ "overflow-y": "hidden" })
         for (var item of $(this).parent().siblings()) {
             for (var role of $(".role-btn")) {
                 if ($(item).text() == $(role).text()) {
@@ -102,25 +102,31 @@ $(function () {
 
 //Course Simple Delete Action modal
 function Modal() {
+    let url;
     $(".delete").click(function () {
+        url = this.dataset.url;
         let box = $(this).parents(".text-center");
         $(".modal-box").css("display", "block");
-        $("body").css({ "height": "100vh", "overflow-y": "hidden" })
+        $("body").css({"height": "100vh", "overflow-y": "hidden" })
         $.ajax({
             type: "GET",
-            url: '/Admin/Course/Delete',
+            url: `/Admin/${url}/Delete`,
             data: { "id": this.dataset.delete },
             success: function (res) {
-                $(".inner-img").attr("src", `/img/course/${res.image}`)
-                $(".modal-body").append(res.title)
+                $(".inner-img").attr("src", `/img/${url.toLowerCase()}/${res.image}`)
+                if (url == "Teacher") {
+                    $(".modal-body").text(res.fullname)
+                } else {
+                    $(".modal-body").text(res.title)
+                }
                 $(".modal-delete").click(function () {
                     $.ajax({
                         type: "Get",
-                        url: '/Admin/Course/DeleteCourse',
+                        url: `/Admin/${url}/DeletePost`,
                         data: { "id": res.id },
                         success: function () {
                             $(".modal-box").css("display", "none");
-                            $("body").css({ "height": "initial", "overflow-y": "initial" })
+                            $("body").css({ "height": "auto", "overflow-y": "auto" })
                             box.remove();
                         }
                     })
@@ -131,11 +137,11 @@ function Modal() {
 
     $(".modal-box").click(function () {
         $(".modal-box").css("display", "none");
-        $("body").css({ "height": "initial", "overflow-y": "initial" })
+        $("body").css({ "height": "auto", "overflow-y": "auto" })
     });
     $(".modal-back").click(function () {
         $(".modal-box").css("display", "none");
-        $("body").css({ "height": "initial", "overflow-y": "initial" })
+        $("body").css({ "height": "auto", "overflow-y": "auto" })
     });
     $(".inner-box").click(function (e) {
         e.stopPropagation();
