@@ -103,6 +103,7 @@ namespace EduHome.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Update(int id)
         {
+            CourseSimple courseSimple = await _db.CourseSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.CourseDetail).ThenInclude(t => t.CourseFeature).FirstOrDefaultAsync();
 
 
 
@@ -111,8 +112,7 @@ namespace EduHome.Areas.Admin.Controllers
 
 
 
-
-          return View();
+            return View(courseSimple);
         }
 
     }
