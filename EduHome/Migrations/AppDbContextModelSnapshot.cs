@@ -159,7 +159,7 @@ namespace EduHome.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateTime")
@@ -384,7 +384,7 @@ namespace EduHome.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateTime")
@@ -451,7 +451,7 @@ namespace EduHome.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateTime")
@@ -629,12 +629,9 @@ namespace EduHome.Migrations
                         .HasColumnType("nvarchar(15)")
                         .HasMaxLength(15);
 
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Skill");
+                    b.ToTable("Skills");
                 });
 
             modelBuilder.Entity("EduHome.Models.SocialMedia", b =>
@@ -711,10 +708,10 @@ namespace EduHome.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("EventSimpleId")
+                    b.Property<int>("EventSimpleId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SpeakerId")
+                    b.Property<int>("SpeakerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -905,6 +902,9 @@ namespace EduHome.Migrations
                     b.Property<int>("SkillId")
                         .HasColumnType("int");
 
+                    b.Property<int>("SkillValue")
+                        .HasColumnType("int");
+
                     b.Property<int>("TeacherDetailId")
                         .HasColumnType("int");
 
@@ -914,7 +914,7 @@ namespace EduHome.Migrations
 
                     b.HasIndex("TeacherDetailId");
 
-                    b.ToTable("TeacherSkill");
+                    b.ToTable("TeacherSkills");
                 });
 
             modelBuilder.Entity("EduHome.Models.TestimonialArea", b =>
@@ -1118,7 +1118,9 @@ namespace EduHome.Migrations
                 {
                     b.HasOne("EduHome.Models.Category", "Category")
                         .WithMany("BlogSimples")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EduHome.Models.Comment", b =>
@@ -1166,7 +1168,9 @@ namespace EduHome.Migrations
                 {
                     b.HasOne("EduHome.Models.Category", "Category")
                         .WithMany("CourseSimples")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EduHome.Models.EventDetail", b =>
@@ -1182,7 +1186,9 @@ namespace EduHome.Migrations
                 {
                     b.HasOne("EduHome.Models.Category", "Category")
                         .WithMany("EventSimples")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EduHome.Models.SocialMedia", b =>
@@ -1207,11 +1213,15 @@ namespace EduHome.Migrations
                 {
                     b.HasOne("EduHome.Models.EventSimple", "EventSimple")
                         .WithMany("SpeakerEventSimples")
-                        .HasForeignKey("EventSimpleId");
+                        .HasForeignKey("EventSimpleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("EduHome.Models.Speaker", "Speaker")
                         .WithMany("SpeakerEventSimples")
-                        .HasForeignKey("SpeakerId");
+                        .HasForeignKey("SpeakerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EduHome.Models.TagBlogSimple", b =>

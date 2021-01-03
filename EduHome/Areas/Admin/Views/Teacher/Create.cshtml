@@ -1,0 +1,163 @@
+﻿@model TeacherForCreateVM
+@{
+    ViewData["Title"] = "Teacher Create";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5 col-sm-5 col-xs-12">
+            <div class="teacher-details-img">
+                <img class="img-fluid" src="~/img/teacher/@Model.TeacherSimple.Image" alt="teacher">
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-xs-12">
+            <div class="teacher-details-content ml-50">
+                <h2>@Model.TeacherSimple.Fullname</h2>
+                <h5>@Model.TeacherSimple.Profession.Name</h5>
+                <h4>about me</h4>
+                <p>@Model.TeacherDetail.AboutContent</p>
+                <ul>
+                    <li><span>degree: </span>@Model.TeacherDetail.Degree</li>
+                    <li><span>experience: </span>@Model.TeacherDetail.Experience years experience</li>
+                    <li><span>hobbies: </span>@Model.TeacherDetail.Hobbies</li>
+                    <li><span>faculty: </span>@Model.TeacherDetail.Faculty</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-4">
+            <div class="teacher-contact">
+                <h4>contact information</h4>
+                <p><span>mail me : </span>@Model.TeacherDetail.Mail</p>
+                <p><span>make a call : </span>@Model.TeacherDetail.Phone</p>
+                <p><span>skype : </span>@Model.TeacherDetail.Skype</p>
+                <ul>
+                    @foreach (SocialMedia s in Model.SocialMedias)
+                    {
+                        <li><a href="@s.Link">@Html.Raw(s.Icon)</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9 col-sm-8">
+            <div class="skill-area">
+                <h4>skills</h4>
+            </div>
+            <div class="skill-wrapper">
+                <div class="row">
+                    @foreach (TeacherSkill t in Model.TeacherDetail.TeacherSkills)
+                    {
+                        <div class="col-sm-4">
+                            <div class="skill-bar-item">
+                                <span>@t.Skill.Name</span>
+                                <div class="progress">
+                                    <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: @t.SkillValue%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft;" data-progress="50%" class="progress-bar wow fadeInLeft">
+                                        <span class="text-top">@t.SkillValue%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <form class="forms-sample" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                                <div class="form-group">
+                                    <label asp-for="TeacherSimple.Photo" class="form-label">Select Image</label>
+                                    <input asp-for="TeacherSimple.Photo" class="form-control" accept="image/*" type="file">
+                                    <span class="text-danger" asp-validation-for="TeacherSimple.Photo"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="TeacherSimple.Fullname" class="form-label">Name</label>
+                                    <input asp-for="TeacherSimple.Fullname" class="form-control" placeholder="Title">
+                                    <span class="text-danger" asp-validation-for="TeacherSimple.Fullname"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="TeacherDetail.AboutContent">About Teacher</label>
+                                    <input asp-for="TeacherDetail.AboutContent" class="form-control" placeholder="About Teacher">
+                                    <span class="text-danger" asp-validation-for="TeacherDetail.AboutContent"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="TeacherDetail.Experience">Experience/year</label>
+                                    <input asp-for="TeacherDetail.Experience" class="form-control" placeholder="Experience/year">
+                                    <span class="text-danger" asp-validation-for="TeacherDetail.Experience"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="TeacherDetail.Faculty">Faculty</label>
+                                    <input asp-for="TeacherDetail.Faculty" class="form-control" placeholder="Faculty">
+                                    <span class="text-danger" asp-validation-for="TeacherDetail.Faculty"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="TeacherDetail.Hobbies">Hobbies</label>
+                                    <input asp-for="TeacherDetail.Hobbies" class="form-control" placeholder="Hobbies">
+                                    <span class="text-danger" asp-validation-for="TeacherDetail.Hobbies"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="TeacherDetail.Degree">Degree</label>
+                                    <input asp-for="TeacherDetail.Degree" class="form-control" placeholder="Degree">
+                                    <span class="text-danger" asp-validation-for="TeacherDetail.Degree"></span>
+                                </div>
+                                <div class="form-check form-check-flat form-check-primary">
+                                    <label asp-for="TeacherSimple.IsSimple" class="form-check-label">
+                                        <input asp-for="TeacherSimple.IsSimple" type="checkbox" class="form-check-input">
+                                        Do you want to show it also at About page?
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="TeacherDetail.Mail">Mail</label>
+                                    <input asp-for="TeacherDetail.Mail" class="form-control" placeholder="Mail">
+                                    <span class="text-danger" asp-validation-for="TeacherDetail.Mail"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="TeacherDetail.Phone">Phone</label>
+                                    <input asp-for="TeacherDetail.Phone" class="form-control" placeholder="Phone">
+                                    <span class="text-danger" asp-validation-for="TeacherDetail.Phone"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="TeacherDetail.Skype">Skype</label>
+                                    <input asp-for="TeacherDetail.Skype" class="form-control" placeholder="Skype">
+                                    <span class="text-danger" asp-validation-for="TeacherDetail.Skype"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Profession">Profession</label>
+                                    <select asp-for="Profession" class="form-control">
+                                        @foreach (Profession c in Model.Professions)
+                                        {
+                                            <option value="@c.Id">@c.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                @foreach (Skill s in Model.Skills)
+                                {
+                                    <div class="form-group">
+                                        <label for="@s.Name.ToLower()" class="form-label">@s.Name.ToUpper()</label>
+                                        <input type="range" min="0" max="100" step="1" class="form-range" name="@s.Name.Replace(" ", "").ToLower()">
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <a asp-area="Admin" asp-controller="Event" asp-action="Index" class="btn btn-light">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

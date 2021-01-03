@@ -31,7 +31,7 @@ namespace EduHome.Models
         public CourseDetail CourseDetail { get; set; }
         public List<Comment> Comments { get; set; }
         public List<TagCourseSimple> TagCourseSimples { get; set; }
-        public int? CategoryId { get; set; }
+        public int CategoryId { get; set; }
         public Category Category { get; set; }
     }
 }

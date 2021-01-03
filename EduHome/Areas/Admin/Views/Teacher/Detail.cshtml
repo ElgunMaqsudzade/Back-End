@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-5 col-sm-5 col-xs-12">
             <div class="teacher-details-img">
-                <img src="~/img/teacher/@Model.Image" alt="teacher">
+                <img class="img-fluid" src="~/img/teacher/@Model.Image" alt="teacher">
             </div>
         </div>
         <div class="col-md-7 col-sm-7 col-xs-12">
@@ -53,8 +53,8 @@
                             <div class="skill-bar-item">
                                 <span>@t.Skill.Name</span>
                                 <div class="progress">
-                                    <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: @t.Skill.Value%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft;" data-progress="50%" class="progress-bar wow fadeInLeft">
-                                        <span class="text-top">@t.Skill.Value%</span>
+                                    <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: @t.SkillValue%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft;" data-progress="50%" class="progress-bar wow fadeInLeft">
+                                        <span class="text-top">@t.SkillValue%</span>
                                     </div>
                                 </div>
                             </div>

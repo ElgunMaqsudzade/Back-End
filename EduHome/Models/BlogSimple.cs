@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,6 +17,8 @@ namespace EduHome.Models
         public string Author { get; set; }
         [Required]
         public string Image { get; set; }
+        [NotMapped]
+        public IFormFile Photo { get; set; }
         public int ReplyCount { get; set; }
         public bool IsDeleted { get; set; }
         [DataType(DataType.DateTime)]
@@ -26,7 +30,7 @@ namespace EduHome.Models
         public BlogDetail BlogDetail { get; set; }
         public List<Comment> Comments { get; set; }
         public List<TagBlogSimple> TagBlogSimples { get; set; }
-        public int? CategoryId { get; set; }
+        public int CategoryId { get; set; }
         public Category Category { get; set; }
     }
 }

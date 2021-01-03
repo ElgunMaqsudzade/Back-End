@@ -12,6 +12,7 @@ namespace EduHome.ViewModels
         public CourseFeature CourseFeature { get; set; }
         public CourseDetail CourseDetail { get; set; }
         public List<Tag> Tags { get; set; }
+        public List<TagCourseSimple> TagCourseSimples { get; set; }
         public Category Category { get; set; }
         public List<Category> Categories { get; set; }
     }

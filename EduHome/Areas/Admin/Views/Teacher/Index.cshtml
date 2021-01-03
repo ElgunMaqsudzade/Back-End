@@ -26,13 +26,13 @@
                 <th scope="col">#</th>
                 <th scope="col">Image</th>
                 <th scope="col">Fullname</th>
-                <th scope="col">For Home Page</th>
+                <th scope="col">For About Page</th>
                 <th scope="col">Profession</th>
                 <th scope="col">Social Media</th>
                 <th scope="col">Settings</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="body">
             @foreach (TeacherSimple e in Model)
             {
                 <tr class="text-center">
@@ -58,6 +58,17 @@
                 count++;
             }
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="7">
+                    <div class="col-12 text-center btn-holder">
+                        <input type="hidden" id="productCount" value="@ViewBag.Count" />
+                        <button class="btn btn-success btn-lg my-5 amkButtonu">Load More</button>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
     </table>
+    <input type="hidden" id="count" value="@Model.Count()" />
 </div>
 

@@ -125,32 +125,39 @@ namespace EduHome.Areas.Admin.Controllers
             if (id == null) return NotFound();
             bool isExist = _db.EventSimples.Where(c => c.IsDeleted == false).Any(c => c.Id == id);
             if (!isExist) return NotFound();
-            EventForCreateVM courseForCreateVM = new EventForCreateVM()
+            EventForCreateVM eventForCreateVM = new EventForCreateVM()
             {
-                EventSimple = await _db.EventSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.EventDetail).FirstOrDefaultAsync(),
+                EventSimple = await _db.EventSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.EventDetail).Include(e=>e.Category).FirstOrDefaultAsync(),
                 EventDetail = await _db.EventDetails.Where(e => e.EventSimpleId == id).FirstOrDefaultAsync(),
+                TagEventSimples = await _db.TagEventSimples.Where(e=>e.EventSimple.Id==id).ToListAsync(),
+                SpeakerEventSimples = await _db.SpeakerEventSimples.Where(e => e.EventSimpleId == id).ToListAsync(),
+                Speakers = await _db.Speakers.ToListAsync(),
                 Categories = await _db.Categories.ToListAsync(),
                 Tags = await _db.Tags.ToListAsync(),
-                Speakers = await _db.Speakers.ToListAsync(), 
             };
-            return View(courseForCreateVM);
+            ViewBag.Speakers = eventForCreateVM.Speakers.Where(c => eventForCreateVM.SpeakerEventSimples.Any(t => t.SpeakerId == c.Id));
+            return View(eventForCreateVM);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(int? id, EventForCreateVM eventvm, List<int> Speakers, List<int> Tags, int Category)
         {
-            EventForCreateVM courseForCreateVM = new EventForCreateVM()
+            EventForCreateVM eventForCreateVM = new EventForCreateVM()
             {
                 EventSimple = await _db.EventSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.EventDetail).FirstOrDefaultAsync(),
                 EventDetail = await _db.EventDetails.Where(e => e.EventSimpleId == id).FirstOrDefaultAsync(),
+                SpeakerEventSimples = await _db.SpeakerEventSimples.Where(e => e.EventSimpleId == id).ToListAsync(),
+                TagEventSimples = await _db.TagEventSimples.Where(e => e.EventSimpleId == id).ToListAsync(),
                 Categories = await _db.Categories.ToListAsync(),
                 Tags = await _db.Tags.ToListAsync(),
                 Speakers = await _db.Speakers.ToListAsync(),
             };
+            EventSimple eventSimple1 = await _db.EventSimples.Where(c => c.IsDeleted == false && c.Id == id).FirstOrDefaultAsync();
+            EventDetail eventDetail = await _db.EventDetails.Where(c => c.EventSimpleId == id).FirstOrDefaultAsync();
             if (Speakers.Count() == 0)
             {
                 ModelState.AddModelError("Speakers", "You need to choose at least one Speaker");
-                return View(courseForCreateVM);
+                return View(eventForCreateVM);
             }
             //if (!ModelState.IsValid) return View();
 
@@ -158,31 +165,38 @@ namespace EduHome.Areas.Admin.Controllers
             if (isExist)
             {
                 ModelState.AddModelError("", "This Event already exist");
-                return View(courseForCreateVM);
+                return View(eventForCreateVM);
             }
-            if (eventvm.EventSimple.Photo == null)
+            if(eventvm.EventSimple.Image != null)
             {
-                ModelState.AddModelError("", "Please,add Image");
-                return View(courseForCreateVM);
-            }
-            if (!eventvm.EventSimple.Photo.IsImage())
-            {
-                ModelState.AddModelError("", "Please,add Image file");
-                return View(courseForCreateVM);
-            }
-            if (!eventvm.EventSimple.Photo.MaxSize(500))
-            {
-                ModelState.AddModelError("", "Max size of Image should be lower than 500");
-                return View(courseForCreateVM);
-            }
 
-            string folder = Path.Combine("img", "event");
-            string fileName = await eventvm.EventSimple.Photo.SaveImagesAsync(_env.WebRootPath, folder);
+                if (eventvm.EventSimple.Photo == null)
+                {
+                    ModelState.AddModelError("", "Please,add Image");
+                    return View(eventForCreateVM);
+                }
+                if (!eventvm.EventSimple.Photo.IsImage())
+                {
+                    ModelState.AddModelError("", "Please,add Image file");
+                    return View(eventForCreateVM);
+                }
+                if (!eventvm.EventSimple.Photo.MaxSize(500))
+                {
+                    ModelState.AddModelError("", "Max size of Image should be lower than 500");
+                    return View(eventForCreateVM);
+                }
 
-            EventSimple eventSimple1 = await _db.EventSimples.Where(c => c.IsDeleted == false && c.Id == id).FirstOrDefaultAsync();
-            EventDetail eventDetail = await _db.EventDetails.Where(c => c.EventSimpleId == id).FirstOrDefaultAsync();
+                string folder = Path.Combine("img", "event");
+                string fileName = await eventvm.EventSimple.Photo.SaveImagesAsync(_env.WebRootPath, folder);
 
-            eventSimple1.Image = fileName;
+                string path = Path.Combine(_env.WebRootPath, folder, eventSimple1.Image);
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+
+                eventSimple1.Image = fileName;
+            }
             eventSimple1.Title = eventvm.EventSimple.Title;
             eventSimple1.Location = eventvm.EventSimple.Location;
             eventSimple1.StartingTime = eventvm.EventSimple.StartingTime;
@@ -192,7 +206,14 @@ namespace EduHome.Areas.Admin.Controllers
 
             await _db.SaveChangesAsync();
 
-
+            foreach (var s in eventForCreateVM.SpeakerEventSimples)
+            {
+                _db.SpeakerEventSimples.Remove(s);
+            }
+            foreach (var s in eventForCreateVM.TagEventSimples)
+            {
+                _db.TagEventSimples.Remove(s);
+            }
             foreach (var i in Tags)
             {
                 _db.TagEventSimples.Add(new TagEventSimple { EventSimpleId = eventSimple1.Id, TagId = i });

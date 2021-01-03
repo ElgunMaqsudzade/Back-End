@@ -130,12 +130,13 @@ namespace EduHome.Areas.Admin.Controllers
                 CourseFeature = await _db.CourseFeatures.Where(e => e.CourseDetail.CourseSimpleId == id).FirstOrDefaultAsync(),
                 Categories = await _db.Categories.ToListAsync(),
                 Tags = await _db.Tags.ToListAsync(),
+                TagCourseSimples = await _db.TagCourseSimples.Where(c => c.CourseSimple.Id == id).ToListAsync(),
             };
             return View(courseForCreateVM);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int id, CourseForCreateVM course,List<int> Tags,int Category)
+        public async Task<IActionResult> Update(int id, CourseForCreateVM course, List<int> Tags, int Category)
         {
             //We have int CourseSimpleId at CourseDetail for one for one relation we should either 
             //do that nullable or just do not use (!ModelState.Isvalid)
@@ -147,6 +148,10 @@ namespace EduHome.Areas.Admin.Controllers
                 Categories = await _db.Categories.ToListAsync(),
                 Tags = await _db.Tags.ToListAsync(),
             };
+
+            CourseSimple courseSimple = await _db.CourseSimples.Where(c => c.IsDeleted == false && c.Id == id).FirstOrDefaultAsync();
+            CourseDetail courseDetail = await _db.CourseDetails.Where(c => c.CourseSimpleId == id).FirstOrDefaultAsync();
+            CourseFeature courseFeature = await _db.CourseFeatures.Where(c => c.CourseDetail.CourseSimpleId == id).FirstOrDefaultAsync();
 
             bool isExist = _db.CourseSimples.Where(c => c.IsDeleted == false).Any(c => c.Title.Trim().ToLower() == course.CourseSimple.Title.Trim().ToLower() && c.Id != id);
             if (isExist)
@@ -172,10 +177,11 @@ namespace EduHome.Areas.Admin.Controllers
 
             string folder = Path.Combine("img", "course");
             string fileName = await course.CourseSimple.Photo.SaveImagesAsync(_env.WebRootPath, folder);
-
-            CourseSimple courseSimple = await _db.CourseSimples.Where(c => c.IsDeleted == false && c.Id == id).FirstOrDefaultAsync();
-            CourseDetail courseDetail = await _db.CourseDetails.Where(c => c.CourseSimpleId == id).FirstOrDefaultAsync();
-            CourseFeature courseFeature = await _db.CourseFeatures.Where(c => c.CourseDetail.CourseSimpleId == id).FirstOrDefaultAsync();
+            string path = Path.Combine(_env.WebRootPath, folder, courseSimple.Image);
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
 
             courseSimple.CategoryId = Category;
             courseSimple.Image = fileName;
@@ -197,7 +203,10 @@ namespace EduHome.Areas.Admin.Controllers
 
             await _db.SaveChangesAsync();
 
-
+            foreach (var s in courseForCreateVM.TagCourseSimples)
+            {
+                _db.TagCourseSimples.Remove(s);
+            }
             foreach (var i in Tags)
             {
                 _db.TagCourseSimples.Add(new TagCourseSimple { CourseSimpleId = courseSimple.Id, TagId = i });
