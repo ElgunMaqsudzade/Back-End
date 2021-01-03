@@ -27,6 +27,5 @@ namespace EduHome.Models
         [ForeignKey("TeacherSimple")]
         public int TeacherSimpleId { get; set; }
         public TeacherSimple TeacherSimple { get; set; }
-        public List<TeacherSkill> TeacherSkills { get; set; }
     }
 }

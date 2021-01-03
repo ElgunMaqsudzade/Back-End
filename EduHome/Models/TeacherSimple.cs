@@ -32,5 +32,6 @@ namespace EduHome.Models
         public int ProfessionId { get; set; }
         public Profession Profession { get; set; }
         public List<SocialMedia> SocialMedias { get; set; }
+        public List<TeacherSkill> TeacherSkills { get; set; }
     }
 }

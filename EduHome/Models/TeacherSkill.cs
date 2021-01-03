@@ -9,9 +9,9 @@ namespace EduHome.Models
     public class TeacherSkill
     {
         public int Id { get; set; }
-        public int TeacherDetailId { get; set; }
+        public int TeacherSimpleId { get; set; }
 
-        public TeacherDetail TeacherDetail { get; set; }
+        public TeacherSimple TeacherSimple { get; set; }
 
         public int SkillId { get; set; }
         public Skill Skill { get; set; }

@@ -41,7 +41,7 @@ namespace EduHome.Areas.Admin.Controllers
             if (!isExist) return NotFound();
 
             TeacherSimple teacherSimple = await _db.TeacherSimples.Where(e => e.IsDeleted == false && e.Id == id)
-                .Include(e => e.TeacherDetail).ThenInclude(t => t.TeacherSkills).ThenInclude(t => t.Skill).Include(t => t.SocialMedias).Include(t => t.Profession).FirstOrDefaultAsync();
+                .Include(e => e.TeacherDetail).Include(t => t.TeacherSkills).ThenInclude(t => t.Skill).Include(t => t.SocialMedias).Include(t => t.Profession).FirstOrDefaultAsync();
             return View(teacherSimple);
         }
         public async Task<IActionResult> Create()
@@ -107,12 +107,12 @@ namespace EduHome.Areas.Admin.Controllers
             await _db.TeacherDetails.AddAsync(teacher.TeacherDetail);
             await _db.SaveChangesAsync();
 
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherDetailId = teacher.TeacherDetail.Id, SkillId = 1, SkillValue = language });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherDetailId = teacher.TeacherDetail.Id, SkillId = 2, SkillValue = teamleader });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherDetailId = teacher.TeacherDetail.Id, SkillId = 3, SkillValue = development });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherDetailId = teacher.TeacherDetail.Id, SkillId = 4, SkillValue = design });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherDetailId = teacher.TeacherDetail.Id, SkillId = 6, SkillValue = innovation });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherDetailId = teacher.TeacherDetail.Id, SkillId = 7, SkillValue = communication });
+            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacher.TeacherSimple.Id, SkillId = 1, SkillValue = language });
+            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacher.TeacherSimple.Id, SkillId = 2, SkillValue = teamleader });
+            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacher.TeacherSimple.Id, SkillId = 3, SkillValue = development });
+            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacher.TeacherSimple.Id, SkillId = 4, SkillValue = design });
+            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacher.TeacherSimple.Id, SkillId = 6, SkillValue = innovation });
+            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacher.TeacherSimple.Id, SkillId = 7, SkillValue = communication });
             await _db.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
@@ -126,6 +126,7 @@ namespace EduHome.Areas.Admin.Controllers
         {
             TeacherSimple teacherSimple = _db.TeacherSimples.Where(e => e.IsDeleted == false && e.Id == id).FirstOrDefault();
             teacherSimple.IsDeleted = true;
+            teacherSimple.DeleteTime = DateTime.UtcNow;
             await _db.SaveChangesAsync();
             return Json(teacherSimple);
         }
@@ -136,10 +137,10 @@ namespace EduHome.Areas.Admin.Controllers
             if (!isExist) return NotFound();
             TeacherForCreateVM teacherForCreateVM = new TeacherForCreateVM()
             {
-                TeacherSimple = await _db.TeacherSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.TeacherDetail).FirstOrDefaultAsync(),
+                TeacherSimple = await _db.TeacherSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.TeacherDetail).Include(t=>t.TeacherSkills).FirstOrDefaultAsync(),
                 TeacherDetail = await _db.TeacherDetails.Where(e => e.TeacherSimpleId == id).FirstOrDefaultAsync(),
                 Skills = await _db.Skills.ToListAsync(),
-                TeacherSkills = await _db.TeacherSkills.Where(e => e.TeacherDetail.TeacherSimple.Id == id).ToListAsync(),
+                TeacherSkills = await _db.TeacherSkills.Where(e => e.TeacherSimpleId == id).ToListAsync(),
                 Professions = await _db.Professions.ToListAsync(),
                 Profession = await _db.Professions.FirstOrDefaultAsync(),
             };
@@ -153,10 +154,10 @@ namespace EduHome.Areas.Admin.Controllers
             //do that nullable or just do not use (!ModelState.Isvalid)
             TeacherForCreateVM teacherForCreateVM = new TeacherForCreateVM()
             {
-                TeacherSimple = await _db.TeacherSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.TeacherDetail).FirstOrDefaultAsync(),
+                TeacherSimple = await _db.TeacherSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.TeacherDetail).Include(t => t.TeacherSkills).FirstOrDefaultAsync(),
                 TeacherDetail = await _db.TeacherDetails.Where(e => e.TeacherSimpleId == id).FirstOrDefaultAsync(),
+                TeacherSkills = await _db.TeacherSkills.Where(e => e.TeacherSimpleId == id).Include(e=>e.Skill).ToListAsync(),
                 Skills = await _db.Skills.ToListAsync(),
-                TeacherSkills = await _db.TeacherSkills.Where(e => e.TeacherDetail.TeacherSimple.Id == id).ToListAsync(),
                 Professions = await _db.Professions.ToListAsync(),
                 Profession = await _db.Professions.FirstOrDefaultAsync(),
             };
@@ -214,12 +215,12 @@ namespace EduHome.Areas.Admin.Controllers
             {
                 _db.TeacherSkills.Remove(s);
             }
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherDetailId = teacher.TeacherDetail.Id, SkillId = 1, SkillValue = language });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherDetailId = teacher.TeacherDetail.Id, SkillId = 2, SkillValue = teamleader });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherDetailId = teacher.TeacherDetail.Id, SkillId = 3, SkillValue = development });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherDetailId = teacher.TeacherDetail.Id, SkillId = 4, SkillValue = design });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherDetailId = teacher.TeacherDetail.Id, SkillId = 6, SkillValue = innovation });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherDetailId = teacher.TeacherDetail.Id, SkillId = 7, SkillValue = communication });
+            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacherSimple.Id, SkillId = 1, SkillValue = language });
+            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacherSimple.Id, SkillId = 2, SkillValue = teamleader });
+            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacherSimple.Id, SkillId = 3, SkillValue = development });
+            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacherSimple.Id, SkillId = 4, SkillValue = design });
+            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacherSimple.Id, SkillId = 6, SkillValue = innovation });
+            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacherSimple.Id, SkillId = 7, SkillValue = communication });
             await _db.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

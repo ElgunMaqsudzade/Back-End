@@ -36,7 +36,7 @@
                                         {
                                             <td class="text-danger">Passive</td>
                                         }
-                                        <td class="role-column">@user.Role</td>
+                                        <td class="role-column @("tab" + user.Id)">@user.Role</td>
                                         <td>
                                             @if (!(User.Identity.Name == user.Username))
                                             {
@@ -52,7 +52,7 @@
                                             <a class="btn btn-md btn-warning" asp-controller="User" asp-action="ResetPassword" asp-route-id="@user.Id">Reset Password</a>
                                             @if (!(User.Identity.Name == user.Username))
                                             {
-                                                <button class="btn btn-md btn-secondary change-role-btn">Change Role</button>
+                                                <button data-username="@(user.Username)" class="btn btn-md btn-secondary change-role-btn">Change Role</button>
                                             }
                                         </td>
                                     </tr>
@@ -70,16 +70,16 @@
         <i class="fas fa-caret-up"></i>
         @foreach (string role in Model.FirstOrDefault().Roles)
         {
-            <button  class="btn btn-sm btn-light role-btn">@role</button>
+            <button class="btn btn-sm btn-light role-btn">@role</button>
         }
-    <ul style="list-style-type:none;" class="p-0 m-0 d-flex">
-        <li>
-            <button class="role-save-btn btn" style="width:100px;cursor:not-allowed">Save</button>
-        </li>
-        <li>
-            <button class="role-cancel-btn btn btn-danger" style="width:100px">Cancel</button>
-        </li>
-    </ul>
+        <ul style="list-style-type:none;" class="p-0 m-0 d-flex">
+            <li>
+                <button class="role-save-btn btn" style="width:100px;cursor:not-allowed">Save</button>
+            </li>
+            <li>
+                <button class="role-cancel-btn btn btn-danger" style="width:100px">Cancel</button>
+            </li>
+        </ul>
     </div>
 </div>
 

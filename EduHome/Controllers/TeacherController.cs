@@ -34,7 +34,7 @@ namespace EduHome.Controllers
             if (id == null) return RedirectToAction(nameof(Index));
 
             TeacherSimple teacherSimple = _db.TeacherSimples.Where(b => b.IsDeleted == false && b.Id == id)
-                .Include(b => b.TeacherDetail).ThenInclude(t=>t.TeacherSkills).ThenInclude(t=>t.Skill)
+                .Include(b => b.TeacherDetail).Include(t=>t.TeacherSkills).ThenInclude(t=>t.Skill)
                 .Include(t=>t.Profession).Include(t=>t.SocialMedias).FirstOrDefault();
             
             if (teacherSimple == null) return NotFound();

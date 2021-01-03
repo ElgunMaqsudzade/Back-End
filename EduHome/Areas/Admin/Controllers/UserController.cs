@@ -91,12 +91,18 @@ namespace EduHome.Areas.Admin.Controllers
             return RedirectToAction("Index");
 
         }
-        public async Task<IActionResult> ChangeRole(string username, string role)
+        public async Task<IActionResult> ChangeRole(string username)
         {
             AppUser user = await _userManager.FindByNameAsync(username);
-            await _userManager.RemoveFromRoleAsync(user, (await _userManager.GetRolesAsync(user))[0]);
-            await _userManager.AddToRoleAsync(user, role);
-            return Content(role);
+            await _userManager.GetRolesAsync(user);
+            return Json(user);
         }
+        //public async Task<IActionResult> ChangeRolePost(string username, string role)
+        //{
+        //    AppUser user = await _userManager.FindByNameAsync(username);
+        //    await _userManager.RemoveFromRoleAsync(user, (await _userManager.GetRolesAsync(user))[0]);
+        //    await _userManager.AddToRoleAsync(user, role);
+        //    return Content(role);
+        //}
     }
 }
