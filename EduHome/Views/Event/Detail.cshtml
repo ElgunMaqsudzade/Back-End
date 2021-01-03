@@ -28,7 +28,7 @@
                         @Html.Raw(Model.EventSimple.EventDetail.AboutContent)
                         <div class="speakers-area fix">
                             <h4>speakers</h4>
-                            @await Component.InvokeAsync("Speaker")
+                            @await Component.InvokeAsync("Speaker", new {id = Model.EventSimple.Id })
                         </div>
                     </div>
                     <partial name="_CommentSectionPartial" for="@url" />

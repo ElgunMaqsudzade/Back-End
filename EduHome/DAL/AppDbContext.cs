@@ -34,6 +34,7 @@ namespace EduHome.DAL
         public DbSet<EventDetail> EventDetails { get; set; }
         public DbSet<Profession> Professions { get; set; }
         public DbSet<Speaker> Speakers { get; set; }
+        public DbSet<SpeakerEventSimple> SpeakerEventSimples { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<TagBlogSimple> TagBlogSimples { get; set; }
         public DbSet<TagCourseSimple> TagCourseSimples { get; set; }

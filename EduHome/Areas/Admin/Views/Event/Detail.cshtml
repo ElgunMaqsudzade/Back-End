@@ -3,30 +3,32 @@
     ViewData["Title"] = "Event Detail";
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="event-details">
-                <div class="event-details-img">
-                    <img src="~/img/event/@Model.Image" alt="event-details">
-                    <div class="event-date">
-                        <h3>@Model.StartingTime.Day <span>@Model.StartingTime.ToString("MMM")</span></h3>
+<div class="event-details-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="event-details">
+                    <div class="event-details-img">
+                        <img class="img-fluid" src="~/img/event/@Model.Image" alt="event-details">
+                        <div class="event-date">
+                            <h3>@Model.StartingTime.Day <span>@Model.StartingTime.ToString("MMM")</span></h3>
+                        </div>
                     </div>
-                </div>
-                <div class="event-details-content">
-                    <h2>@Model.Title</h2>
-                    <ul>
-                        <li><span>time : </span>@Model.StartingTime.ToString("hh.mm tt") - @Model.EndingTime.ToString("hh.mm tt")</li>
-                        <li><span>venue : </span>@Model.Location</li>
-                    </ul>
-                    @Html.Raw(Model.EventDetail.AboutContent)
-                    <div class="speakers-area fix">
-                        <h4>speakers</h4>
-                        @await Component.InvokeAsync("Speaker")
+                    <div class="event-details-content">
+                        <h2>@Model.Title</h2>
+                        <ul>
+                            <li><span>time : </span>@Model.StartingTime.ToString("hh.mm tt") - @Model.EndingTime.ToString("hh.mm tt")</li>
+                            <li><span>venue : </span>@Model.Location</li>
+                        </ul>
+                        @Html.Raw(Model.EventDetail.AboutContent)
+                        <div class="speakers-area fix">
+                            <h4>speakers</h4>
+                            @await Component.InvokeAsync("Speaker", new { id = Model.Id })
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+<!-- Event Details End -->

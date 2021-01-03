@@ -16,7 +16,7 @@ using static EduHome.Extensions.Extension;
 namespace EduHome.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin, CourseModerator" )]
+    [Authorize(Roles = "Admin, CourseModerator")]
     public class CourseController : Controller
     {
         private readonly AppDbContext _db;
@@ -42,19 +42,23 @@ namespace EduHome.Areas.Admin.Controllers
             CourseSimple courseSimple = await _db.CourseSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.CourseDetail).ThenInclude(t => t.CourseFeature).FirstOrDefaultAsync();
             return View(courseSimple);
         }
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewBag.Categories = await _db.Categories.ToListAsync();
+            ViewBag.Tags = await _db.Tags.ToListAsync();
 
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CourseForCreateVM course)
+        public async Task<IActionResult> Create(CourseForCreateVM course, List<int> Tags, int Category)
         {
             //We have int CourseSimpleId at CourseDetail for one for one relation we should either 
             //do that nullable or just do not use (!ModelState.Isvalid)
 
             //if (!ModelState.IsValid) return View();
+            ViewBag.Categories = await _db.Categories.ToListAsync();
+            ViewBag.Tags = await _db.Tags.ToListAsync();
 
             bool isExist = _db.CourseSimples.Where(c => c.IsDeleted == false).Any(c => c.Title.Trim().ToLower() == course.CourseSimple.Title.Trim().ToLower());
             if (isExist)
@@ -81,10 +85,16 @@ namespace EduHome.Areas.Admin.Controllers
             string folder = Path.Combine("img", "course");
             string fileName = await course.CourseSimple.Photo.SaveImagesAsync(_env.WebRootPath, folder);
             course.CourseSimple.Image = fileName;
+            course.CourseSimple.CategoryId = Category;
 
             course.CourseSimple.CreateTime = DateTime.UtcNow;
             await _db.CourseSimples.AddAsync(course.CourseSimple);
             await _db.SaveChangesAsync();
+
+            foreach (int id in Tags)
+            {
+                await _db.TagCourseSimples.AddAsync(new TagCourseSimple { CourseSimpleId = course.CourseSimple.Id, TagId = id });
+            }
 
             course.CourseDetail.CourseSimpleId = course.CourseSimple.Id;
             await _db.CourseDetails.AddAsync(course.CourseDetail);
@@ -104,6 +114,7 @@ namespace EduHome.Areas.Admin.Controllers
         {
             CourseSimple courseSimple = _db.CourseSimples.Where(e => e.IsDeleted == false && e.Id == id).FirstOrDefault();
             courseSimple.IsDeleted = true;
+            courseSimple.DeleteTime = DateTime.UtcNow;
             await _db.SaveChangesAsync();
             return Json(courseSimple);
         }
@@ -115,14 +126,16 @@ namespace EduHome.Areas.Admin.Controllers
             CourseForCreateVM courseForCreateVM = new CourseForCreateVM()
             {
                 CourseSimple = await _db.CourseSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.CourseDetail).ThenInclude(t => t.CourseFeature).FirstOrDefaultAsync(),
-                CourseDetail = await _db.CourseDetails.Where(e =>  e.CourseSimpleId == id).Include(t => t.CourseFeature).FirstOrDefaultAsync(),
-                CourseFeature = await _db.CourseFeatures.Where(e =>  e.CourseDetail.CourseSimpleId == id).FirstOrDefaultAsync(),
+                CourseDetail = await _db.CourseDetails.Where(e => e.CourseSimpleId == id).Include(t => t.CourseFeature).FirstOrDefaultAsync(),
+                CourseFeature = await _db.CourseFeatures.Where(e => e.CourseDetail.CourseSimpleId == id).FirstOrDefaultAsync(),
+                Categories = await _db.Categories.ToListAsync(),
+                Tags = await _db.Tags.ToListAsync(),
             };
             return View(courseForCreateVM);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int id,CourseForCreateVM course)
+        public async Task<IActionResult> Update(int id, CourseForCreateVM course,List<int> Tags,int Category)
         {
             //We have int CourseSimpleId at CourseDetail for one for one relation we should either 
             //do that nullable or just do not use (!ModelState.Isvalid)
@@ -131,6 +144,8 @@ namespace EduHome.Areas.Admin.Controllers
                 CourseSimple = await _db.CourseSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.CourseDetail).ThenInclude(t => t.CourseFeature).FirstOrDefaultAsync(),
                 CourseDetail = await _db.CourseDetails.Where(e => e.CourseSimpleId == id).Include(t => t.CourseFeature).FirstOrDefaultAsync(),
                 CourseFeature = await _db.CourseFeatures.Where(e => e.CourseDetail.CourseSimpleId == id).FirstOrDefaultAsync(),
+                Categories = await _db.Categories.ToListAsync(),
+                Tags = await _db.Tags.ToListAsync(),
             };
 
             bool isExist = _db.CourseSimples.Where(c => c.IsDeleted == false).Any(c => c.Title.Trim().ToLower() == course.CourseSimple.Title.Trim().ToLower() && c.Id != id);
@@ -162,6 +177,7 @@ namespace EduHome.Areas.Admin.Controllers
             CourseDetail courseDetail = await _db.CourseDetails.Where(c => c.CourseSimpleId == id).FirstOrDefaultAsync();
             CourseFeature courseFeature = await _db.CourseFeatures.Where(c => c.CourseDetail.CourseSimpleId == id).FirstOrDefaultAsync();
 
+            courseSimple.CategoryId = Category;
             courseSimple.Image = fileName;
             courseSimple.Title = course.CourseSimple.Title;
             courseSimple.MainContent = course.CourseSimple.MainContent;
@@ -179,7 +195,13 @@ namespace EduHome.Areas.Admin.Controllers
             courseFeature.CourseDuration = course.CourseFeature.CourseDuration;
             courseFeature.ClassDuration = course.CourseFeature.ClassDuration;
 
+            await _db.SaveChangesAsync();
 
+
+            foreach (var i in Tags)
+            {
+                _db.TagCourseSimples.Add(new TagCourseSimple { CourseSimpleId = courseSimple.Id, TagId = i });
+            }
             await _db.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

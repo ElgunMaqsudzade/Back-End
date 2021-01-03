@@ -16,11 +16,16 @@ namespace EduHome.ViewComponents
         {
             _db = db;
         }
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(int id)
         {
-            List<Speaker> speakers = await _db.Speakers.Where(t => t.IsDeleted == false).Include(b=>b.Profession).ToListAsync();
+            List<Speaker> speakers1 = await _db.Speakers.Where(t => t.IsDeleted == false)
+                .Include(s => s.SpeakerEventSimples).ThenInclude(s => s.EventSimple).Include(b => b.Profession).ToListAsync();
 
-            return View(await Task.FromResult(speakers));
+            List<Speaker> speakers2 = (from spe in speakers1
+                                       from category in spe.SpeakerEventSimples.Where(x => x.EventSimple.Id == id)
+                                       select spe).ToList();
+
+            return View(await Task.FromResult(speakers2));
         }
     }
 }

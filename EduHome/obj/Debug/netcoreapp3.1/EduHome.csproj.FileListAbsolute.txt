@@ -313,3 +313,4 @@ C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Areas\Admin
 C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Course\Update.cshtml.g.cs
 C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Blog\Detail.cshtml.g.cs
 C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Teacher\Detail.cshtml.g.cs
+C:\Users\USER\Desktop\Back-End\EduHome\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Event\Update.cshtml.g.cs

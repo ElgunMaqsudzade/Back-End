@@ -723,7 +723,7 @@ namespace EduHome.Migrations
 
                     b.HasIndex("SpeakerId");
 
-                    b.ToTable("SpeakerEventSimple");
+                    b.ToTable("SpeakerEventSimples");
                 });
 
             modelBuilder.Entity("EduHome.Models.Tag", b =>

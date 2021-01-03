@@ -1,0 +1,91 @@
+﻿@model EventForCreateVM
+@{
+    ViewData["Title"] = "Create Event";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <form class="forms-sample" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                                <div class="form-group">
+                                    <label asp-for="EventSimple.Photo" class="form-label">Select Image</label>
+                                    <input asp-for="EventSimple.Photo" class="form-control" accept="image/*" type="file">
+                                    <span class="text-danger" asp-validation-for="EventSimple.Photo"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="EventSimple.Title" class="form-label">Title</label>
+                                    <input asp-for="EventSimple.Title" class="form-control" placeholder="Title">
+                                    <span class="text-danger" asp-validation-for="EventSimple.Title"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="EventSimple.StartingTime">Starting Time</label>
+                                    <input asp-for="EventSimple.StartingTime" class="form-control" placeholder="Starting Time">
+                                    <span class="text-danger" asp-validation-for="EventSimple.StartingTime"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="EventSimple.EndingTime">Ending Time</label>
+                                    <input asp-for="EventSimple.EndingTime" class="form-control" placeholder="Ending Time">
+                                    <span class="text-danger" asp-validation-for="EventSimple.EndingTime"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="EventSimple.Location">Location</label>
+                                    <input asp-for="EventSimple.Location" class="form-control" placeholder="Location">
+                                    <span class="text-danger" asp-validation-for="EventSimple.Location"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="EventDetail.AboutContent">Description</label>
+                                    <input asp-for="EventDetail.AboutContent" class="form-control" placeholder="Description">
+                                    <span class="text-danger" asp-validation-for="EventDetail.AboutContent"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Speakers">Speakers</label>
+                                    <select asp-for="Speakers" class="form-control" multiple size="4" aria-label="multiple select example">
+                                        @foreach (Speaker s in Model.Speakers)
+                                        {
+                                            <option value="@s.Id">@s.Name</option>
+                                        }
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="Speakers"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Category">Category</label>
+                                    <select asp-for="Category" class="form-control">
+                                        @foreach (Category c in Model.Categories)
+                                        {
+                                            <option value="@c.Id">@c.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Tags" for="exampleFormControlSelect2">Tags</label>
+                                    <select asp-for="Tags" class="form-control" multiple size="4" aria-label="multiple select example">
+                                        @foreach (Tag s in Model.Tags)
+                                        {
+                                            <option value="@s.Id">@s.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <a asp-area="Admin" asp-controller="Event" asp-action="Index" class="btn btn-light">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}
+
