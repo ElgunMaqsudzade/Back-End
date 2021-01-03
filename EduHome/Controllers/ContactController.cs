@@ -5,7 +5,9 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using EduHome.DAL;
+using EduHome.Models;
 using EduHome.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EduHome.Controllers
@@ -13,9 +15,11 @@ namespace EduHome.Controllers
     public class ContactController : Controller
     {
         private readonly AppDbContext _db;
-        public ContactController(AppDbContext db)
+        private readonly UserManager<AppUser> _userManager;
+        public ContactController(AppDbContext db, UserManager<AppUser> userManager)
         {
             _db = db;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
@@ -26,22 +30,51 @@ namespace EduHome.Controllers
             };
             return View(contactVM);
         }
-        //public IActionResult SendEmail(string subject,string body, string name,string email)
-        //{
+        public async Task<IActionResult> AddSubscriber(string email, string username)
+        {
+            if (email != null)
+            {
 
-        //    SmtpClient client = new SmtpClient("smtp.mail.ru", 587);
-        //    client.UseDefaultCredentials = false;
-        //    client.EnableSsl = true;
-        //    client.Credentials = new NetworkCredential("back.end.00@mail.ru", "developer123");
-        //    client.DeliveryMethod = SmtpDeliveryMethod.Network;
-        //    MailMessage message = new MailMessage("back.end.00@mail.ru", email);
-        //    message.Subject = "<By Default: IAP Choices Notification>";
-        //    message.Body = "Hi, <Student_Name><br>Your choice for <Program Name> has been approved<br>";
-        //    message.BodyEncoding = System.Text.Encoding.UTF8;
-        //    message.IsBodyHtml = true;
+                bool isExist = _db.Subscribers.Any(c => c.Mail == email);
+                if (!isExist)
+                {
+                    Subscriber subscriber = new Subscriber()
+                    {
+                        Mail = email
+                    };
+                    await _db.Subscribers.AddAsync(subscriber);
+                    await _db.SaveChangesAsync();
+                    return Content("AddedNonMember");
+                }
+                else
+                {
+                    return Content("There is already Email like this");
+                }
 
-        //    client.Send(message);
-        //    return RedirectToAction(nameof(Index));
-        //}
+
+            }
+            else
+            {
+                AppUser user = await _userManager.FindByNameAsync(username);
+
+                bool isExist = _db.Subscribers.Any(c => c.Mail == user.Email);
+                if (!isExist)
+                {
+                    Subscriber subscriber = new Subscriber()
+                    {
+                        Mail = user.Email
+                    };
+                    await _db.Subscribers.AddAsync(subscriber);
+                    await _db.SaveChangesAsync();
+
+                    return Content("AddedMember");
+                }
+                else
+                {
+                    return Content("There is already Email like this");
+                }
+            }
+        }
+
     }
 }

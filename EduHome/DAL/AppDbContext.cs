@@ -45,5 +45,7 @@ namespace EduHome.DAL
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<MapAddress> MapAddresses { get; set; }
         public DbSet<HeaderFooter> HeaderFooters { get; set; }
+        public DbSet<Subscriber> Subscribers { get; set; }
+        public DbSet<SubscriberEventSimple> SubscriberEventSimples { get; set; }
     }
 }

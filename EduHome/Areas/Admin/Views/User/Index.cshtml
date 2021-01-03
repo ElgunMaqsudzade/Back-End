@@ -36,7 +36,7 @@
                                         {
                                             <td class="text-danger">Passive</td>
                                         }
-                                        <td class="role-column @("tab" + user.Id)">@user.Role</td>
+                                        <td class="role-column @(user.Username)">@user.Role</td>
                                         <td>
                                             @if (!(User.Identity.Name == user.Username))
                                             {
@@ -74,7 +74,7 @@
         }
         <ul style="list-style-type:none;" class="p-0 m-0 d-flex">
             <li>
-                <button class="role-save-btn btn" style="width:100px;cursor:not-allowed">Save</button>
+                <button class="role-save-btn btn" style="width:100px;cursor:not-allowed" disabled>Save</button>
             </li>
             <li>
                 <button class="role-cancel-btn btn btn-danger" style="width:100px">Cancel</button>

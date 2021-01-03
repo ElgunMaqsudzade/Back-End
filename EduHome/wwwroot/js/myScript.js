@@ -245,7 +245,6 @@
             }
         })
         $(document).on("focus", "#search-inp", function () {
-            console.log("dafe")
             $(".search-ul").css("display", "block");
         })
         $(document).on("mouseenter", ".search-ul", function () {
@@ -426,5 +425,57 @@
             }
         })
     } UserProfile();
+
+
+
+    //subscribe
+    //Validation starts
+    function ValidateEmail2(email) {
+        var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if ($("#sub-form").hasClass("authorized")) {
+            return true;
+        }
+        else if (email.match(mailformat)) {
+            return true;
+        }
+        else {
+            $("#email").css("border-color", "red")
+            $(".mc-form").after(`<span class="text-danger text-sm validate-text">You have entered an invalid email address!</span>`)
+            setTimeout(function () {
+                $("#email").css("border-color", "#E1E1E1");
+                $(".validate-text").remove();
+            }, 2000)
+            $("#email")[0].scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+            return false;
+        }
+    }
+    function Subscribe() {
+        let email;
+        $("#sub-btn").click(function () {
+            email = $("#email").val();
+            if (ValidateEmail2(email)) {
+                $.ajax({
+                    url: 'Contact/AddSubscriber/',
+                    type: 'GET',
+                    data: {
+                        "email": email,
+                        "username": this.dataset.username
+                    },
+                    success: function (res) {
+                        if (!$(".mc-form").next().hasClass("validate-text")) {
+                            $(".mc-form").after(`<span class="text-danger text-sm validate-text">${res}</span>`)
+                            setTimeout(function () {
+                                $(".validate-text").remove();
+                            }, 2000)
+                        }
+                    }
+                })
+            }
+        })
+
+    } Subscribe();
 
 });

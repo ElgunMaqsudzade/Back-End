@@ -1,23 +1,62 @@
 ﻿
 $(function () {
     let person;
-
+    let roleText;
     $(".change-role-btn").click(function () {
         $(".rol-btn-holder").css({ "top": `${$(this).offset().top - $(document).scrollTop() + 50}px`, "left": `${$(this).offset().left + 20}px` })
         $(".role-modal").removeClass("d-none");
-        $("body").css({ "overflow-y": "hidden" })
+        $("body").css({ "height": "100vh", "overflow-y": "hidden" })
+        person = this.dataset.username;
         $.ajax({
             type: "GET",
             url: `/Admin/User/ChangeRole`,
             data: { "username": this.dataset.username },
             success: function (res) {
-                console.log(res)
+                for (var btn of $(".role-btn")) {
+                    if (btn.innerText == res) {
+                        btn.classList.add("btn-success");
+                        btn.classList.remove("btn-light");
+                    }
+                };
             }
 
         })
-        //$(document).on("click", ".role-btn"){
-        //    $(this).
-        //}
+    });
+    $(".role-btn").on("click", function () {
+        if ($(this).hasClass("btn-success")) {
+            $(".role-btn").removeClass("btn-success")
+            $(this).addClass("btn-light")
+        } else {
+            $(".role-btn").removeClass("btn-success")
+            $(this).addClass("btn-success")
+            $(this).removeClass("btn-light")
+            $(".role-save-btn").css("cursor", "pointer");
+            $(".role-save-btn").addClass("btn-primary")
+            $(".role-save-btn").prop("disabled", false);
+        }
+    });
+    $(".role-save-btn").click(function () {
+        for (var role of $(".role-btn")) {
+            if (role.classList.contains("btn-success")) {
+                roleText = role.innerText;
+            }
+        }
+        $.ajax({
+            type: "GET",
+            url: `/Admin/User/ChangeRolePost`,
+            data: {
+                "username": person,
+                "role": roleText
+            },
+            success: function (res) {
+                $(`.${person}`).text(`${res}`);
+                $(".role-btn").removeClass("btn-success");
+                $(".role-btn").addClass("btn-light");
+                $(".role-modal").addClass("d-none");
+                $("body").css({ "height": "initial", "overflow-y": "initial" })
+            }
+        })
+    })
 
 
 
@@ -100,11 +139,7 @@ $(function () {
                 if ($("#count").val() <= count) {
                     $(".btn-holder").remove();
                 };
-            },
-            error: function myfunction() {
-                console.log("sea")
             }
         })
     })
 })
-

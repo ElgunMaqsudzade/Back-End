@@ -36,5 +36,7 @@ namespace EduHome.Models
         public List<TagEventSimple> TagEventSimples { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+        public List<SubscriberEventSimple> SubscriberEventSimples { get; set; }
+
     }
 }
