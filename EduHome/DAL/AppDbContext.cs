@@ -41,7 +41,7 @@ namespace EduHome.DAL
         public DbSet<TagEventSimple> TagEventSimples { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Slider> HomeSliders { get; set; }
+        public DbSet<Slider> Sliders { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<MapAddress> MapAddresses { get; set; }
         public DbSet<HeaderFooter> HeaderFooters { get; set; }

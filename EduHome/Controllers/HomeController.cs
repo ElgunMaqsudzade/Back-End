@@ -21,7 +21,7 @@ namespace EduHome.Controllers
             HomeVM homeVM = new HomeVM()
             {
                 EventSimples = _db.EventSimples.Where(e => e.IsDeleted == false).Take(4).ToList(),
-                HomeSliders = _db.HomeSliders.Take(3).ToList(),
+                HomeSliders = _db.Sliders.Take(3).ToList(),
                 TeacherSimples = _db.TeacherSimples.Where(e => e.IsDeleted == false).Include(t=>t.TeacherDetail).Take(3).ToList(),
             };
             return View(homeVM);
