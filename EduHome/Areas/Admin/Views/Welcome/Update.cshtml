@@ -1,0 +1,47 @@
+﻿@model AboutArea
+@{
+    ViewData["Title"] = "Welcome Update";
+}
+
+<div class="container">
+    @await Component.InvokeAsync("AboutArea")
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <form class="forms-sample" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                                <div class="form-group">
+                                    <label asp-for="Photo" class="form-label">Select Image</label>
+                                    <input asp-for="Photo" class="form-control" accept="image/*" type="file">
+                                    <span class="text-danger" asp-validation-for="Photo"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Title" class="form-label">Title</label>
+                                    <input asp-for="Title" class="form-control" placeholder="Title">
+                                    <span class="text-danger" asp-validation-for="Title"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Description">Main Description</label>
+                                    <input asp-for="Description" class="form-control" placeholder="Main Description">
+                                    <span class="text-danger" asp-validation-for="Description"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <a asp-area="Admin" asp-controller="Event" asp-action="Index" class="btn btn-light">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

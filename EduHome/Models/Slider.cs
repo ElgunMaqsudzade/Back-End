@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EduHome.Models
 {
-    public class HomeSlider
+    public class Slider
     {
         public int Id { get; set; }
         [Required, StringLength(25)]

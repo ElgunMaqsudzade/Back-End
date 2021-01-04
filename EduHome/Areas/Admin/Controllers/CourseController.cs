@@ -215,6 +215,12 @@ namespace EduHome.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        public async Task<IActionResult> LoadMore(int skip)
+        {
+            ViewBag.Skip = skip;
+            List<CourseSimple> courseSimples = await _db.CourseSimples.Where(t => t.IsDeleted == false).Skip(skip).Take(10).ToListAsync();
 
+            return PartialView("_CoursePartial", courseSimples);
+        }
     }
 }

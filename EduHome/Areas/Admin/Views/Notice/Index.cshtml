@@ -1,0 +1,27 @@
+﻿@model HomeVM
+@{
+    ViewData["Title"] = "Notice Index";
+}
+
+<section class="notice-area two pt-140">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="notice-left-wrapper">
+                    <h3>@Model.VideoTour.BoardTitle</h3>
+                    <div class="notice-left">
+                        @foreach (NoticeBoard n in Model.NoticeBoards)
+                        {
+                            <div class="single-notice-left mb-23 pb-20">
+                                <h4>@n.NoticeDate.ToString("d, MMMM yyyy")</h4>
+                                <p>@n.Descriptioon</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<a class="btn btn-sm btn-primary" asp-controller="Notice" asp-action="Update">Update</a>

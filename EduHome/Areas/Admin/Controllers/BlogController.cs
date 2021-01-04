@@ -209,5 +209,12 @@ namespace EduHome.Areas.Admin.Controllers
             await _db.SaveChangesAsync();
             return Json(blogSimple);
         }
+        public async Task<IActionResult> LoadMore(int skip)
+        {
+            ViewBag.Skip = skip;
+            List<BlogSimple> blogSimples = await _db.BlogSimples.Where(t => t.IsDeleted == false).Skip(skip).Take(10).ToListAsync();
+
+            return PartialView("_BlogPartial", blogSimples);
+        }
     }
 }

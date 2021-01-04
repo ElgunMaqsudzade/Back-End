@@ -127,13 +127,11 @@ $(function () {
     //++++++++++++++++++++++++++++++++
 
     let count = 10;
-    let num;
     $(document).on('click', '.amkButtonu', function () {
         $.ajax({
-            url: 'Teacher/LoadMore/?skip=' + count,
+            url: `${this.dataset.set}/LoadMore/?skip=` + count,
             type: 'GET',
             success: function (res) {
-                console.log(res)
                 $(".body").append(res);
                 count += 10;
                 if ($("#count").val() <= count) {
