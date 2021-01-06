@@ -13,7 +13,6 @@ namespace EduHome.Models
         public string Title { get; set; }
         [Required]
         public string Address { get; set; }
-        [Required]
         public string Image { get; set; }
     }
 }

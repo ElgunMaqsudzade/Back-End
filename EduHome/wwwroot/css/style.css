@@ -2373,7 +2373,7 @@ textarea {
 }
 
 .notice-video {
-    background: rgba(0, 0, 0, 0) url("../img/notice/video.jpg") repeat scroll 0 0;
+    background: rgba(0, 0, 0, 0) repeat scroll 0 0;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;

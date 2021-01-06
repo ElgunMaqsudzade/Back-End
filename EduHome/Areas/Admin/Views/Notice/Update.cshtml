@@ -1,0 +1,48 @@
+﻿@model NoticeBoard
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="notice-left-wrapper">
+                <h3>NOTICE BOARD</h3>
+                <div class="notice-left">
+                        <div class="single-notice-left mb-23 pb-20">
+                            <h4>@Model.NoticeDate.ToString("d, MMMM yyyy")</h4>
+                            <p>@Model.Descriptioon</p>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <form class="forms-sample" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                                <div class="form-group">
+                                    <label asp-for="Descriptioon">Main Description</label>
+                                    <input asp-for="Descriptioon" class="form-control" placeholder="Main Description">
+                                    <span class="text-danger" asp-validation-for="Descriptioon"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <a asp-area="Admin" asp-controller="Notice" asp-action="Index" class="btn btn-light">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}
+
+

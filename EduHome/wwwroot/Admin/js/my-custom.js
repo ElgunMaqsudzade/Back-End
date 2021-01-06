@@ -89,7 +89,9 @@ $(function () {
                 url: `/Admin/${url}/Delete`,
                 data: { "id": this.dataset.delete },
                 success: function (res) {
-                    $(".inner-img").attr("src", `/img/${url.toLowerCase()}/${res.image}`)
+                    if (res.image != null) {
+                        $(".inner-img").attr("src", `/img/${url.toLowerCase()}/${res.image}`)
+                    }
                     if (url == "Teacher") {
                         $(".modal-body").text(res.fullname)
                     } else {

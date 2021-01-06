@@ -20,62 +20,116 @@ namespace EduHome.Areas.Admin.Controllers
     public class NoticeController : Controller
     {
         private readonly AppDbContext _db;
-        private readonly UserManager<AppUser> _userManager;
         private readonly IWebHostEnvironment _env;
-        public NoticeController(UserManager<AppUser> userManager, AppDbContext db, IWebHostEnvironment env)
+        public NoticeController(AppDbContext db, IWebHostEnvironment env)
         {
-            _userManager = userManager;
             _db = db;
             _env = env;
         }
         public async Task<IActionResult> Index()
         {
-            return View();
+            HomeVM homeVM = new HomeVM()
+            {
+                VideoTour = await _db.VideoTours.FirstOrDefaultAsync(),
+                NoticeBoards = await _db.NoticeBoards.ToListAsync()
+            };
+            return View(homeVM);
         }
-        public async Task<IActionResult> Update()
+        public IActionResult Create()
         {
-            AboutArea aboutArea = await _db.AboutAreas.FirstOrDefaultAsync();
-            return View(aboutArea);
+            return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(AboutArea about)
+        public async Task<IActionResult> Create(NoticeBoard notice)
         {
-            AboutArea aboutArea = await _db.AboutAreas.FirstOrDefaultAsync();
+            await _db.NoticeBoards.AddAsync(notice);
 
-            if (about.Photo == null)
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> Update(int? id)
+        {
+            if (id == null) return NotFound();
+            bool isExist = _db.NoticeBoards.Any(c => c.Id == id);
+            if (!isExist) return NotFound();
+            NoticeBoard notice = await _db.NoticeBoards.Where(c => c.Id == id).FirstOrDefaultAsync();
+            return View(notice);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(int? id,NoticeBoard notice)
+        {
+            NoticeBoard noticeBoard = await _db.NoticeBoards.Where(c => c.Id == id).FirstOrDefaultAsync();
+
+            noticeBoard.NoticeDate = DateTime.UtcNow;
+            noticeBoard.Descriptioon = notice.Descriptioon;
+
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> VideoUpdate(int? id)
+        {
+            if (id == null) return NotFound();
+            bool isExist = _db.VideoTours.Any(c => c.Id == id);
+            if (!isExist) return NotFound();
+            VideoTour video = await _db.VideoTours.Where(c => c.Id == id).FirstOrDefaultAsync();
+            return View(video);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> VideoUpdate(int id, VideoTour video)
+        {
+
+            VideoTour videoTour = await _db.VideoTours.Where(c => c.Id == id).FirstOrDefaultAsync();
+            if (!ModelState.IsValid) return View(videoTour);
+
+            if (video.Photo != null)
             {
-                ModelState.AddModelError("", "Please,add Image");
-                return View();
-            }
-            if (!about.Photo.IsImage())
-            {
-                ModelState.AddModelError("", "Please,add Image file");
-                return View();
-            }
-            if (!about.Photo.MaxSize(500))
-            {
-                ModelState.AddModelError("", "Max size of Image should be lower than 500");
-                return View();
+                if (!video.Photo.IsImage())
+                {
+                    ModelState.AddModelError("", "Please,add Image file");
+                    return View(videoTour);
+                }
+                if (!video.Photo.MaxSize(500))
+                {
+                    ModelState.AddModelError("", "Max size of Image should be lower than 500");
+                    return View(videoTour);
+                }
+                string folder = Path.Combine("img", "notice");
+                string fileName = await video.Photo.SaveImagesAsync(_env.WebRootPath, folder);
+                string path = Path.Combine(_env.WebRootPath, folder, videoTour.Image);
+                videoTour.Image = fileName;
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
             }
 
-            string folder = Path.Combine("img", "about");
-            string fileName = await about.Photo.SaveImagesAsync(_env.WebRootPath, folder);
-            string path = Path.Combine(_env.WebRootPath, folder, aboutArea.Image);
-            if (System.IO.File.Exists(path))
-            {
-                System.IO.File.Delete(path);
-            }
-
-            aboutArea.Image = fileName;
-            aboutArea.Title = about.Title;
-            aboutArea.Description = about.Description;
-            aboutArea.UpdateTime = DateTime.UtcNow;
+            videoTour.VideoLink = video.VideoLink;
 
             await _db.SaveChangesAsync();
 
-
             return RedirectToAction(nameof(Index));
+        }
+        public IActionResult Delete(int id)
+        {
+            NoticeBoard notice = _db.NoticeBoards.Where(e => e.Id == id).FirstOrDefault();
+            return Json(notice);
+        }
+        public async Task<IActionResult> DeletePost(int id)
+        {
+            List<NoticeBoard> notices = _db.NoticeBoards.Where(e => e.Id == id).ToList();
+            if (notices.Count() > 0)
+            {
+                _db.NoticeBoards.Remove(notices.FirstOrDefault());
+            }
+            else
+            {
+                return NotFound();
+            }
+            await _db.SaveChangesAsync();
+            return Json(notices);
         }
     }
 }

@@ -15,8 +15,7 @@ namespace EduHome.Models
         public string Title { get; set; }
         [Required]
         public string Description { get; set; }
-        [Required]
-        public string BgImage { get; set; }
+        public string Image { get; set; }
         [NotMapped]
         public IFormFile Photo { get; set; }
     }

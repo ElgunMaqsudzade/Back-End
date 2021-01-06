@@ -1,27 +1,61 @@
 ﻿@model HomeVM
 @{
-    ViewData["Title"] = "Notice Index";
+    ViewData["Title"] = "Notice";
+    int count = 1;
+    string url = "Notice";
 }
-
-<section class="notice-area two pt-140">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <div class="notice-left-wrapper">
-                    <h3>@Model.VideoTour.BoardTitle</h3>
-                    <div class="notice-left">
-                        @foreach (NoticeBoard n in Model.NoticeBoards)
-                        {
-                            <div class="single-notice-left mb-23 pb-20">
-                                <h4>@n.NoticeDate.ToString("d, MMMM yyyy")</h4>
-                                <p>@n.Descriptioon</p>
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
+<div class="modal-box">
+    <div class="inner-box col-4">
+        <div class="modal-img-box">
+            <img class=" img-fluid inner-img" src="" />
+        </div>
+        <div class="modal-body text-uppercase"></div>
+        <div class="modal-btn">
+            <button class="m-2 btn btn-md btn-danger modal-delete">Delete</button>
+            <button class="m-2 btn btn-md btn-primary modal-back">Go Back</button>
         </div>
     </div>
-</section>
-
-<a class="btn btn-sm btn-primary" asp-controller="Notice" asp-action="Update">Update</a>
+</div>
+<div class="row">
+    <table class="table table-hover">
+        <thead>
+            <tr class="text-right">
+                <th scope="col"><a class="btn btn-md btn-success" asp-controller="Notice" asp-action="Create">Create Notice</a></th>
+            </tr>
+            <tr class="text-center">
+                <td scope="col">
+                    Video
+                </td>
+                <td class="td-img" scope="col">
+                    <img class="img-fluid" style="width:120px!important;" src="~/img/notice/@Model.VideoTour.Image" alt="Alternate Text" />
+                </td>
+                <td scope="col">
+                    @Model.VideoTour.VideoLink
+                </td>
+                <td scope="col">
+                    <a class="btn btn-sm btn-primary" asp-controller="Notice" asp-action="VideoUpdate" asp-route-id="@Model.VideoTour.Id">Update</a>
+                </td>
+            </tr>
+            <tr class="text-center">
+                <th scope="col">#</th>
+                <th scope="col">Notice Create Date</th>
+                <th style="width:30%" scope="col">Description</th>
+            </tr>
+        </thead>
+        <tbody class="body">
+            @foreach (NoticeBoard e in Model.NoticeBoards)
+            {
+                <tr class="text-center">
+                    <td>@count</td>
+                    <td>@e.NoticeDate.ToString("d, MMMM yyyy")</td>
+                    <td>@e.Descriptioon</td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" asp-controller="Notice" asp-action="Update" asp-route-id="@e.Id">Update</a>
+                        <button data-delete="@e.Id" data-url="@url" class="btn btn-sm btn-danger delete">Delete</button>
+                    </td>
+                </tr>
+                count++;
+            }
+        </tbody>
+    </table>
+</div>

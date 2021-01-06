@@ -44,7 +44,7 @@ namespace EduHome.Controllers
                     };
                     await _db.Subscribers.AddAsync(subscriber);
                     await _db.SaveChangesAsync();
-                    return Content("AddedNonMember");
+                    return Content("Subscribed");
                 }
                 else
                 {
@@ -67,7 +67,7 @@ namespace EduHome.Controllers
                     await _db.Subscribers.AddAsync(subscriber);
                     await _db.SaveChangesAsync();
 
-                    return Content("AddedMember");
+                    return Content("Subscribed");
                 }
                 else
                 {

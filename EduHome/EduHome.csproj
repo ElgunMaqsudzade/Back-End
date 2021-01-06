@@ -55,6 +55,8 @@
     <Compile Remove="Migrations\20201231191303_UserUpdate.Designer.cs" />
     <Compile Remove="Migrations\20210101093814_CommentUpdateUserRelation.cs" />
     <Compile Remove="Migrations\20210101093814_CommentUpdateUserRelation.Designer.cs" />
+    <Compile Remove="Migrations\20210105223458_UpdateNoticeBoard.cs" />
+    <Compile Remove="Migrations\20210105223458_UpdateNoticeBoard.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,6 +74,7 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="wwwroot\img\notice\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -13,7 +13,6 @@ namespace EduHome.Models
         public string Description { get; set; }
         [Required]
         public string Fullname { get; set; }
-        [Required]
         public string Image { get; set; }
         [Required]
         public bool IsDeleted { get; set; }
