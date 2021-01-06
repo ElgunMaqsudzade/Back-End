@@ -32,6 +32,7 @@ namespace EduHome.Areas.Admin.Controllers
         {
             List<TeacherSimple> teacherSimples = await _db.TeacherSimples.Where(e => e.IsDeleted == false)
                 .Skip(0).Take(10).Include(t => t.SocialMedias).Include(t => t.Profession).ToListAsync();
+            ViewBag.Count = _db.TeacherSimples.Count();
             return View(teacherSimples);
         }
         public async Task<IActionResult> Detail(int? id)
@@ -59,10 +60,8 @@ namespace EduHome.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TeacherForCreateVM teacher, int design, int language, int teamleader, int development, int innovation, int communication, int Profession)
         {
-            //We have int TeacherSimpleId at TeacherDetail for one for one relation we should either 
-            //do that nullable or just do not use (!ModelState.Isvalid)
-
-            //if (!ModelState.IsValid) return View();
+            
+            if (!ModelState.IsValid) return View();
             TeacherForCreateVM teacherForCreateVM = new TeacherForCreateVM()
             {
                 Skills = await _db.Skills.ToListAsync(),
@@ -150,8 +149,7 @@ namespace EduHome.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(int id, TeacherForCreateVM teacher, int design, int language, int teamleader, int development, int innovation, int communication, int Profession)
         {
-            //We have int TeacherSimpleId at TeacherDetail for one for one relation we should either 
-            //do that nullable or just do not use (!ModelState.Isvalid)
+            if (!ModelState.IsValid) return View();
             TeacherForCreateVM teacherForCreateVM = new TeacherForCreateVM()
             {
                 TeacherSimple = await _db.TeacherSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.TeacherDetail).Include(t => t.TeacherSkills).FirstOrDefaultAsync(),
@@ -164,39 +162,36 @@ namespace EduHome.Areas.Admin.Controllers
 
             TeacherSimple teacherSimple = await _db.TeacherSimples.Where(c => c.IsDeleted == false && c.Id == id).FirstOrDefaultAsync();
             TeacherDetail teacherDetail = await _db.TeacherDetails.Where(c => c.TeacherSimpleId == id).FirstOrDefaultAsync();
-
             bool isExist = _db.TeacherSimples.Where(c => c.IsDeleted == false).Any(c => c.Fullname.Trim().ToLower() == teacher.TeacherSimple.Fullname.Trim().ToLower() && c.Id != id);
             if (isExist)
             {
                 ModelState.AddModelError("", "This Teacher already exist");
                 return View(teacherForCreateVM);
             }
-            if (teacher.TeacherSimple.Photo == null)
+            if (teacher.TeacherSimple.Photo != null)
             {
-                ModelState.AddModelError("", "Please,add Image");
-                return View(teacherForCreateVM);
-            }
-            if (!teacher.TeacherSimple.Photo.IsImage())
-            {
-                ModelState.AddModelError("", "Please,add Image file");
-                return View(teacherForCreateVM);
-            }
-            if (!teacher.TeacherSimple.Photo.MaxSize(500))
-            {
-                ModelState.AddModelError("", "Max size of Image should be lower than 500");
-                return View(teacherForCreateVM);
+                if (!teacher.TeacherSimple.Photo.IsImage())
+                {
+                    ModelState.AddModelError("", "Please,add Image file");
+                    return View(teacherForCreateVM);
+                }
+                if (!teacher.TeacherSimple.Photo.MaxSize(500))
+                {
+                    ModelState.AddModelError("", "Max size of Image should be lower than 500");
+                    return View(teacherForCreateVM);
+                }
+                string folder = Path.Combine("img", "teacher");
+                string fileName = await teacher.TeacherSimple.Photo.SaveImagesAsync(_env.WebRootPath, folder);
+                string path = Path.Combine(_env.WebRootPath, folder, teacherSimple.Image);
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+                teacherSimple.Image = fileName;
             }
 
-            string folder = Path.Combine("img", "teacher");
-            string fileName = await teacher.TeacherSimple.Photo.SaveImagesAsync(_env.WebRootPath, folder);
-            string path = Path.Combine(_env.WebRootPath, folder, teacherSimple.Image);
-            if (System.IO.File.Exists(path))
-            {
-                System.IO.File.Delete(path);
-            }
 
             teacherSimple.ProfessionId = Profession;
-            teacherSimple.Image = fileName;
             teacherSimple.Fullname = teacher.TeacherSimple.Fullname;
             teacherSimple.IsSimple = teacher.TeacherSimple.IsSimple;
             teacherSimple.UpdateTime = DateTime.UtcNow;

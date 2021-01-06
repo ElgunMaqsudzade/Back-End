@@ -33,6 +33,7 @@ namespace EduHome.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             List<EventSimple> eventSimples = await _db.EventSimples.Where(e => e.IsDeleted == false).Skip(0).Take(10).ToListAsync();
+            ViewBag.Count = _db.EventSimples.Count();
             return View(eventSimples);
         }
         public async Task<IActionResult> Detail(int? id)
@@ -125,7 +126,7 @@ namespace EduHome.Areas.Admin.Controllers
                 MailMessage message = new MailMessage("imbackend4000@gmail.com", s.Mail);
                 message.Subject = "EduHome Event Review";
 
-               
+
                 message.Body = "<div style='padding:20px;' class='container'><div class='row justify-content-center'><div class='col-6 text-center'>" +
                     "<h4>Hello, Our dear Subscriber:)</h4><h4 style='color: red'>Want to learn more in 2021?</h4>" +
                     "<h4>Create a goal and Eduhome will help you stay on track.</h4>" +

@@ -75,6 +75,37 @@ namespace EduHome.Controllers
                 }
             }
         }
+        public async Task<IActionResult> Comment(string subject, string message, string name, string email)
+        {
+            try
+            {
+                if (User.Identity.IsAuthenticated)
+                {
+                    AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+                    name = user.Fullname;
+                    email = user.Email;
+                }
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                client.EnableSsl = true;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential("imbackend4000@gmail.com", "backend318");
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
 
+                MailMessage mailMessage = new MailMessage("imbackend4000@gmail.com", "elgun.maqsudzade@gmail.com");
+                mailMessage.Subject = $"Message From Client";
+                mailMessage.Body = $"Client Subject - {subject} <br> Client Name - {name} <br> Client Email - {email} <br> Client Message - {message}";
+                mailMessage.BodyEncoding = System.Text.Encoding.UTF8;
+                mailMessage.IsBodyHtml = true;
+
+                client.Send(mailMessage);
+
+                return Json(new { send = true });
+            }
+            catch (Exception)
+            {
+                return Json(new { send = false });
+                throw;
+            }
+        }
     }
 }

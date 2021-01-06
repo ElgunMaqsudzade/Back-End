@@ -1,0 +1,62 @@
+﻿@model ContactVM
+@{
+    ViewData["Title"] = "Contact Area";
+    int count = 1;
+    string url = "Contact";
+}
+<div class="modal-box">
+    <div class="inner-box col-4">
+        <div class="modal-img-box">
+            <img class=" img-fluid inner-img" src="" />
+        </div>
+        <div class="modal-body text-uppercase"></div>
+        <div class="modal-btn">
+            <button class="m-2 btn btn-md btn-danger modal-delete">Delete</button>
+            <button class="m-2 btn btn-md btn-primary modal-back">Go Back</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <table class="table table-hover">
+        <thead>
+            <tr class="text-right">
+                <th scope="col"><a class="btn btn-md btn-success" asp-controller="Contact" asp-action="Create">Create Contact</a></th>
+            </tr>
+            <tr class="text-center">
+                <td scope="col">
+                    Map
+                </td>
+                <td colspan="3"  scope="col">
+                    @Html.Raw(Model.MapAddress.Iframe)
+                </td>
+                <td colspan="2" scope="col">
+                    <a class="btn btn-sm btn-primary" asp-action="MapUpdate" asp-route-id="@Model.MapAddress.Id">Update</a>
+                </td>
+            </tr>
+            <tr class="text-center">
+                <th scope="col">#</th>
+                <th scope="col">Image</th>
+                <th scope="col">Title</th>
+                <th scope="col">Address</th>
+                <th scope="col">Settings</th>
+            </tr>
+        </thead>
+        <tbody class="body">
+            @foreach (Contact e in Model.Contacts)
+            {
+                <tr class="text-center">
+                    <td>@count</td>
+                    <td style="width: 20px;"><img class="img-fluid" src="~/img/contact/@e.Image" alt="Alternate Text" /></td>
+                    <td>@e.Title</td>
+                    <td>@e.Address</td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" asp-controller="Contact" asp-action="Update" asp-route-id="@e.Id">Update</a>
+                        <button data-delete="@e.Id" data-url="@url" class="btn btn-sm btn-danger delete">Delete</button>
+                    </td>
+                </tr>
+                count++;
+            }
+        </tbody>
+    </table>
+</div>
+

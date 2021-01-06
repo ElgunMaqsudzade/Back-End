@@ -567,26 +567,6 @@ namespace EduHome.Migrations
                     b.ToTable("Professions");
                 });
 
-            modelBuilder.Entity("EduHome.Models.SectionTitle", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("IconImage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SectionTitles");
-                });
-
             modelBuilder.Entity("EduHome.Models.Skill", b =>
                 {
                     b.Property<int>("Id")

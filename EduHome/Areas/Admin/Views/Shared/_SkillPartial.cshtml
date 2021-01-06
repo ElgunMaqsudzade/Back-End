@@ -1,0 +1,18 @@
+﻿@model List<Skill>
+@{
+    int count = (int)ViewBag.Skip + 1;
+    string url = "Skill";
+}
+
+@foreach (Skill e in Model)
+{
+    <tr class="text-center">
+        <td>@count</td>
+        <td>@e.Name</td>
+        <td>
+            <button data-delete="@e.Id" data-url="@url" class="btn btn-sm btn-danger delete">Delete</button>
+        </td>
+    </tr>
+    count++;
+}
+

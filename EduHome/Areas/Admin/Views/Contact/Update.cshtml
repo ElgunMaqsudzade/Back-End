@@ -1,0 +1,66 @@
+﻿@model Contact
+@{
+    ViewData["Title"] = "Contact Update";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" >
+            <h4>TestimonialArea</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt class="td-img" style="width:300px"><img src="~/img/contact/@Model.Image" class="img-fluid" alt="Alternate Text" /></dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Title)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Title)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Address)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <form class="forms-sample" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                                <div class="form-group">
+                                    <label asp-for="Photo" class="form-label">Select Image</label>
+                                    <input asp-for="Photo" class="form-control" accept="image/*" type="file">
+                                    <span class="text-danger" asp-validation-for="Photo"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Title">Title</label>
+                                    <input asp-for="Title" class="form-control" placeholder="Title">
+                                    <span class="text-danger" asp-validation-for="Title"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Address">Address</label>
+                                    <input asp-for="Address" class="form-control" placeholder="Adress">
+                                    <span class="text-danger" asp-validation-for="Address"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <a asp-area="Admin" asp-action="Index" class="btn btn-light">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

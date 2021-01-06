@@ -45,7 +45,7 @@ namespace EduHome.Areas.Admin.Controllers
                 };
                 usersVM.Add(userVM);
             }
-
+            ViewBag.Count = users.Count();
             return View(usersVM);
         }
         public async Task<IActionResult> Activation(string id)
@@ -62,7 +62,7 @@ namespace EduHome.Areas.Admin.Controllers
             await _userManager.UpdateAsync(userChange);
             return RedirectToAction("Index");
         }
-        public IActionResult ResetPassword(string id)
+        public IActionResult ResetPassword()
         {
             return View();
         }
@@ -104,6 +104,34 @@ namespace EduHome.Areas.Admin.Controllers
             await _userManager.RemoveFromRoleAsync(user, (await _userManager.GetRolesAsync(user))[0]);
             await _userManager.AddToRoleAsync(user, role);
             return Content((await _userManager.GetRolesAsync(user))[0]);
+        }
+        public async Task<IActionResult> LoadMore(int skip)
+        {
+            ViewBag.Skip = skip;
+            List<AppUser> users = _userManager.Users.Skip(skip).Take(10).ToList();
+            List<UserVM> usersVM = new List<UserVM>();
+            List<string> allroles = new List<string>();
+            foreach (var role in Enum.GetValues(typeof(Roles)))
+            {
+                allroles.Add(role.ToString());
+            }
+            foreach (AppUser user in users)
+            {
+                UserVM userVM = new UserVM
+                {
+                    Id = user.Id,
+                    Fullname = user.Fullname,
+                    Email = user.Email,
+                    Username = user.UserName,
+                    IsDeleted = user.IsDeleted,
+                    Role = (await _userManager.GetRolesAsync(user))[0],
+                    Roles = allroles
+
+                };
+                usersVM.Add(userVM);
+            }
+
+            return PartialView("_UserPartial", usersVM);
         }
     }
 }

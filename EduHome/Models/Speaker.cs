@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,6 +14,8 @@ namespace EduHome.Models
         [Required]
         public string Name { get; set; }
         public string Image { get; set; }
+        [NotMapped]
+        public IFormFile Photo { get; set; }
         public bool IsDeleted { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime? DeleteTime { get; set; }

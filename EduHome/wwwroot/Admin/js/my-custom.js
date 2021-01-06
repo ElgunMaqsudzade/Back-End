@@ -89,16 +89,23 @@ $(function () {
                 url: `/Admin/${url}/Delete`,
                 data: { "id": this.dataset.delete },
                 success: function (res) {
-                    if (res.image != null) {
+                    if (res.image != null && url.toLowerCase() != "speaker") {
                         $(".inner-img").attr("src", `/img/${url.toLowerCase()}/${res.image}`)
+                    } else if (url.toLowerCase() == "speaker") {
+                        $(".inner-img").attr("src", `/img/event/${res.image}`)
+                        $(".inner-img").css("width", "95px")
+                        $(".inner-img").addClass("img-fluid")
                     }
-                    if (url == "Teacher" || url == "Testimonial") {
+                    if (res.fullname != null) {
                         $(".modal-body").text(res.fullname)
-                    } else if (url == "Notice") {
-                        $(".modal-body").text(res.descriptioon)
+                    } else if (res.title != null) {
+                        $(".modal-body").text(res.title)
+                    }
+                    else if (res.name != null) {
+                        $(".modal-body").text(res.name)
                     }
                     else {
-                        $(".modal-body").text(res.title)
+                        $(".modal-body").text(res.descriptioon)
                     }
                     $(".modal-delete").click(function () {
                         $.ajax({
@@ -130,9 +137,11 @@ $(function () {
     } Modal();
 
     //++++++++++++++++++++++++++++++++
-
     let count = 10;
-    $(document).on('click', '.amkButtonu', function () {
+    if ($("#count").val() <= count) {
+        $(".btn-holder").remove();
+    };
+    $(document).on('click', '.loadButton', function () {
         $.ajax({
             url: `${this.dataset.set}/LoadMore/?skip=` + count,
             type: 'GET',

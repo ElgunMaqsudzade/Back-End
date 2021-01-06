@@ -77,9 +77,6 @@
     //Bring comment from back
 
 
-    let BlogUrl = "/Blog/";
-    let CourseUrl = "/Course/";
-    let EventUrl = "/Event/";
     function TakeData() {
         let name;
         let dbid;
@@ -88,6 +85,8 @@
         let message;
         let myCard;
         let count;
+        let btnUrl;
+        let sent = true;
         $(document).on("click", ".reply-button", function (e) {
             e.preventDefault();
             dbid = $("#db-id").val();
@@ -95,11 +94,15 @@
             email = $("#email").val();
             subject = $("#subject").val();
             message = $("#message").val();
+            btnUrl = this.dataset.url;
             if (ValidateEmail(email)) {
-                if (ValidateName(name) && ValidateMessage(message)) {
+                if (ValidateName(name) && ValidateMessage(message) && sent) {
+                    if (btnUrl == "/Contact/") {
+                        sent = false;
+                    }
                     count = Number($(".reply-count").text())
                     $.ajax({
-                        url: `${this.dataset.url}Comment`,
+                        url: `${btnUrl}Comment`,
                         type: "POST",
                         data: {
                             "dbid": dbid,
@@ -109,6 +112,28 @@
                             "message": message
                         },
                         success: function (res) {
+                            if (btnUrl == "/Contact/") {
+                                if (res.send == true) {
+                                    $(".form-message").addClass("send");
+                                    $(".form-message").append("<span class='text-success'>Your email was sent successfully</span>")
+                                    setTimeout(function () {
+                                        $(".form-message").text("");
+                                        sent = true;
+                                    }, 5000)
+                                    $("#name").val("");
+                                    $("#email").val("");
+                                    $("#subject").val("");
+                                    $("#message").val("");
+                                    return;
+                                } else {
+                                    $(".form-message").append("<span class='text-danger'>We couldn't send your message:(</span>");
+                                    setTimeout(function () {
+                                        $(".form-message").text("");
+                                        sent = true;
+                                    }, 5000)
+                                    return;
+                                }
+                            }
                             myCard = document.createElement("div");
                             $(myCard).prepend(res)
                             $(".reply-count").text(`${count + 1}`);

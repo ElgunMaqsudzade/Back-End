@@ -1,0 +1,58 @@
+﻿@model List<Tag>
+@{
+    ViewData["Title"] = "Tag";
+    int count = 1;
+    string url = "Tag";
+}
+
+<div class="modal-box">
+    <div class="inner-box col-4">
+        <div class="modal-img-box">
+            <img class=" img-fluid inner-img" src="" />
+        </div>
+        <div class="modal-body text-uppercase"></div>
+        <div class="modal-btn">
+            <button class="m-2 btn btn-md btn-danger modal-delete">Delete</button>
+            <button class="m-2 btn btn-md btn-primary modal-back">Go Back</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <table class="table table-hover">
+        <thead>
+            <tr class="text-left">
+                <th scope="col"><a class="btn btn-md btn-success" asp-controller="Tag" asp-action="Create">Create Tag</a></th>
+            </tr>
+            <tr class="text-center">
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Settings</th>
+            </tr>
+        </thead>
+        <tbody class="body">
+            @foreach (Tag e in Model)
+            {
+                <tr class="text-center">
+                    <td>@count</td>
+                    <td>@e.Name</td>
+                    <td>
+                        <button data-delete="@e.Id" data-url="@url" class="btn btn-sm btn-danger delete">Delete</button>
+                    </td>
+                </tr>
+                count++;
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="7">
+                    <div class="col-12 text-center btn-holder">
+                        <input type="hidden" id="count" value="@ViewBag.Count" />
+                        <button data-set="@url" class="btn btn-success btn-lg my-5 loadButton">Load More</button>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+

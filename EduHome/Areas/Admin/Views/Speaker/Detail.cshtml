@@ -1,0 +1,22 @@
+﻿@model Speaker
+@{
+    ViewData["Title"] = "Speaker Detail";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="single-speaker">
+                <div style="width:95px;" class="speaker-img">
+                    <img class="img-fluid" src="/img/event/@Model.Image" alt="speaker">
+                </div>
+                <div class="speaker-name">
+                    <h5>@Model.Name</h5>
+                    <p>@Model.Profession.Name</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

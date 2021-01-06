@@ -20,17 +20,16 @@ namespace EduHome.Areas.Admin.Controllers
     public class BlogController : Controller
     {
         private readonly AppDbContext _db;
-        private readonly UserManager<AppUser> _userManager;
         private readonly IWebHostEnvironment _env;
-        public BlogController(UserManager<AppUser> userManager, AppDbContext db, IWebHostEnvironment env)
+        public BlogController( AppDbContext db, IWebHostEnvironment env)
         {
-            _userManager = userManager;
             _db = db;
             _env = env;
         }
         public async Task<IActionResult> Index()
         {
             List<BlogSimple> blogSimples = await _db.BlogSimples.Where(e => e.IsDeleted == false).Skip(0).Take(10).ToListAsync();
+            ViewBag.Count = _db.BlogSimples.Count();
             return View(blogSimples);
         }
 
@@ -61,7 +60,7 @@ namespace EduHome.Areas.Admin.Controllers
         {
 
 
-            //if (!ModelState.IsValid) return View();
+            if (!ModelState.IsValid) return View();
             BlogForCreateVM blogForCreateVM = new BlogForCreateVM()
             {
                 Categories = await _db.Categories.ToListAsync(),
@@ -131,8 +130,6 @@ namespace EduHome.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(int id, BlogForCreateVM blog, List<int> Tags, int Category)
         {
-            //We have int BlogSimpleId at BlogDetail for one for one relation we should either 
-            //do that nullable or just do not use (!ModelState.Isvalid)
             BlogForCreateVM blogForCreateVM = new BlogForCreateVM()
             {
                 BlogSimple = await _db.BlogSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.BlogDetail).FirstOrDefaultAsync(),
@@ -144,6 +141,8 @@ namespace EduHome.Areas.Admin.Controllers
 
             BlogSimple blogSimple = await _db.BlogSimples.Where(c => c.IsDeleted == false && c.Id == id).FirstOrDefaultAsync();
             BlogDetail blogDetail = await _db.BlogDetails.Where(c => c.BlogSimpleId == id).FirstOrDefaultAsync();
+
+            if (!ModelState.IsValid) return View(blogForCreateVM);
 
             bool isExist = _db.BlogSimples.Where(c => c.IsDeleted == false).Any(c => c.Title.Trim().ToLower() == blog.BlogSimple.Title.Trim().ToLower() && c.Id != id);
             if (isExist)

@@ -31,6 +31,7 @@ namespace EduHome.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             List<CourseSimple> courseSimples = await _db.CourseSimples.Where(e => e.IsDeleted == false).Skip(0).Take(10).ToListAsync();
+            ViewBag.Count = _db.CourseSimples.Count();
             return View(courseSimples);
         }
         public async Task<IActionResult> Detail(int? id)

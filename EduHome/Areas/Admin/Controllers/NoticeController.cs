@@ -58,7 +58,7 @@ namespace EduHome.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int? id,NoticeBoard notice)
+        public async Task<IActionResult> Update(int? id, NoticeBoard notice)
         {
             NoticeBoard noticeBoard = await _db.NoticeBoards.Where(c => c.Id == id).FirstOrDefaultAsync();
 
@@ -119,17 +119,17 @@ namespace EduHome.Areas.Admin.Controllers
         }
         public async Task<IActionResult> DeletePost(int id)
         {
-            List<NoticeBoard> notices = _db.NoticeBoards.Where(e => e.Id == id).ToList();
-            if (notices.Count() > 0)
+            NoticeBoard notice = await _db.NoticeBoards.Where(e => e.Id == id).FirstOrDefaultAsync();
+            if (_db.NoticeBoards.Count() > 1)
             {
-                _db.NoticeBoards.Remove(notices.FirstOrDefault());
+                _db.NoticeBoards.Remove(notice);
             }
             else
             {
                 return NotFound();
             }
             await _db.SaveChangesAsync();
-            return Json(notices);
+            return Json(notice);
         }
     }
 }

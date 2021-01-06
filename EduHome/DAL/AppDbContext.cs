@@ -26,7 +26,6 @@ namespace EduHome.DAL
         public DbSet<BlogSimple> BlogSimples { get; set; }
         public DbSet<BlogDetail> BlogDetails { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<SectionTitle> SectionTitles { get; set; }
         public DbSet<CourseSimple> CourseSimples { get; set; }
         public DbSet<CourseDetail> CourseDetails { get; set; }
         public DbSet<CourseFeature> CourseFeatures { get; set; }

@@ -1,0 +1,42 @@
+﻿@model List<UserVM>
+@{
+    int count = (int)ViewBag.Skip + 1;
+}
+
+@foreach (UserVM user in Model)
+{
+
+    <tr>
+        <td>@user.Fullname</td>
+        <td class="username-column">@user.Username</td>
+        <td class="email-column">@user.Email</td>
+        @if (!user.IsDeleted)
+        {
+            <td class="text-success">Active</td>
+        }
+        else
+        {
+            <td class="text-danger">Passive</td>
+        }
+        <td class="role-column @(user.Username)">@user.Role</td>
+        <td>
+            @if (!(User.Identity.Name == user.Username))
+            {
+                @if (!user.IsDeleted)
+                {
+                    <a class="btn btn-md btn-danger" asp-controller="User" asp-action="Activation" asp-route-id="@user.Id">Disable</a>
+                }
+                else
+                {
+                    <a class="btn btn-md btn-success" asp-controller="User" asp-action="Activation" asp-route-id="@user.Id">Enable</a>
+                }
+            }
+            <a class="btn btn-md btn-warning" asp-controller="User" asp-action="ResetPassword" asp-route-id="@user.Id">Reset Password</a>
+            @if (!(User.Identity.Name == user.Username))
+            {
+                <button data-username="@(user.Username)" class="btn btn-md btn-secondary change-role-btn">Change Role</button>
+            }
+        </td>
+    </tr>
+}
+

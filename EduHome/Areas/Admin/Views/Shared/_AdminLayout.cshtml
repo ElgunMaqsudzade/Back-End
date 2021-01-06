@@ -89,22 +89,6 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="collapse" href="#auth2" aria-expanded="false" aria-controls="auth">
-                                <i class="mdi mdi-file-document-box-outline menu-icon"></i>
-                                <span class="menu-title">About Pages</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="collapse" id="auth2">
-                                <ul class="nav flex-column sub-menu">
-                                    <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/samples/login-2.html"> Login 2 </a></li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/samples/register-2.html"> Register 2 </a></li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/samples/lock-screen.html"> Lockscreen </a></li>
-                                </ul>
-                            </div>
-                        </li>
                     }
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#auth3" aria-expanded="false" aria-controls="auth">
@@ -164,11 +148,23 @@
                             </a>
                             <div class="collapse" id="auth7">
                                 <ul class="nav flex-column sub-menu">
-                                    <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/samples/login-2.html"> Login 2 </a></li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/samples/register-2.html"> Register 2 </a></li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/samples/lock-screen.html"> Lockscreen </a></li>
+                                    <li class="nav-item"> <a class="nav-link" asp-controller="Contact" asp-action="Index"> Contact Area </a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#auth2" aria-expanded="false" aria-controls="auth">
+                                <i class="mdi mdi-file-document-box-outline menu-icon"></i>
+                                <span class="menu-title">Others</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="auth2">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"> <a class="nav-link" asp-controller="Tag" asp-action="Index"> Tags </a></li>
+                                    <li class="nav-item"> <a class="nav-link" asp-controller="Category" asp-action="Index"> Categories </a></li>
+                                    <li class="nav-item"> <a class="nav-link" asp-controller="Profession" asp-action="Index"> Professions </a></li>
+                                    <li class="nav-item"> <a class="nav-link" asp-controller="Speaker" asp-action="Index"> Speakers </a></li>
+                                    <li class="nav-item"> <a class="nav-link" asp-controller="Skill" asp-action="Index"> Skills </a></li>
                                 </ul>
                             </div>
                         </li>
