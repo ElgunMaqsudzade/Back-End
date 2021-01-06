@@ -57,11 +57,14 @@
     <Compile Remove="Migrations\20210101093814_CommentUpdateUserRelation.Designer.cs" />
     <Compile Remove="Migrations\20210105223458_UpdateNoticeBoard.cs" />
     <Compile Remove="Migrations\20210105223458_UpdateNoticeBoard.Designer.cs" />
+    <Compile Remove="Migrations\20210106123416_Testimonial.cs" />
+    <Compile Remove="Migrations\20210106123416_Testimonial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.10">
       <PrivateAssets>all</PrivateAssets>

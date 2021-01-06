@@ -115,22 +115,17 @@ namespace EduHome.Areas.Admin.Controllers
             }
 
 
-            SmtpClient client = new SmtpClient("smtp.mail.ru", 587);
+            SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
             client.UseDefaultCredentials = false;
             client.EnableSsl = true;
-            client.Credentials = new NetworkCredential("back.end.00@mail.ru", "developer123");
+            client.Credentials = new NetworkCredential("imbackend4000@gmail.com", "backend318");
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             foreach (Subscriber s in subscribers)
             {
-                MailMessage message = new MailMessage("back.end.00@mail.ru", s.Mail);
+                MailMessage message = new MailMessage("imbackend4000@gmail.com", s.Mail);
                 message.Subject = "EduHome Event Review";
 
-                //AlternateView alternateView = AlternateView.CreateAlternateViewFromString("<br/><img src=cid:imgpath height=auto width=500 />");
-                //LinkedResource lr = new LinkedResource("C:/Users/USER/Desktop/Back-End/EduHome/wwwroot/img/event/" + fileName);
-                //lr.ContentId = "imgpath";
-                //alternateView.LinkedResources.Add(lr);
-                ////message.AlternateViews.Add(alternateView);
-                //message.Body = lr.ContentId;
+               
                 message.Body = "<div style='padding:20px;' class='container'><div class='row justify-content-center'><div class='col-6 text-center'>" +
                     "<h4>Hello, Our dear Subscriber:)</h4><h4 style='color: red'>Want to learn more in 2021?</h4>" +
                     "<h4>Create a goal and Eduhome will help you stay on track.</h4>" +

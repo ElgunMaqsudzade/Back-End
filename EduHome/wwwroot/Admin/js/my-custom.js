@@ -92,9 +92,12 @@ $(function () {
                     if (res.image != null) {
                         $(".inner-img").attr("src", `/img/${url.toLowerCase()}/${res.image}`)
                     }
-                    if (url == "Teacher") {
+                    if (url == "Teacher" || url == "Testimonial") {
                         $(".modal-body").text(res.fullname)
-                    } else {
+                    } else if (url == "Notice") {
+                        $(".modal-body").text(res.descriptioon)
+                    }
+                    else {
                         $(".modal-body").text(res.title)
                     }
                     $(".modal-delete").click(function () {
