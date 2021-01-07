@@ -79,7 +79,7 @@ $(function () {
     //++++++++++++++++++++++++++++++++
     function Modal() {
         let url;
-        $(".delete").click(function () {
+        $(document).on("click", ".delete", function () {
             url = this.dataset.url;
             let box = $(this).parents(".text-center");
             $(".modal-box").css("display", "block");

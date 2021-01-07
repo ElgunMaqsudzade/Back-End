@@ -39,7 +39,8 @@ namespace EduHome.Areas.Admin.Controllers
             bool isExist = _db.BlogSimples.Where(c => c.IsDeleted == false).Any(c => c.Id == id);
             if (!isExist) return NotFound();
 
-            BlogSimple blogSimple = await _db.BlogSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.BlogDetail).FirstOrDefaultAsync();
+            BlogSimple blogSimple = await _db.BlogSimples.Where(e => e.IsDeleted == false && e.Id == id)
+                .Include(e => e.BlogDetail).Include(i=>i.Category).Include(t=>t.TagBlogSimples).ThenInclude(t=>t.Tag).FirstOrDefaultAsync();
             return View(blogSimple);
         }
         public async Task<IActionResult> Create()
@@ -150,32 +151,30 @@ namespace EduHome.Areas.Admin.Controllers
                 ModelState.AddModelError("", "This Blog already exist");
                 return View(blogForCreateVM);
             }
-            if (blog.BlogSimple.Photo == null)
+            if (blog.BlogSimple.Photo != null)
             {
-                ModelState.AddModelError("", "Please,add Image");
-                return View(blogForCreateVM);
-            }
-            if (!blog.BlogSimple.Photo.IsImage())
-            {
-                ModelState.AddModelError("", "Please,add Image file");
-                return View(blogForCreateVM);
-            }
-            if (!blog.BlogSimple.Photo.MaxSize(500))
-            {
-                ModelState.AddModelError("", "Max size of Image should be lower than 500");
-                return View(blogForCreateVM);
+                if (!blog.BlogSimple.Photo.IsImage())
+                {
+                    ModelState.AddModelError("", "Please,add Image file");
+                    return View(blogForCreateVM);
+                }
+                if (!blog.BlogSimple.Photo.MaxSize(500))
+                {
+                    ModelState.AddModelError("", "Max size of Image should be lower than 500");
+                    return View(blogForCreateVM);
+                }
+                string folder = Path.Combine("img", "blog");
+                string fileName = await blog.BlogSimple.Photo.SaveImagesAsync(_env.WebRootPath, folder);
+                string path = Path.Combine(_env.WebRootPath, folder, blogSimple.Image);
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+                blogSimple.Image = fileName;
             }
 
-            string folder = Path.Combine("img", "blog");
-            string fileName = await blog.BlogSimple.Photo.SaveImagesAsync(_env.WebRootPath, folder);
-            string path = Path.Combine(_env.WebRootPath, folder, blogSimple.Image);
-            if (System.IO.File.Exists(path))
-            {
-                System.IO.File.Delete(path);
-            }
 
             blogSimple.CategoryId = Category;
-            blogSimple.Image = fileName;
             blogSimple.Title = blog.BlogSimple.Title;
             blogSimple.Author = blog.BlogSimple.Author;
             blogSimple.UpdateTime = DateTime.UtcNow;

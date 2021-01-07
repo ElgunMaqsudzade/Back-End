@@ -44,6 +44,17 @@
                     </div>
                 </div>
             </div>
+            <h4>Tags:</h4>
+            <div>
+                @foreach (var t in Model.TagCourseSimples)
+                {
+                    <p>@t.Tag.Name</p>
+                }
+            </div>
+            <h4>Category:</h4>
+            <div>
+                <p>@Model.Category.Name</p>
+            </div>
         </div>
     </div>
 </div>

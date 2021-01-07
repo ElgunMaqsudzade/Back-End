@@ -38,7 +38,12 @@ namespace EduHome.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Skill skill)
         {
-
+            bool isExist = _db.Skills.Any(c => c.Name.Trim().ToLower() == skill.Name.Trim().ToLower());
+            if (isExist)
+            {
+                ModelState.AddModelError("", "This Skill already exist");
+                return View();
+            }
             await _db.Skills.AddAsync(skill);
             await _db.SaveChangesAsync();
 

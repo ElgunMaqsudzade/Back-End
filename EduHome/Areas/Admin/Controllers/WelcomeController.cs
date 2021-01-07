@@ -20,11 +20,9 @@ namespace EduHome.Areas.Admin.Controllers
     public class WelcomeController : Controller
     {
         private readonly AppDbContext _db;
-        private readonly UserManager<AppUser> _userManager;
         private readonly IWebHostEnvironment _env;
-        public WelcomeController(UserManager<AppUser> userManager, AppDbContext db, IWebHostEnvironment env)
+        public WelcomeController( AppDbContext db, IWebHostEnvironment env)
         {
-            _userManager = userManager;
             _db = db;
             _env = env;
         }
@@ -44,31 +42,30 @@ namespace EduHome.Areas.Admin.Controllers
         {
             AboutArea aboutArea = await _db.AboutAreas.FirstOrDefaultAsync();
 
-            if (about.Photo == null)
+            if (about.Photo != null)
             {
-                ModelState.AddModelError("", "Please,add Image");
-                return View();
-            }
-            if (!about.Photo.IsImage())
-            {
-                ModelState.AddModelError("", "Please,add Image file");
-                return View();
-            }
-            if (!about.Photo.MaxSize(500))
-            {
-                ModelState.AddModelError("", "Max size of Image should be lower than 500");
-                return View();
+
+                if (!about.Photo.IsImage())
+                {
+                    ModelState.AddModelError("", "Please,add Image file");
+                    return View();
+                }
+                if (!about.Photo.MaxSize(500))
+                {
+                    ModelState.AddModelError("", "Max size of Image should be lower than 500");
+                    return View();
+                }
+                string folder = Path.Combine("img", "about");
+                string fileName = await about.Photo.SaveImagesAsync(_env.WebRootPath, folder);
+                string path = Path.Combine(_env.WebRootPath, folder, aboutArea.Image);
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+
+                aboutArea.Image = fileName;
             }
 
-            string folder = Path.Combine("img", "about");
-            string fileName = await about.Photo.SaveImagesAsync(_env.WebRootPath, folder);
-            string path = Path.Combine(_env.WebRootPath, folder, aboutArea.Image);
-            if (System.IO.File.Exists(path))
-            {
-                System.IO.File.Delete(path);
-            }
-
-            aboutArea.Image = fileName;
             aboutArea.Title = about.Title;
             aboutArea.Description = about.Description;
             aboutArea.UpdateTime = DateTime.UtcNow;

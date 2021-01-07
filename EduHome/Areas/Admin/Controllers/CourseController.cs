@@ -40,7 +40,8 @@ namespace EduHome.Areas.Admin.Controllers
             bool isExist = _db.CourseSimples.Where(c => c.IsDeleted == false).Any(c => c.Id == id);
             if (!isExist) return NotFound();
 
-            CourseSimple courseSimple = await _db.CourseSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.CourseDetail).ThenInclude(t => t.CourseFeature).FirstOrDefaultAsync();
+            CourseSimple courseSimple = await _db.CourseSimples.Where(e => e.IsDeleted == false && e.Id == id)
+                .Include(e => e.CourseDetail).ThenInclude(t => t.CourseFeature).Include(i => i.Category).Include(t => t.TagCourseSimples).ThenInclude(t => t.Tag).FirstOrDefaultAsync();
             return View(courseSimple);
         }
         public async Task<IActionResult> Create()
@@ -54,10 +55,8 @@ namespace EduHome.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CourseForCreateVM course, List<int> Tags, int Category)
         {
-            //We have int CourseSimpleId at CourseDetail for one for one relation we should either 
-            //do that nullable or just do not use (!ModelState.Isvalid)
 
-            //if (!ModelState.IsValid) return View();
+            if (!ModelState.IsValid) return View();
             ViewBag.Categories = await _db.Categories.ToListAsync();
             ViewBag.Tags = await _db.Tags.ToListAsync();
 
@@ -129,9 +128,9 @@ namespace EduHome.Areas.Admin.Controllers
                 CourseSimple = await _db.CourseSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.CourseDetail).ThenInclude(t => t.CourseFeature).FirstOrDefaultAsync(),
                 CourseDetail = await _db.CourseDetails.Where(e => e.CourseSimpleId == id).Include(t => t.CourseFeature).FirstOrDefaultAsync(),
                 CourseFeature = await _db.CourseFeatures.Where(e => e.CourseDetail.CourseSimpleId == id).FirstOrDefaultAsync(),
+                TagCourseSimples = await _db.TagCourseSimples.Where(c => c.CourseSimple.Id == id).ToListAsync(),
                 Categories = await _db.Categories.ToListAsync(),
                 Tags = await _db.Tags.ToListAsync(),
-                TagCourseSimples = await _db.TagCourseSimples.Where(c => c.CourseSimple.Id == id).ToListAsync(),
             };
             return View(courseForCreateVM);
         }
@@ -139,13 +138,13 @@ namespace EduHome.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(int id, CourseForCreateVM course, List<int> Tags, int Category)
         {
-            //We have int CourseSimpleId at CourseDetail for one for one relation we should either 
-            //do that nullable or just do not use (!ModelState.Isvalid)
+            if (!ModelState.IsValid) return View();
             CourseForCreateVM courseForCreateVM = new CourseForCreateVM()
             {
                 CourseSimple = await _db.CourseSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.CourseDetail).ThenInclude(t => t.CourseFeature).FirstOrDefaultAsync(),
                 CourseDetail = await _db.CourseDetails.Where(e => e.CourseSimpleId == id).Include(t => t.CourseFeature).FirstOrDefaultAsync(),
                 CourseFeature = await _db.CourseFeatures.Where(e => e.CourseDetail.CourseSimpleId == id).FirstOrDefaultAsync(),
+                TagCourseSimples = await _db.TagCourseSimples.Where(c => c.CourseSimple.Id == id).ToListAsync(),
                 Categories = await _db.Categories.ToListAsync(),
                 Tags = await _db.Tags.ToListAsync(),
             };
@@ -160,32 +159,30 @@ namespace EduHome.Areas.Admin.Controllers
                 ModelState.AddModelError("", "This Course already exist");
                 return View(courseForCreateVM);
             }
-            if (course.CourseSimple.Photo == null)
+            if (course.CourseSimple.Photo != null)
             {
-                ModelState.AddModelError("", "Please,add Image");
-                return View(courseForCreateVM);
-            }
-            if (!course.CourseSimple.Photo.IsImage())
-            {
-                ModelState.AddModelError("", "Please,add Image file");
-                return View(courseForCreateVM);
-            }
-            if (!course.CourseSimple.Photo.MaxSize(500))
-            {
-                ModelState.AddModelError("", "Max size of Image should be lower than 500");
-                return View(courseForCreateVM);
-            }
+                if (!course.CourseSimple.Photo.IsImage())
+                {
+                    ModelState.AddModelError("", "Please,add Image file");
+                    return View(courseForCreateVM);
+                }
+                if (!course.CourseSimple.Photo.MaxSize(500))
+                {
+                    ModelState.AddModelError("", "Max size of Image should be lower than 500");
+                    return View(courseForCreateVM);
+                }
 
-            string folder = Path.Combine("img", "course");
-            string fileName = await course.CourseSimple.Photo.SaveImagesAsync(_env.WebRootPath, folder);
-            string path = Path.Combine(_env.WebRootPath, folder, courseSimple.Image);
-            if (System.IO.File.Exists(path))
-            {
-                System.IO.File.Delete(path);
+                string folder = Path.Combine("img", "course");
+                string fileName = await course.CourseSimple.Photo.SaveImagesAsync(_env.WebRootPath, folder);
+                string path = Path.Combine(_env.WebRootPath, folder, courseSimple.Image);
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+                courseSimple.Image = fileName;
             }
 
             courseSimple.CategoryId = Category;
-            courseSimple.Image = fileName;
             courseSimple.Title = course.CourseSimple.Title;
             courseSimple.MainContent = course.CourseSimple.MainContent;
             courseSimple.IsSimple = course.CourseSimple.IsSimple;

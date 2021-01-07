@@ -41,7 +41,8 @@ namespace EduHome.Areas.Admin.Controllers
             if (id == null) return NotFound();
             bool isExist = _db.EventSimples.Where(c => c.IsDeleted == false).Any(c => c.Id == id);
             if (!isExist) return NotFound();
-            EventSimple eventSimple = await _db.EventSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.EventDetail).FirstOrDefaultAsync();
+            EventSimple eventSimple = await _db.EventSimples.Where(e => e.IsDeleted == false && e.Id == id)
+                .Include(e => e.EventDetail).Include(i => i.Category).Include(t => t.TagEventSimples).ThenInclude(t => t.Tag).FirstOrDefaultAsync();
             return View(eventSimple);
         }
         public async Task<IActionResult> Create()
@@ -63,7 +64,7 @@ namespace EduHome.Areas.Admin.Controllers
                 ModelState.AddModelError("Speakers", "You need to choose at least one Speaker");
                 return View();
             }
-            //if (!ModelState.IsValid) return View();
+            if (!ModelState.IsValid) return View();
 
             bool isExist = _db.EventSimples.Where(c => c.IsDeleted == false).Any(c => c.Title.Trim().ToLower() == eventvm.EventSimple.Title.Trim().ToLower());
             if (isExist)
@@ -190,7 +191,7 @@ namespace EduHome.Areas.Admin.Controllers
                 ModelState.AddModelError("Speakers", "You need to choose at least one Speaker");
                 return View(eventForCreateVM);
             }
-            //if (!ModelState.IsValid) return View();
+            if (!ModelState.IsValid) return View();
 
             bool isExist = _db.EventSimples.Where(c => c.IsDeleted == false).Any(c => c.Title.Trim().ToLower() == eventvm.EventSimple.Title.Trim().ToLower() && c.Id != id);
             if (isExist)

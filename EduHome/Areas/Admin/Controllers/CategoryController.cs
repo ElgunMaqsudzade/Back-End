@@ -26,6 +26,7 @@ namespace EduHome.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            
             List<Category> categories = await _db.Categories.Take(10).ToListAsync();
             ViewBag.Count = _db.Tags.Count();
             return View(categories);
@@ -38,7 +39,12 @@ namespace EduHome.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Category category)
         {
-
+            bool isExist = _db.Categories.Any(c => c.Name.Trim().ToLower() == category.Name.Trim().ToLower());
+            if (isExist)
+            {
+                ModelState.AddModelError("", "This Category already exist");
+                return View();
+            }
             await _db.Categories.AddAsync(category);
             await _db.SaveChangesAsync();
 

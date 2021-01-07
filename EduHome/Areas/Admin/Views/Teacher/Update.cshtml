@@ -141,11 +141,11 @@
                                         }
                                     </select>
                                 </div>
-                                @foreach (Skill s in Model.Skills)
+                                @foreach (TeacherSkill s in Model.TeacherSkills)
                                 {
                                     <div class="form-group">
-                                        <label for="@s.Name.ToLower()" class="form-label">@s.Name.ToUpper()</label>
-                                        <input type="range" min="0" max="100" step="1" class="form-range" name="@s.Name.Replace(" ", "").ToLower()">
+                                        <label class="form-label">@s.Skill.Name.ToUpper()</label>
+                                        <input asp-for="@s.SkillValue" name="Skill" type="range" min="0" max="100" step="1" class="form-range" >
                                     </div>
                                 }
                             </div>

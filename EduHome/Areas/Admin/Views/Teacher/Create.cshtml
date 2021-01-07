@@ -82,8 +82,8 @@
                                 @foreach (Skill s in Model.Skills)
                                 {
                                     <div class="form-group">
-                                        <label for="@s.Name.ToLower()" class="form-label">@s.Name.ToUpper()</label>
-                                        <input type="range" min="0" max="100" step="1" class="form-range" name="@s.Name.Replace(" ", "").ToLower()">
+                                        <label class="form-label">@s.Name.ToUpper()</label>
+                                        <input type="range" min="0" max="100" step="1" class="form-range" name="Skill">
                                     </div>
                                 }
                             </div>

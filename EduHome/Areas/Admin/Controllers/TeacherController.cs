@@ -52,15 +52,15 @@ namespace EduHome.Areas.Admin.Controllers
                 Skills = await _db.Skills.ToListAsync(),
                 TeacherSkills = await _db.TeacherSkills.ToListAsync(),
                 Professions = await _db.Professions.ToListAsync(),
-                Profession = await _db.Professions.FirstOrDefaultAsync()
+                Profession = await _db.Professions.FirstOrDefaultAsync(),
             };
             return View(teacherForCreateVM);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TeacherForCreateVM teacher, int design, int language, int teamleader, int development, int innovation, int communication, int Profession)
+        public async Task<IActionResult> Create(TeacherForCreateVM teacher, List<int> Skill, int Profession)
         {
-            
+
             if (!ModelState.IsValid) return View();
             TeacherForCreateVM teacherForCreateVM = new TeacherForCreateVM()
             {
@@ -106,12 +106,12 @@ namespace EduHome.Areas.Admin.Controllers
             await _db.TeacherDetails.AddAsync(teacher.TeacherDetail);
             await _db.SaveChangesAsync();
 
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacher.TeacherSimple.Id, SkillId = 1, SkillValue = language });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacher.TeacherSimple.Id, SkillId = 2, SkillValue = teamleader });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacher.TeacherSimple.Id, SkillId = 3, SkillValue = development });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacher.TeacherSimple.Id, SkillId = 4, SkillValue = design });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacher.TeacherSimple.Id, SkillId = 6, SkillValue = innovation });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacher.TeacherSimple.Id, SkillId = 7, SkillValue = communication });
+
+            for (int i = 0; i < teacherForCreateVM.Skills.Count(); i++)
+            {
+                await _db.TeacherSkills.AddAsync
+                    (new TeacherSkill { TeacherSimpleId = teacher.TeacherSimple.Id, SkillId = teacherForCreateVM.Skills[i].Id, SkillValue = Skill[i] });
+            }
             await _db.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
@@ -136,7 +136,7 @@ namespace EduHome.Areas.Admin.Controllers
             if (!isExist) return NotFound();
             TeacherForCreateVM teacherForCreateVM = new TeacherForCreateVM()
             {
-                TeacherSimple = await _db.TeacherSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.TeacherDetail).Include(t=>t.TeacherSkills).FirstOrDefaultAsync(),
+                TeacherSimple = await _db.TeacherSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.TeacherDetail).Include(t => t.TeacherSkills).FirstOrDefaultAsync(),
                 TeacherDetail = await _db.TeacherDetails.Where(e => e.TeacherSimpleId == id).FirstOrDefaultAsync(),
                 Skills = await _db.Skills.ToListAsync(),
                 TeacherSkills = await _db.TeacherSkills.Where(e => e.TeacherSimpleId == id).ToListAsync(),
@@ -147,14 +147,14 @@ namespace EduHome.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int id, TeacherForCreateVM teacher, int design, int language, int teamleader, int development, int innovation, int communication, int Profession)
+        public async Task<IActionResult> Update(int id, TeacherForCreateVM teacher, List<int> Skill, int Profession)
         {
             if (!ModelState.IsValid) return View();
             TeacherForCreateVM teacherForCreateVM = new TeacherForCreateVM()
             {
                 TeacherSimple = await _db.TeacherSimples.Where(e => e.IsDeleted == false && e.Id == id).Include(e => e.TeacherDetail).Include(t => t.TeacherSkills).FirstOrDefaultAsync(),
                 TeacherDetail = await _db.TeacherDetails.Where(e => e.TeacherSimpleId == id).FirstOrDefaultAsync(),
-                TeacherSkills = await _db.TeacherSkills.Where(e => e.TeacherSimpleId == id).Include(e=>e.Skill).ToListAsync(),
+                TeacherSkills = await _db.TeacherSkills.Where(e => e.TeacherSimpleId == id).Include(e => e.Skill).ToListAsync(),
                 Skills = await _db.Skills.ToListAsync(),
                 Professions = await _db.Professions.ToListAsync(),
                 Profession = await _db.Professions.FirstOrDefaultAsync(),
@@ -205,17 +205,10 @@ namespace EduHome.Areas.Admin.Controllers
             teacherDetail.AboutContent = teacher.TeacherDetail.AboutContent;
 
             await _db.SaveChangesAsync();
-
-            foreach (var s in teacherForCreateVM.TeacherSkills)
+            for (int i = 0; i < Skill.Count(); i++)
             {
-                _db.TeacherSkills.Remove(s);
+                teacherSimple.TeacherSkills[i].SkillValue = Skill[i];
             }
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacherSimple.Id, SkillId = 1, SkillValue = language });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacherSimple.Id, SkillId = 2, SkillValue = teamleader });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacherSimple.Id, SkillId = 3, SkillValue = development });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacherSimple.Id, SkillId = 4, SkillValue = design });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacherSimple.Id, SkillId = 6, SkillValue = innovation });
-            await _db.TeacherSkills.AddAsync(new TeacherSkill { TeacherSimpleId = teacherSimple.Id, SkillId = 7, SkillValue = communication });
             await _db.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

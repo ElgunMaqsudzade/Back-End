@@ -19,10 +19,20 @@
                             </div>
                         </div>
                         <div class="blog-img">
-                            <a class="profile-image"><img class="img-fluid" src="~/img/user/@Model.Image" alt="blog"></a>
-                            <div class="blog-hover">
-                                <a class="profile-image"><i class="far fa-image"></i></a>
-                            </div>
+                            @if (User.Identity.Name == Model.UserName)
+                            {
+                                <a class="profile-image"><img class="img-fluid" src="~/img/user/@Model.Image" alt="blog"></a>
+                                <div class="blog-hover">
+                                    <a class="profile-image"><i class="far fa-image"></i></a>
+                                </div>
+                            }
+                            else
+                            {
+                                <button style="cursor:pointer" disabled class="profile-image"><img class="img-fluid" src="~/img/user/@Model.Image" alt="blog"></button>
+                                <div class="blog-hover">
+                                    <button style="cursor:pointer"  disabled class="profile-image"><i class="far fa-image"></i></button>
+                                </div>
+                            }
                         </div>
                         <div class="blog-content">
                             <div class="blog-bottom">
@@ -32,24 +42,36 @@
                                     <div class="input-field">
                                         <input asp-for="Fullname" class="profile-inp" id="name" placeholder="Fullname" value="@Model.Fullname" autocomplete="off" />
                                     </div>
-                                    <h2><a data-set="name" class="edit-btn text-right"><i class="fas fa-user-edit"></i></a></h2>
+                                    @if (User.Identity.Name == Model.UserName)
+                                    {
+                                        <h2><a data-set="name" class="edit-btn text-right"><i class="fas fa-user-edit"></i></a></h2>
+                                    }
                                 </div>
                                 <div class="content" style="display:flex; justify-content:space-between">
                                     <h2 class="username">Username: <span class="text-username">@Model.UserName</span></h2>
                                     <div class="input-field">
                                         <input asp-for="UserName" class="profile-inp" id="username" placeholder="Username" value="@Model.UserName" autocomplete="off" />
                                     </div>
-                                    <h2><a data-set="username" class="edit-btn text-right"><i class="fas fa-user-edit"></i></a></h2>
+                                    @if (User.Identity.Name == Model.UserName)
+                                    {
+                                        <h2><a data-set="name" class="edit-btn text-right"><i class="fas fa-user-edit"></i></a></h2>
+                                    }
                                 </div>
                                 <div class="content" style="display:flex; justify-content:space-between">
                                     <h2 class="email">Email: <span class="text-email">@Model.Email</span></h2>
                                     <div class="input-field">
                                         <input asp-for="Email" class="profile-inp" id="email" placeholder="Email" value="@Model.Email" autocomplete="off" />
                                     </div>
-                                    <h2><a data-set="email" class="edit-btn text-right"><i class="fas fa-user-edit"></i></a></h2>
+                                    @if (User.Identity.Name == Model.UserName)
+                                    {
+                                        <h2><a data-set="name" class="edit-btn text-right"><i class="fas fa-user-edit"></i></a></h2>
+                                    }
                                 </div>
                                 <div style="display:flex; justify-content:center">
-                                    <button type="submit" class="save-btn" disabled>Save</button>
+                                    @if (User.Identity.Name == Model.UserName)
+                                    {
+                                        <button type="submit" class="save-btn" disabled>Save</button>
+                                    }
                                 </div>
                             </div>
                         </div>
