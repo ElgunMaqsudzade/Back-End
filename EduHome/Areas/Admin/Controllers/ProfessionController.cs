@@ -46,6 +46,33 @@ namespace EduHome.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        public async Task<IActionResult> Update(int? id)
+        {
+            if (id == null) return NotFound();
+            bool isExist = _db.Professions.Any(c => c.Id == id);
+            if (!isExist) return NotFound();
+            Profession profession = await _db.Professions.FirstOrDefaultAsync(e => e.Id == id);
+            return View(profession);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(int id, Profession profession)
+        {
+            if (!ModelState.IsValid) return View();
+            Profession profession1 = await _db.Professions.Where(e => e.Id == id).FirstOrDefaultAsync();
+
+            bool isExist = _db.Professions.Any(c => c.Name.Trim().ToLower() == profession.Name.Trim().ToLower());
+            if (isExist)
+            {
+                ModelState.AddModelError("", "This Skill already exist");
+                return View(profession1);
+            }
+
+            profession1.Name = profession.Name;
+
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
         public IActionResult Delete(int id)
         {
             Profession profession = _db.Professions.Where(e => e.Id == id).FirstOrDefault();

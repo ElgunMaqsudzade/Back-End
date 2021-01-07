@@ -49,6 +49,33 @@ namespace EduHome.Areas.Admin.Controllers
             Tag tag = _db.Tags.Where(e => e.Id == id).FirstOrDefault();
             return Json(tag);
         }
+        public async Task<IActionResult> Update(int? id)
+        {
+            if (id == null) return NotFound();
+            bool isExist = _db.Tags.Any(c => c.Id == id);
+            if (!isExist) return NotFound();
+            Tag tag = await _db.Tags.FirstOrDefaultAsync(e => e.Id == id);
+            return View(tag);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(int id, Tag tag)
+        {
+            if (!ModelState.IsValid) return View();
+            Tag tag1 = await _db.Tags.Where(e => e.Id == id).FirstOrDefaultAsync();
+
+            bool isExist = _db.Skills.Any(c => c.Name.Trim().ToLower() == tag.Name.Trim().ToLower());
+            if (isExist)
+            {
+                ModelState.AddModelError("", "This Skill already exist");
+                return View(tag1);
+            }
+
+            tag1.Name = tag.Name;
+
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
         public async Task<IActionResult> DeletePost(int id)
         {
             Tag tag = await _db.Tags.Where(e => e.Id == id).FirstOrDefaultAsync();

@@ -50,6 +50,33 @@ namespace EduHome.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        public async Task<IActionResult> Update(int? id)
+        {
+            if (id == null) return NotFound();
+            bool isExist = _db.Categories.Any(c => c.Id == id);
+            if (!isExist) return NotFound();
+            Category category = await _db.Categories.FirstOrDefaultAsync(e => e.Id == id);
+            return View(category);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(int id, Category category)
+        {
+            if (!ModelState.IsValid) return View();
+            Category category1 = await _db.Categories.Where(e => e.Id == id).FirstOrDefaultAsync();
+
+            bool isExist = _db.Skills.Any(c => c.Name.Trim().ToLower() == category.Name.Trim().ToLower());
+            if (isExist)
+            {
+                ModelState.AddModelError("", "This Skill already exist");
+                return View(category);
+            }
+
+            category1.Name = category.Name;
+
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
         public IActionResult Delete(int id)
         {
             Category category = _db.Categories.Where(e => e.Id == id).FirstOrDefault();

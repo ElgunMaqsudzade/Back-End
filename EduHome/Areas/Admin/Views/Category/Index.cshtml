@@ -36,6 +36,7 @@
                     <td>@count</td>
                     <td>@e.Name</td>
                     <td>
+                        <a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@e.Id">Update</a>
                         <button data-delete="@e.Id" data-url="@url" class="btn btn-sm btn-danger delete">Delete</button>
                     </td>
                 </tr>
